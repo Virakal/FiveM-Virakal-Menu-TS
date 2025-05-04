@@ -2,6 +2,7 @@ import { Delay } from "client";
 import MainMenuAdder from "Menu/MainMenuAdder";
 import AnimalBombMenuAdder from "Menu/AnimalBombMenuAdder";
 import AnimationMenuAdder from "Menu/AnimationMenuAdder";
+import PoliceMenuAdder from "Menu/PoliceMenuAdder";
 import type Trainer from "Trainer";
 
 export default class MenuManager {
@@ -17,6 +18,7 @@ export default class MenuManager {
             new MainMenuAdder(),
             new AnimalBombMenuAdder(),
             new AnimationMenuAdder(),
+            new PoliceMenuAdder(),
         ];
 
         on('virakal:allMenusSent', () => this.onMenusSent())

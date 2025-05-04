@@ -55,7 +55,7 @@ export default class Trainer {
         } else if (this.shouldHandleControl(KEY_BACK)) {
             this.sendUIMessage({ trainerback: true })
         }
-        
+
         // Up / Down
         if (this.shouldHandleControl(KEY_UP)) {
             this.sendUIMessage({ trainerup: true })

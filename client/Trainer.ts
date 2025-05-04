@@ -26,6 +26,8 @@ export default class Trainer {
         RegisterNuiCallback('trainerclose', (data: any, cb: CallableFunction) => this.onTrainerClose(data, cb));
         RegisterNuiCallback('playsound', (data: any, cb: CallableFunction) => this.onPlaySound(data, cb));
 
+        this.maxPlayerStats();
+
         this.notify('~y~Virakal Menu loaded!');
     }
 
@@ -94,6 +96,25 @@ export default class Trainer {
             this.sendUIMessage({ trainerleft: true })
         } else if (this.shouldHandleControl(KEY_RIGHT)) {
             this.sendUIMessage({ trainerright: true })
+        }
+    }
+
+    /**
+     * Set current player stats to their maximums
+     */
+    maxPlayerStats() {
+        const stats = [
+            'MP0_STAMINA',
+            'MP0_STRENGTH',
+            'MP0_LUNG_CAPACITY',
+            'MP0_WHEELIE_ABILITY',
+            'MP0_FLYING_ABILITY',
+            'MP0_SHOOTING_ABILITY',
+            'MP0_STEALTH_ABILITY',
+        ]
+
+        for (const stat of stats) {
+            StatSetInt(GetHashKey(stat), 100, true);
         }
     }
 }

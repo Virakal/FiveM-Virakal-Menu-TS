@@ -2,6 +2,7 @@ import { Delay } from "client";
 import MainMenuAdder from "Menu/MainMenuAdder";
 import AnimalBombMenuAdder from "Menu/AnimalBombMenuAdder";
 import AnimationMenuAdder from "Menu/AnimationMenuAdder";
+import PlayerMenuAdder from "Menu/PlayerMenuAdder";
 import PoliceMenuAdder from "Menu/PoliceMenuAdder";
 import SettingsMenuAdder from "Menu/SettingsMenuAdder";
 import TeleportMenuAdder from "Menu/TeleportMenuAdder";
@@ -9,7 +10,6 @@ import UIMenuAdder from "Menu/UIMenuAdder";
 import WeaponsMenuAdder from "Menu/WeaponsMenuAdder";
 import type Trainer from "Trainer";
 import type { Config } from "Config";
-import getConfig from "Config";
 
 export default class MenuManager {
     menu: MenuMap = new Map();
@@ -26,6 +26,7 @@ export default class MenuManager {
             new AnimalBombMenuAdder(),
             new AnimationMenuAdder(),
             new MainMenuAdder(),
+            new PlayerMenuAdder(config),
             new PoliceMenuAdder(),
             new SettingsMenuAdder(config),
             new TeleportMenuAdder(),

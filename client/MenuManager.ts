@@ -5,7 +5,7 @@ import type Trainer from "Trainer";
 export default class MenuManager {
     menu: MenuMap = new Map();
     menuAdders: MenuAdder[] = [];
-    
+
     private trainer: Trainer;
 
     constructor(trainer: Trainer) {
@@ -18,7 +18,7 @@ export default class MenuManager {
         on('virakal:allMenusSent', () => this.onMenusSent())
         // on('virakal:configFetched', () => this.onConfigFetched())
         // TODO: Swap this when config storage is implemented
-        this.onConfigFetched();
+        setTimeout(() => this.onConfigFetched(), 100);
     }
 
     onConfigFetched() {

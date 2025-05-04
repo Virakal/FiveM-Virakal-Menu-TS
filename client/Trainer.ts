@@ -1,3 +1,4 @@
+import getConfig from "Config";
 import MenuManager from "MenuManager";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
@@ -14,9 +15,18 @@ export default class Trainer {
 
     blockInput = false;
     showTrainer = false;
+    _config = getConfig();
+
+    get config() {
+        return this._config;
+    }
+
+    private set config(config) {
+        this._config = config;
+    }
 
     constructor() {
-        this.menuManager = new MenuManager(this);
+        this.menuManager = new MenuManager(this, this.config);
 
         setTick(() => this.handleMenuKeys());
         setImmediate(() => this.onLoad());

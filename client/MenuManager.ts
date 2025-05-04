@@ -3,25 +3,31 @@ import MainMenuAdder from "Menu/MainMenuAdder";
 import AnimalBombMenuAdder from "Menu/AnimalBombMenuAdder";
 import AnimationMenuAdder from "Menu/AnimationMenuAdder";
 import PoliceMenuAdder from "Menu/PoliceMenuAdder";
+import SettingsMenuAdder from "Menu/SettingsMenuAdder";
 import TeleportMenuAdder from "Menu/TeleportMenuAdder";
 import UIMenuAdder from "Menu/UIMenuAdder";
 import WeaponsMenuAdder from "Menu/WeaponsMenuAdder";
 import type Trainer from "Trainer";
+import type { Config } from "Config";
+import getConfig from "Config";
 
 export default class MenuManager {
     menu: MenuMap = new Map();
     menuAdders: MenuAdder[] = [];
 
     private trainer: Trainer;
+    private config;
 
-    constructor(trainer: Trainer) {
+    constructor(trainer: Trainer, config: Config) {
         this.trainer = trainer;
+        this.config = config;
 
         this.menuAdders = [
-            new MainMenuAdder(),
             new AnimalBombMenuAdder(),
             new AnimationMenuAdder(),
+            new MainMenuAdder(),
             new PoliceMenuAdder(),
+            new SettingsMenuAdder(config),
             new TeleportMenuAdder(),
             new UIMenuAdder(),
             new WeaponsMenuAdder(),

@@ -95,9 +95,14 @@
             });
         }
 
-        sendData(name: string, data: any = {}): JQueryXHR {
-            return $.post(`http://${this.resourceName}/${name}`, JSON.stringify(data), function (response) {
-                // console.log('Data response: ' + response);
+        async sendData(name: string, data: any = {}): Promise<Response> {
+            // @ts-ignore
+            return fetch(`https://${GetParentResourceName()}/${name}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json; charset=UTF-8',
+                },
+                body: JSON.stringify(data),
             });
         }
 

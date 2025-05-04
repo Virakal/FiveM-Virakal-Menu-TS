@@ -1,3 +1,4 @@
+import MenuManager from "MenuManager";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
 const KEY_TOGGLE_MENU = 168; // F7
@@ -9,10 +10,14 @@ const KEY_LEFT = 174;
 const KEY_RIGHT = 175;
 
 export default class Trainer {
+    menuManager: MenuManager;
+
     blockInput = false;
     showTrainer = false;
 
     constructor() {
+        this.menuManager = new MenuManager(this);
+
         setTick(() => this.handleMenuKeys());
     }
 

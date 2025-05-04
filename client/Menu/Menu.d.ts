@@ -1,5 +1,7 @@
-interface Menu {
-    add(): Map<string, MenuItem[]>
+type MenuMap = Map<string, MenuItem[]>
+
+interface MenuAdder {
+    add(menus: MenuMap): MenuMap
 }
 
 interface MenuItem {

@@ -1,7 +1,5 @@
-export default class MainMenu implements Menu {
-    add() {
-        const menus: Map<string, MenuItem[]> = new Map();
-
+export default class MainMenuAdder implements MenuAdder {
+    add(menus: MenuMap) {
         menus.set('mainmenu', [
             {
                 text: "Player",

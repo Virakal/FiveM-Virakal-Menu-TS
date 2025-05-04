@@ -20,7 +20,7 @@ export default class PedModelList {
             .sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    static getItemByHash(hash: number) {
+    static getByHash(hash: number) {
         if (!this.modelHashCache.has(hash)) {
             const model: PedModelListItem = this.models.find((m) => m.modelHash === hash);
             this.modelHashCache.set(hash, model);

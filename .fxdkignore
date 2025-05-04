@@ -1,0 +1,8 @@
+.git
+client/*
+server/*
+ui/src/*
+ui/src/*.json
+ui/src/*.config.js
+package.json
+build.js

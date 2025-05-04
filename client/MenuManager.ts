@@ -4,6 +4,7 @@ import AnimalBombMenuAdder from "Menu/AnimalBombMenuAdder";
 import AnimationMenuAdder from "Menu/AnimationMenuAdder";
 import PoliceMenuAdder from "Menu/PoliceMenuAdder";
 import TeleportMenuAdder from "Menu/TeleportMenuAdder";
+import UIMenuAdder from "Menu/UIMenuAdder";
 import type Trainer from "Trainer";
 
 export default class MenuManager {
@@ -21,6 +22,7 @@ export default class MenuManager {
             new AnimationMenuAdder(),
             new PoliceMenuAdder(),
             new TeleportMenuAdder(),
+            new UIMenuAdder(),
         ];
 
         on('virakal:allMenusSent', () => this.onMenusSent())

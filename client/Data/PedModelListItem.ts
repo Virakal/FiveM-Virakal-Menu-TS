@@ -1,10 +1,10 @@
-import type { PedModelType } from "./PedModelList";
+import { PedModelType } from "./PedModelList";
 
 export default class PedModelListItem {
     name: string;
     image?: string;
     model: string;
-    type: PedModelType;
+    type: PedModelType = PedModelType.Human;
     tags?: object = {};
 
     private hash: number;

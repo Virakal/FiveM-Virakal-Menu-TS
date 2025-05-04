@@ -19,10 +19,36 @@ export default class Trainer {
         this.menuManager = new MenuManager(this);
 
         setTick(() => this.handleMenuKeys());
+        setImmediate(() => this.onLoad());
+    }
+
+    onLoad() {
+        RegisterNuiCallback('trainerclose', (data: any, cb: CallableFunction) => this.onTrainerClose(data, cb));
+        RegisterNuiCallback('playsound', (data: any, cb: CallableFunction) => this.onPlaySound(data, cb));
+
+        this.notify('~y~Virakal Menu loaded!');
+    }
+
+    onTrainerClose(data: any, callback: CallableFunction) {
+        this.showTrainer = false;
+        callback('ok');
+        return callback;
+    }
+
+    onPlaySound(data: any, callback: CallableFunction) {
+        PlaySoundFrontend(-1, data.name, 'HUD_FRONTEND_DEFAULT_SOUNDSET', true);
+        callback('ok');
+        return callback;
     }
 
     sendUIMessage(message: object) {
         SendNUIMessage(message);
+    }
+
+    notify(message: string) {
+        SetNotificationTextEntry('STRING');
+        AddTextComponentString(message);
+        DrawNotification(false, false);
     }
 
     shouldHandleControl(key: number, checkShowTrainer: boolean = true) {

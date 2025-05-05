@@ -5,6 +5,7 @@ import AnimationHandler from "Handler/AnimationHandler";
 import PoliceHandler from "Handler/PoliceHandler";
 import SettingsHandler from "Handler/SettingsHandler";
 import TeleportHandler from "Handler/TeleportHandler";
+import UIHandler from "Handler/UIHandler";
 import MenuManager from "MenuManager";
 import { notify, sendUIMessage } from "utils";
 
@@ -137,6 +138,7 @@ export default class Trainer {
             new PoliceHandler(),
             new SettingsHandler(),
             new TeleportHandler(),
+            new UIHandler(this),
         ];
     }
 }

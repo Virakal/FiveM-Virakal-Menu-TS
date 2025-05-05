@@ -29,24 +29,20 @@ export class Config {
         return null;
     }
 
-    set(key: string, value: string): void {
-        this.store.set(key, value);
+    set(key: string, value: string | boolean): void {
+        this.store.set(key, value.toString());
 
         TriggerServerEvent('virakal:setConfig', this.store);
         TriggerEvent('virakal:configChanged', key, value);
     }
 
-    setBool(key: string, value: boolean): void {
-        this.set(key, value ? 'true' : 'false');
+    setDefault(key: string, value: string | boolean): void {
+        this.defaults.set(key, value.toString());
     }
 
-    setDefault(key: string, value: string): void {
-        this.defaults.set(key, value);
-    }
-
-    setDefaults(defaults: { [key: string ]: string }): void {
+    setDefaults(defaults: { [key: string ]: string | boolean }): void {
         for (const [key, value] of Object.entries(defaults)) {
-            this.defaults.set(key, value);
+            this.setDefault(key, value);
         }
     }
 

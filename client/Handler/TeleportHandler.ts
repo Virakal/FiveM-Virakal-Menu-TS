@@ -49,7 +49,7 @@ export default class TeleportHandler implements Handler {
         let errorMessage: string | null = null;
 
         if (playerServerId === otherServerId) {
-            // errorMessage = `Player ${otherServerId} is you!`;
+            errorMessage = `Player ${otherServerId} is you!`;
         } else if (otherClientId === null) {
             errorMessage = `Player ${otherServerId} was not found!`;
         }

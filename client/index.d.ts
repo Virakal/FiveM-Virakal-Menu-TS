@@ -1,2 +1,7 @@
 type NuiCallback = (data: any) => void;
-type NuiData = any;
+
+type NuiData = {
+    action?: string,
+    newstate?: boolean,
+    [key: string]: any,
+};

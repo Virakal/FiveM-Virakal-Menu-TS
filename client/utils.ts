@@ -1,5 +1,7 @@
 import isPromise from "is-promise";
 
+type Model = number | string;
+
 export class Vector3 {
     readonly x: number;
     readonly y: number;
@@ -75,7 +77,7 @@ export function notify(message: string, isImportant = false, showOnInfoTab = fal
     DrawNotification(isImportant, showOnInfoTab);
 }
 
-export async function loadModel(model: string | number): Promise<boolean> {
+export async function loadModel(model: Model): Promise<boolean> {
     // TODO: Add timeout
     console.log(`Loading model ${model}...`);
 
@@ -144,8 +146,8 @@ export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets
     setEntityPosition(entity, position, false, false, false, noOffsets);
 }
 
-export async function withModel(model: string | number, callback: (model: string | number, loaded: boolean) => any) {
-    async function* context(callback: (model: string | number, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
+export async function withModel(model: Model, callback: (model: Model, loaded: boolean) => any) {
+    async function* context(callback: (model: Model, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
         try {
             const loaded = await loadModel(model);
 

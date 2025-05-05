@@ -1,3 +1,5 @@
+import isPromise from "is-promise";
+
 export class Vector3 {
     x: number;
     y: number;
@@ -77,7 +79,7 @@ export async function withModel(model: number, callback: (model: number, loaded:
         try {
             const loaded = await loadModel(model);
 
-            if ('then' in callback) {
+            if (isPromise(callback)) {
                 yield setImmediate(async () => await callback(model, loaded));
             } else {
                 yield setImmediate(() => callback(model, loaded));

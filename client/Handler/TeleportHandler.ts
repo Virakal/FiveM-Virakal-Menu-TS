@@ -28,8 +28,8 @@ export default class TeleportHandler implements Handler {
     }
 
     onCoords(data: NuiData, cb: NuiCallback): NuiCallback {
-        const playerPed = GetPlayerPed(-1);
-        const coords = getEntityPosition(playerPed);
+        const ped = PlayerPedId();
+        const coords = getEntityPosition(ped);
 
         notify(`~g~${coords}`);
         sendChatMessage(coords.toString());
@@ -86,7 +86,7 @@ export default class TeleportHandler implements Handler {
         const input = data.action.split(',').map((x: string) => Number.parseInt(x.trim(), 10));
         const coords = Vector3.fromArray(input);
 
-        const ped = GetPlayerPed(-1);
+        const ped = PlayerPedId();
 
         teleportPedWithVehicle(ped, coords);
 
@@ -104,7 +104,7 @@ export default class TeleportHandler implements Handler {
             return cb;
         }
 
-        const ped = GetPlayerPed(-1);
+        const ped = PlayerPedId();
         teleportToGroundHeight(ped, waypointPosition, true, TP_TO_WAYPOINT_ADDITIONAL_HEIGHT);
 
         return cb;

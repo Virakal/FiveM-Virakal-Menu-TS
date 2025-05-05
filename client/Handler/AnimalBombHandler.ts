@@ -30,7 +30,7 @@ export default class AnimalBombHandler implements Handler {
                 return;
             }
 
-            const playerPed = GetPlayerPed(-1);
+            const playerPed = PlayerPedId();
             const { x, y, z } = getEntityPosition(playerPed);
 
             for (let i = 0; i < this.bombCount; i++) {

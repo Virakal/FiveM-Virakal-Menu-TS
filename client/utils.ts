@@ -70,6 +70,14 @@ export function delay(ms: number): Promise<CitizenTimer> {
     return new Promise(res => setTimeout(res, ms, null));
 }
 
+export function sendChatMessage(message: string, name: string | null = null, multiline: boolean = true, colour: number[] = [255, 255, 255]) {
+    emit('chat:addMessage', {
+        color: colour,
+        multiline,
+        args: [name ?? GetPlayerName(PlayerId()), message],
+    });
+}
+
 export function getEntityPosition(ped: number): Vector3 {
     return Vector3.fromArray(GetEntityCoords(ped, true));
 }

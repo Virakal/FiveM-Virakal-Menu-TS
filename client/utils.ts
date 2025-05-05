@@ -98,6 +98,30 @@ export async function loadModel(model: Model, timeoutMs = 5000): Promise<boolean
     return true;
 }
 
+export async function loadAnimDict(animation: string, timeoutMs = 5000): Promise<boolean> {
+    console.log(`Loading animation ${animation}...`);
+
+    const timeout = Date.now() + timeoutMs;
+    const parts = animation.split('@');
+
+    for (const i of [...Array(parts.length)].keys()) {
+        const dictToLoad = parts.slice(0, i + 1).join('@');
+        console.log(`Loading dict ${dictToLoad}...`);
+        RequestAnimDict(dictToLoad);
+    }
+
+    while (Date.now() < timeout && !HasAnimDictLoaded(animation)) {
+        await delay(1);
+    }
+
+    if (!DoesAnimDictExist(animation) || !HasAnimDictLoaded(animation)) {
+        console.log(`Failed to load animation '${animation}' after ${timeoutMs} milliseconds!`);
+        return false;
+    }
+
+    return true;
+}
+
 export function sendUIMessage(message: object) {
     SendNUIMessage(message);
 }

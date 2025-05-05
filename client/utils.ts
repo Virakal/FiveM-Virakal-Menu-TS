@@ -27,6 +27,10 @@ export class Vector3 {
         return [this.x, this.y, this.z];
     }
 
+    apply<T>(callback: (x: number, y: number, z: number) => T, context: any = null): T {
+        return callback.apply(context ?? this, this.toArray());
+    }
+
     withX(value: number): Vector3 {
         return this.with('x', value);
     }

@@ -3,6 +3,7 @@ import ConfigCommsManager from "ConfigCommsManager";
 import AnimalBombHandler from "Handler/AnimalBombHandler";
 import AnimationHandler from "Handler/AnimationHandler";
 import PoliceHandler from "Handler/PoliceHandler";
+import SettingsHandler from "Handler/SettingsHandler";
 import TeleportHandler from "Handler/TeleportHandler";
 import MenuManager from "MenuManager";
 import { notify, sendUIMessage } from "utils";
@@ -134,6 +135,7 @@ export default class Trainer {
             new AnimalBombHandler(),
             new AnimationHandler(),
             new PoliceHandler(),
+            new SettingsHandler(),
             new TeleportHandler(),
         ];
     }

@@ -1,8 +1,19 @@
-import { getClientIdFromServerId, getEntityPosition, setEntityPosition, notify, sendChatMessage, Vector3 } from 'utils';
+import {
+    getClientIdFromServerId,
+    getEntityPosition,
+    getWaypointPosition,
+    notify,
+    sendChatMessage,
+    setEntityPosition,
+    teleportPedWithVehicle,
+    teleportToGroundHeight,
+    Vector3,
+} from 'utils';
 import type Trainer from '../Trainer';
 import type { Handler } from './Handler';
 
 const TP_TO_PLAYER_ADDITIONAL_HEIGHT = 2.5;
+const TP_TO_WAYPOINT_ADDITIONAL_HEIGHT = 2.5;
 
 export default class TeleportHandler implements Handler {
     trainer: Trainer;
@@ -13,6 +24,7 @@ export default class TeleportHandler implements Handler {
         RegisterNuiCallback('coords', this.onCoords.bind(this));
         RegisterNuiCallback('teleplayer', this.onTelePlayer.bind(this));
         RegisterNuiCallback('teleport', this.onTeleport.bind(this));
+        RegisterNuiCallback('telewaypoint', this.onTeleWaypoint.bind(this));
     }
 
     onCoords(data: NuiData, cb: NuiCallback): NuiCallback {
@@ -37,7 +49,7 @@ export default class TeleportHandler implements Handler {
         let errorMessage: string | null = null;
 
         if (playerServerId === otherServerId) {
-            errorMessage = `Player ${otherServerId} is you!`;
+            // errorMessage = `Player ${otherServerId} is you!`;
         } else if (otherClientId === null) {
             errorMessage = `Player ${otherServerId} was not found!`;
         }
@@ -79,6 +91,22 @@ export default class TeleportHandler implements Handler {
         teleportPedWithVehicle(ped, coords);
 
         cb('ok');
+        return cb;
+    }
+
+    async onTeleWaypoint(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const waypointPosition = getWaypointPosition();
+
+        cb('ok');
+
+        if (!waypointPosition) {
+            notify('~r~No waypoint is set!');
+            return cb;
+        }
+
+        const ped = GetPlayerPed(-1);
+        teleportToGroundHeight(ped, waypointPosition, true, TP_TO_WAYPOINT_ADDITIONAL_HEIGHT);
+
         return cb;
     }
 }

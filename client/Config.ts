@@ -36,6 +36,10 @@ export class Config {
         TriggerEvent('virakal:configChanged', key, value);
     }
 
+    setBool(key: string, value: boolean): void {
+        this.set(key, value ? 'true' : 'false');
+    }
+
     setDefault(key: string, value: string): void {
         this.defaults.set(key, value);
     }

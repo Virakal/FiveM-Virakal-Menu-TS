@@ -116,11 +116,15 @@ export function getEntityPosition(entity: number): Vector3 {
     return Vector3.fromArray(GetEntityCoords(entity, true));
 }
 
-export function setEntityPosition(entity: number, position: Vector3, ragdoll = false, clearArea = false, deadFlag = false): void {
+export function setEntityPosition(entity: number, position: Vector3, ragdoll = false, clearArea = false, deadFlag = false, noOffsets = false): void {
+    if (noOffsets) {
+        SetEntityCoordsNoOffset(entity, position.x, position.y, position.z, true, true, true);
+    } else {
     SetEntityCoords(entity, position.x, position.y, position.z, false, deadFlag, ragdoll, clearArea)
 }
+}
 
-export function teleportPedWithVehicle(ped: number, position: Vector3): void {
+export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets = false): void {
     const vehicle = GetVehiclePedIsIn(ped, false);
     let entity = ped;
 
@@ -129,7 +133,7 @@ export function teleportPedWithVehicle(ped: number, position: Vector3): void {
         entity = vehicle;
     }
 
-    setEntityPosition(entity, position);
+    setEntityPosition(entity, position, false, false, false, noOffsets);
 }
 
 export async function withModel(model: number, callback: (model: number, loaded: boolean) => any) {

@@ -1,6 +1,7 @@
 import getConfig from "Config";
 import AnimalBombHandler from "Handler/AnimalBombHandler";
 import type { Handler } from "Handler/Handler";
+import TeleportHandler from "Handler/TeleportHandler";
 import MenuManager from "MenuManager";
 import { notify, sendUIMessage } from "utils";
 
@@ -127,6 +128,7 @@ export default class Trainer {
     registerHandlers() {
         this.handlers = [
             new AnimalBombHandler(this),
+            new TeleportHandler(this),
         ];
     }
 }

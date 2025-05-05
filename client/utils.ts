@@ -100,8 +100,8 @@ export function getClientIdFromServerId(playerId: number): number | null {
     return null;
 }
 
-export function getEntityPosition(ped: number): Vector3 {
-    return Vector3.fromArray(GetEntityCoords(ped, true));
+export function getEntityPosition(entity: number): Vector3 {
+    return Vector3.fromArray(GetEntityCoords(entity, true));
 }
 
 export async function withModel(model: number, callback: (model: number, loaded: boolean) => any) {

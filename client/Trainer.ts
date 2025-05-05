@@ -1,8 +1,8 @@
-import { Delay } from "client";
 import getConfig from "Config";
 import AnimalBombHandler from "Handler/AnimalBombHandler";
 import type { Handler } from "Handler/Handler";
 import MenuManager from "MenuManager";
+import { notify, sendUIMessage } from "utils";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
 const KEY_TOGGLE_MENU = 168; // F7
@@ -39,34 +39,24 @@ export default class Trainer {
     onLoad() {
         this.registerHandlers();
 
-        RegisterNuiCallback('trainerclose', (data: any, cb: CallableFunction) => this.onTrainerClose(data, cb));
-        RegisterNuiCallback('playsound', (data: any, cb: CallableFunction) => this.onPlaySound(data, cb));
+        RegisterNuiCallback('trainerclose', (data: NuiData, cb: NuiCallback) => this.onTrainerClose(data, cb));
+        RegisterNuiCallback('playsound', (data: NuiData, cb: NuiCallback) => this.onPlaySound(data, cb));
 
         this.maxPlayerStats();
 
-        this.notify('~y~Virakal Menu loaded!');
+        notify('~y~Virakal Menu loaded!');
     }
 
-    onTrainerClose(data: any, callback: CallableFunction) {
+    onTrainerClose(data: NuiData, cb: NuiCallback) {
         this.showTrainer = false;
-        callback('ok');
-        return callback;
+        cb('ok');
+        return cb;
     }
 
-    onPlaySound(data: any, callback: CallableFunction) {
+    onPlaySound(data: NuiData, cb: NuiCallback) {
         PlaySoundFrontend(-1, data.name, 'HUD_FRONTEND_DEFAULT_SOUNDSET', true);
-        callback('ok');
-        return callback;
-    }
-
-    sendUIMessage(message: object) {
-        SendNUIMessage(message);
-    }
-
-    notify(message: string) {
-        SetNotificationTextEntry('STRING');
-        AddTextComponentString(message);
-        DrawNotification(false, false);
+        cb('ok');
+        return cb;
     }
 
     shouldHandleControl(key: number, checkShowTrainer: boolean = true) {
@@ -87,31 +77,31 @@ export default class Trainer {
             this.showTrainer = !this.showTrainer;
 
             if (this.showTrainer) {
-                this.sendUIMessage({ showtrainer: true });
+                sendUIMessage({ showtrainer: true });
             } else {
-                this.sendUIMessage({ hidetrainer: true });
+                sendUIMessage({ hidetrainer: true });
             }
         }
 
         // Enter / Back
         if (this.shouldHandleControl(KEY_SELECT)) {
-            this.sendUIMessage({ trainerenter: true })
+            sendUIMessage({ trainerenter: true })
         } else if (this.shouldHandleControl(KEY_BACK)) {
-            this.sendUIMessage({ trainerback: true })
+            sendUIMessage({ trainerback: true })
         }
 
         // Up / Down
         if (this.shouldHandleControl(KEY_UP)) {
-            this.sendUIMessage({ trainerup: true })
+            sendUIMessage({ trainerup: true })
         } else if (this.shouldHandleControl(KEY_DOWN)) {
-            this.sendUIMessage({ trainerdown: true })
+            sendUIMessage({ trainerdown: true })
         }
 
         // Left / Right
         if (this.shouldHandleControl(KEY_LEFT)) {
-            this.sendUIMessage({ trainerleft: true })
+            sendUIMessage({ trainerleft: true })
         } else if (this.shouldHandleControl(KEY_RIGHT)) {
-            this.sendUIMessage({ trainerright: true })
+            sendUIMessage({ trainerright: true })
         }
     }
 
@@ -138,20 +128,5 @@ export default class Trainer {
         this.handlers = [
             new AnimalBombHandler(this),
         ];
-    }
-
-    async loadModel(model: string | number): Promise<boolean> {
-        // TODO: Add timeout
-        console.log(`Loading model ${model}...`);
-
-        RequestModel(model);
-
-        while (!HasModelLoaded(model)) {
-            await Delay(1);
-        }
-
-        console.log(`Loaded model ${model}...`);
-
-        return true;
     }
 }

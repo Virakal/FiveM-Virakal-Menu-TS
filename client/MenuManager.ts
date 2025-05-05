@@ -1,4 +1,3 @@
-import { Delay } from "client";
 import MainMenuAdder from "Menu/MainMenuAdder";
 import AnimalBombMenuAdder from "Menu/AnimalBombMenuAdder";
 import AnimationMenuAdder from "Menu/AnimationMenuAdder";
@@ -10,6 +9,7 @@ import UIMenuAdder from "Menu/UIMenuAdder";
 import WeaponsMenuAdder from "Menu/WeaponsMenuAdder";
 import type Trainer from "Trainer";
 import type { Config } from "Config";
+import { delay, sendUIMessage } from "utils";
 
 export default class MenuManager {
     menu: MenuMap = new Map();
@@ -47,7 +47,7 @@ export default class MenuManager {
     }
 
     sendMenu(name: string) {
-        this.trainer.sendUIMessage({
+        sendUIMessage({
             setmenu: true,
             menuname: name,
             menudata: this.menu.get(name),
@@ -58,7 +58,7 @@ export default class MenuManager {
         for (const [key, value] of this.menu) {
             console.log(`Adding menu ${key}`);
             this.sendMenu(key);
-            await Delay(10);
+            await delay(10);
         }
     }
 

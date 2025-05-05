@@ -1,4 +1,4 @@
-import { Delay } from 'client';
+import { delay, loadModel, notify } from 'utils';
 import type Trainer from '../Trainer';
 import type { Handler } from './Handler';
 
@@ -24,10 +24,10 @@ export default class AnimalBombHandler implements Handler {
         const height = 20;
         const heightVariance = 5;
 
-        const loaded = await this.trainer.loadModel(model);
+        const loaded = await loadModel(model);
 
         if (!loaded) {
-            this.trainer.notify('~r~Failed to load model for bomb');
+            notify('~r~Failed to load model for bomb');
             return cb;
         }
 
@@ -47,7 +47,7 @@ export default class AnimalBombHandler implements Handler {
             CreatePed(0, model, pos.x, pos.y, pos.z, heading, true, true);
 
             // Stagger spawns
-            await Delay(Math.random() * 15);
+            await delay(Math.random() * 15);
         }
 
         SetModelAsNoLongerNeeded(model);

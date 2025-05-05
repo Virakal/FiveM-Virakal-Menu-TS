@@ -1,4 +1,4 @@
-import { getClientIdFromServerId, getEntityPosition, setEntityPosition, notify, sendChatMessage } from 'utils';
+import { getClientIdFromServerId, getEntityPosition, setEntityPosition, notify, sendChatMessage, Vector3 } from 'utils';
 import type Trainer from '../Trainer';
 import type { Handler } from './Handler';
 
@@ -12,6 +12,7 @@ export default class TeleportHandler implements Handler {
 
         RegisterNuiCallback('coords', this.onCoords.bind(this));
         RegisterNuiCallback('teleplayer', this.onTelePlayer.bind(this));
+        RegisterNuiCallback('teleport', this.onTeleport.bind(this));
     }
 
     onCoords(data: NuiData, cb: NuiCallback): NuiCallback {
@@ -64,6 +65,25 @@ export default class TeleportHandler implements Handler {
         if (otherVehicle && AreAnyVehicleSeatsFree(otherVehicle)) {
             SetPedIntoVehicle(playerPed, otherVehicle, -2);
         }
+
+        cb('ok');
+        return cb;
+    }
+
+    onTeleport(data: NuiData, cb: NuiCallback): NuiCallback {
+        const input = data.action.split(',').map((x: string) => Number.parseInt(x.trim(), 10));
+        const coords = Vector3.fromArray(input);
+
+        const ped = GetPlayerPed(-1);
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        let entity = ped;
+
+        // If we're in the driver's seat of a vehicle, teleport the whole vehicle
+        if (vehicle && GetPedInVehicleSeat(vehicle, -1) === ped) {
+            entity = vehicle;
+        }
+
+        setEntityPosition(entity, coords);
 
         cb('ok');
         return cb;

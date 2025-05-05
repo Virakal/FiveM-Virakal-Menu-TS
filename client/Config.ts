@@ -26,6 +26,12 @@ export class Config {
         this.defaults.set(key, value);
     }
 
+    setDefaults(defaults: { [key: string ]: string }): void {
+        for (const [key, value] of Object.entries(defaults)) {
+            this.defaults.set(key, value);
+        }
+    }
+
     has(key: string, includeDefaults: boolean = false) {
         if (this.store.has(key)) {
             return true;

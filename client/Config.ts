@@ -49,17 +49,8 @@ export class Config {
 
 let instance: Config;
 
-const handler: ProxyHandler<Config> = {
-    get: (target, prop) => target.get(prop as string),
-    set: (target, prop, newVal) => {
-        target.set(prop as string, newVal);
-        return true;
-    }
-}
-
 export function getConfig(): Config {
     if (!instance) {
-        // instance = new Proxy<Config>(new Config(), handler);
         instance = new Config();
     }
 

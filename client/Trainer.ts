@@ -1,4 +1,5 @@
 import getConfig from "Config";
+import ConfigCommsManager from "ConfigCommsManager";
 import AnimalBombHandler from "Handler/AnimalBombHandler";
 import AnimationHandler from "Handler/AnimationHandler";
 import PoliceHandler from "Handler/PoliceHandler";
@@ -40,6 +41,8 @@ export default class Trainer {
 
     onLoad() {
         this.registerHandlers();
+
+        new ConfigCommsManager();
 
         RegisterNuiCallback('trainerclose', this.onTrainerClose.bind(this));
         RegisterNuiCallback('playsound', this.onPlaySound.bind(this));

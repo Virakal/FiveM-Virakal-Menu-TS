@@ -104,6 +104,10 @@ export function getEntityPosition(entity: number): Vector3 {
     return Vector3.fromArray(GetEntityCoords(entity, true));
 }
 
+export function setEntityPosition(entity: number, position: Vector3, ragdoll = false, clearArea = false, deadFlag = false): void {
+    SetEntityCoords(entity, position.x, position.y, position.z, false, deadFlag, ragdoll, clearArea)
+}
+
 export async function withModel(model: number, callback: (model: number, loaded: boolean) => any) {
     async function* context(callback: (model: number, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
         try {

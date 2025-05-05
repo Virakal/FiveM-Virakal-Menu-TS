@@ -78,6 +78,20 @@ export function sendChatMessage(message: string, name: string | null = null, mul
     });
 }
 
+export function getClientIdFromServerId(playerId: number): number | null {
+    const players = GetActivePlayers();
+
+    for (const player of players) {
+        const serverId = GetPlayerServerId(player);
+
+        if (serverId === playerId) {
+            return player;
+        }
+    }
+
+    return null;
+}
+
 export function getEntityPosition(ped: number): Vector3 {
     return Vector3.fromArray(GetEntityCoords(ped, true));
 }

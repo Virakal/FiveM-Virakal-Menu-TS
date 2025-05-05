@@ -1,9 +1,9 @@
 import isPromise from "is-promise";
 
 export class Vector3 {
-    x: number;
-    y: number;
-    z: number;
+    readonly x: number;
+    readonly y: number;
+    readonly z: number;
 
     constructor(x: number, y: number, z: number) {
         this.x = x;

@@ -15,6 +15,20 @@ export class Config {
         return undefined;
     }
 
+    getBool(key: string): boolean | null {
+        const val = this.get(key);
+
+        if (val.toLowerCase() === 'true') {
+            return true;
+        }
+
+        if (val.toLowerCase() === 'false') {
+            return false;
+        }
+
+        return null;
+    }
+
     set(key: string, value: string) {
         this.store.set(key, value);
 

@@ -1,4 +1,7 @@
+import { Delay } from "client";
 import getConfig from "Config";
+import AnimalBombHandler from "Handler/AnimalBombHandler";
+import type { Handler } from "Handler/Handler";
 import MenuManager from "MenuManager";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
@@ -12,6 +15,7 @@ const KEY_RIGHT = 175;
 
 export default class Trainer {
     menuManager: MenuManager;
+    handlers: Handler[] = []
 
     blockInput = false;
     showTrainer = false;
@@ -33,6 +37,8 @@ export default class Trainer {
     }
 
     onLoad() {
+        this.registerHandlers();
+
         RegisterNuiCallback('trainerclose', (data: any, cb: CallableFunction) => this.onTrainerClose(data, cb));
         RegisterNuiCallback('playsound', (data: any, cb: CallableFunction) => this.onPlaySound(data, cb));
 
@@ -126,5 +132,26 @@ export default class Trainer {
         for (const stat of stats) {
             StatSetInt(GetHashKey(stat), 100, true);
         }
+    }
+
+    registerHandlers() {
+        this.handlers = [
+            new AnimalBombHandler(this),
+        ];
+    }
+
+    async loadModel(model: string | number): Promise<boolean> {
+        // TODO: Add timeout
+        console.log(`Loading model ${model}...`);
+
+        RequestModel(model);
+
+        while (!HasModelLoaded(model)) {
+            await Delay(1);
+        }
+
+        console.log(`Loaded model ${model}...`);
+
+        return true;
     }
 }

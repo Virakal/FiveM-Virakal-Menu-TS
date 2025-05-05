@@ -59,6 +59,12 @@ export default class TeleportHandler implements Handler {
         const newPosition = otherPos.withZ(otherPos.z + TP_TO_PLAYER_ADDITIONAL_HEIGHT);
         setEntityPosition(playerPed, newPosition);
 
+        const otherVehicle = GetVehiclePedIsIn(otherClientId, false);
+
+        if (otherVehicle && AreAnyVehicleSeatsFree(otherVehicle)) {
+            SetPedIntoVehicle(playerPed, otherVehicle, -2);
+        }
+
         cb('ok');
         return cb;
     }

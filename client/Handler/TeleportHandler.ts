@@ -9,23 +9,17 @@ import {
     teleportToGroundHeight,
     Vector3,
 } from 'utils';
-import type Trainer from '../Trainer';
-import type { Handler } from './Handler';
 
 const TP_TO_PLAYER_ADDITIONAL_HEIGHT = 2.5;
 const TP_TO_WAYPOINT_ADDITIONAL_HEIGHT = 2.5;
 
 export default class TeleportHandler implements Handler {
-    trainer: Trainer;
-
-    constructor(trainer: Trainer) {
-        this.trainer = trainer;
-
-        RegisterNuiCallback('coords', this.onCoords.bind(this));
-        RegisterNuiCallback('teleplayer', this.onTelePlayer.bind(this));
-        RegisterNuiCallback('teleport', this.onTeleport.bind(this));
-        RegisterNuiCallback('telelastcar', this.onTeleLastCar.bind(this));
-        RegisterNuiCallback('telewaypoint', this.onTeleWaypoint.bind(this));
+    constructor() {
+        RegisterNuiCallback('coords', this.onCoords);
+        RegisterNuiCallback('teleplayer', this.onTelePlayer);
+        RegisterNuiCallback('teleport', this.onTeleport);
+        RegisterNuiCallback('telelastcar', this.onTeleLastCar);
+        RegisterNuiCallback('telewaypoint', this.onTeleWaypoint);
     }
 
     onCoords(data: NuiData, cb: NuiCallback): NuiCallback {

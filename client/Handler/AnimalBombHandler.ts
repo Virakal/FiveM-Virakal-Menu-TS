@@ -1,15 +1,9 @@
 import { delay, getEntityPosition, notify, Vector3, withModel } from 'utils';
-import type Trainer from '../Trainer';
-import type { Handler } from './Handler';
 
 export default class AnimalBombHandler implements Handler {
-    trainer: Trainer;
-
     bombCount = 10;
 
-    constructor(trainer: Trainer) {
-        this.trainer = trainer;
-
+    constructor() {
         RegisterNuiCallback('anibomb', this.onAniBomb.bind(this));
     }
 

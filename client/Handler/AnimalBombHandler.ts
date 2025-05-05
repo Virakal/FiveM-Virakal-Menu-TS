@@ -1,4 +1,4 @@
-import { delay, getEntityPosition, notify, Vector3, withModel } from 'utils';
+import { delay, getEntityPosition, notify, withModel } from 'utils';
 
 export default class AnimalBombHandler implements Handler {
     bombCount = 10;

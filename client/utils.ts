@@ -137,3 +137,20 @@ export async function withModel(model: number, callback: (model: number, loaded:
 
     return await context(callback).next();
 }
+
+export function getWaypoint(): number | null {
+    const blipType = 8;
+    const blip = GetFirstBlipInfoId(blipType);
+    return blip > 0 ? blip : null;
+}
+
+export function getWaypointPosition(): Vector3 | null {
+    const waypoint = getWaypoint();
+
+    if (!waypoint) {
+        return null;
+    }
+
+    const coords = GetBlipCoords(waypoint);
+    return Vector3.fromArray(coords);
+}

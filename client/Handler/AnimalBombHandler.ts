@@ -10,7 +10,7 @@ export default class AnimalBombHandler implements Handler {
     constructor(trainer: Trainer) {
         this.trainer = trainer;
 
-        RegisterNuiCallback('anibomb', (data: NuiData, cb: NuiCallback) => this.onAniBomb(data, cb));
+        RegisterNuiCallback('anibomb', this.onAniBomb.bind(this));
     }
 
     async onAniBomb(data: NuiData, cb: NuiCallback) {

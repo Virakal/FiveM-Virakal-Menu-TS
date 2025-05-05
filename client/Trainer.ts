@@ -39,8 +39,8 @@ export default class Trainer {
     onLoad() {
         this.registerHandlers();
 
-        RegisterNuiCallback('trainerclose', (data: NuiData, cb: NuiCallback) => this.onTrainerClose(data, cb));
-        RegisterNuiCallback('playsound', (data: NuiData, cb: NuiCallback) => this.onPlaySound(data, cb));
+        RegisterNuiCallback('trainerclose', this.onTrainerClose.bind(this));
+        RegisterNuiCallback('playsound', this.onPlaySound.bind(this));
 
         this.maxPlayerStats();
 

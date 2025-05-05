@@ -57,7 +57,7 @@ export default class TeleportHandler implements Handler {
 
         notify(`Teleporting to ${otherName} (Player ${otherServerId})...`);
 
-        const newPosition = otherPos.withZ(otherPos.z + TP_TO_PLAYER_ADDITIONAL_HEIGHT);
+        const newPosition = otherPos.withOffsetZ(TP_TO_PLAYER_ADDITIONAL_HEIGHT);
         setEntityPosition(playerPed, newPosition);
 
         const otherVehicle = GetVehiclePedIsIn(otherClientId, false);

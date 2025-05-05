@@ -43,6 +43,18 @@ export class Vector3 {
         return this.with('z', value);
     }
 
+    withOffsetX(offset: number): Vector3 {
+        return this.withX(this.x + offset);
+    }
+
+    withOffsetY(offset: number): Vector3 {
+        return this.withY(this.y + offset);
+    }
+
+    withOffsetZ(offset: number): Vector3 {
+        return this.withZ(this.z + offset);
+    }
+
     private with(key: string, value: number): Vector3 {
         const args = ['x', 'y', 'z'].map((k) => key.toLowerCase() === k ? value : this[k as keyof this]);
         return Vector3.fromArray(args as number[]);

@@ -24,6 +24,7 @@ export default class TeleportHandler implements Handler {
         RegisterNuiCallback('coords', this.onCoords.bind(this));
         RegisterNuiCallback('teleplayer', this.onTelePlayer.bind(this));
         RegisterNuiCallback('teleport', this.onTeleport.bind(this));
+        RegisterNuiCallback('telelastcar', this.onTeleLastCar.bind(this));
         RegisterNuiCallback('telewaypoint', this.onTeleWaypoint.bind(this));
     }
 
@@ -76,6 +77,30 @@ export default class TeleportHandler implements Handler {
 
         if (otherVehicle && AreAnyVehicleSeatsFree(otherVehicle)) {
             SetPedIntoVehicle(playerPed, otherVehicle, -2);
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onTeleLastCar(data: NuiData, cb: NuiCallback): NuiCallback {
+        const ped = PlayerPedId();
+        const currentVehicle = GetVehiclePedIsIn(ped, false);
+        const lastVehicle = GetPlayersLastVehicle();
+        let errorMessage;
+
+        if (currentVehicle) {
+            errorMessage = 'You can\'t teleport to a new vehicle while you\'re already in a vehicle.';
+        } else if (!lastVehicle) {
+            errorMessage = 'Last vehicle not found.';
+        } else if (!AreAnyVehicleSeatsFree(lastVehicle)) {
+            errorMessage = 'Last vehicle has no free seats.';
+        } else {
+            SetPedIntoVehicle(ped, lastVehicle, -2);
+        }
+
+        if (errorMessage) {
+            notify(`~r~${errorMessage}`);
         }
 
         cb('ok');

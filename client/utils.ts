@@ -77,14 +77,20 @@ export function notify(message: string, isImportant = false, showOnInfoTab = fal
     DrawNotification(isImportant, showOnInfoTab);
 }
 
-export async function loadModel(model: Model): Promise<boolean> {
-    // TODO: Add timeout
+export async function loadModel(model: Model, timeoutMs = 5000): Promise<boolean> {
     console.log(`Loading model ${model}...`);
+
+    const timeout = Date.now() + timeoutMs;
 
     RequestModel(model);
 
     while (!HasModelLoaded(model)) {
         await delay(1);
+
+        if (Date.now() > timeout) {
+            console.log(`Failed to load model ${model} after ${timeoutMs} milliseconds!`);
+            return false;
+        }
     }
 
     console.log(`Loaded model ${model}...`);
@@ -146,10 +152,10 @@ export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets
     setEntityPosition(entity, position, false, false, false, noOffsets);
 }
 
-export async function withModel(model: Model, callback: (model: Model, loaded: boolean) => any) {
+export async function withModel(model: Model, callback: (model: Model, loaded: boolean) => any, timeoutMs: number = 5000) {
     async function* context(callback: (model: Model, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
         try {
-            const loaded = await loadModel(model);
+            const loaded = await loadModel(model, timeoutMs);
 
             if (isPromise(callback)) {
                 yield setImmediate(async () => await callback(model, loaded));

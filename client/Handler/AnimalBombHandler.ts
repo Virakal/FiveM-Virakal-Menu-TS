@@ -7,7 +7,7 @@ export default class AnimalBombHandler implements Handler {
         RegisterNuiCallback('anibomb', this.onAniBomb.bind(this));
     }
 
-    async onAniBomb(data: NuiData, cb: NuiCallback) {
+    async onAniBomb(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
         // Return early and do the rest async
         cb('ok');
 

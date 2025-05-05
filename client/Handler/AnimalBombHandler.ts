@@ -1,4 +1,4 @@
-import { delay, loadModel, notify } from 'utils';
+import { delay, getEntityPosition, loadModel, notify, Vector3 } from 'utils';
 import type Trainer from '../Trainer';
 import type { Handler } from './Handler';
 
@@ -32,17 +32,18 @@ export default class AnimalBombHandler implements Handler {
         }
 
         const playerPed = GetPlayerPed(-1);
-        const [x, y, z] = GetEntityCoords(playerPed, false);
+        const { x, y, z } = getEntityPosition(playerPed);
 
         for (let i = 0; i < this.bombCount; i++) {
             const heading = 360 * Math.random();
-            const pos = {
+
+            const pos = Vector3.fromObject({
                 x: x + (halfVariance - (Math.random() * variance)),
                 y: y + (halfVariance - (Math.random() * variance)),
                 z: z + (height + (Math.random() * heightVariance)),
-            }
+            });
 
-            console.log(`Dropping animal ${i + 1} at ${pos.x}, ${pos.y}, ${pos.z}, heading ${heading}`);
+            console.log(`Dropping animal ${i + 1} at ${pos}, heading ${heading.toFixed(2)}`);
 
             CreatePed(0, model, pos.x, pos.y, pos.z, heading, true, true);
 

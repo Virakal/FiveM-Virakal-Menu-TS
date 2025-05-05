@@ -1,3 +1,44 @@
+export class Vector3 {
+    x: number;
+    y: number;
+    z: number;
+
+    constructor(x: number, y: number, z: number) {
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
+    static fromArray(args: number[]): Vector3 {
+        return new Vector3(args[0], args[1], args[2]);
+    }
+
+    static fromObject(obj: { x: number, y: number, z: number }): Vector3 {
+        return new Vector3(obj.x, obj.y, obj.z);
+    }
+
+    toString(floatPrecision: number = 2): string {
+        return [this.x, this.y, this.z].map((n) => n.toFixed(floatPrecision)).join(', ');
+    }
+
+    withX(value: number): Vector3 {
+        return this.with('x', value);
+    }
+
+    withY(value: number): Vector3 {
+        return this.with('y', value);
+    }
+
+    withZ(value: number): Vector3 {
+        return this.with('z', value);
+    }
+
+    private with(key: string, value: number): Vector3 {
+        const args = ['x', 'y', 'z'].map((k) => key.toLowerCase() === k ? value : this[k as keyof this]);
+        return Vector3.fromArray(args as number[]);
+    }
+}
+
 export function notify(message: string, isImportant = false, showOnInfoTab = false) {
     SetNotificationTextEntry('STRING');
     AddTextComponentString(message);
@@ -25,4 +66,8 @@ export function sendUIMessage(message: object) {
 
 export function delay(ms: number): Promise<CitizenTimer> {
     return new Promise(res => setTimeout(res, ms, null));
+}
+
+export function getEntityPosition(ped: number): Vector3 {
+    return Vector3.fromArray(GetEntityCoords(ped, true));
 }

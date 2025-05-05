@@ -47,13 +47,13 @@ export default class Trainer {
         notify('~y~Virakal Menu loaded!');
     }
 
-    onTrainerClose(data: NuiData, cb: NuiCallback) {
+    onTrainerClose(data: NuiData, cb: NuiCallback): NuiCallback {
         this.showTrainer = false;
         cb('ok');
         return cb;
     }
 
-    onPlaySound(data: NuiData, cb: NuiCallback) {
+    onPlaySound(data: NuiData, cb: NuiCallback): NuiCallback {
         PlaySoundFrontend(-1, data.name, 'HUD_FRONTEND_DEFAULT_SOUNDSET', true);
         cb('ok');
         return cb;

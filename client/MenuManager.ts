@@ -56,7 +56,6 @@ export default class MenuManager {
 
     async sendAllMenus() {
         for (const [key, value] of this.menu) {
-            console.log(`Adding menu ${key}`);
             this.sendMenu(key);
             await delay(10);
         }

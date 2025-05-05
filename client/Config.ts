@@ -1,6 +1,6 @@
 export class Config {
-    private store: Map<string, string> = new Map();
-    private defaults: Map<string, string> = new Map();
+    private store = new Map<string, string>();
+    private defaults = new Map<string, string>();
 
     get(key: string): string | null {
         if (this.store.has(key)) {
@@ -29,7 +29,7 @@ export class Config {
         return null;
     }
 
-    set(key: string, value: string) {
+    set(key: string, value: string): void {
         this.store.set(key, value);
 
         TriggerServerEvent('virakal:setConfig', this.store);
@@ -50,7 +50,7 @@ export class Config {
         }
     }
 
-    has(key: string, includeDefaults: boolean = false) {
+    has(key: string, includeDefaults: boolean = false): boolean {
         if (this.store.has(key)) {
             return true;
         }
@@ -66,7 +66,7 @@ export class Config {
         return JSON.stringify(this.store);
     }
 
-    fromJson(json: string) {
+    fromJson(json: string): void {
         this.store = new Map(Object.entries(JSON.parse(json)));
     }
 }

@@ -59,7 +59,7 @@ export class Config {
     }
 
     toJson(): string {
-        return JSON.stringify(this.store);
+        return JSON.stringify(Object.fromEntries(this.store));
     }
 
     fromJson(json: string): void {

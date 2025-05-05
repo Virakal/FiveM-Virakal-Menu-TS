@@ -120,8 +120,8 @@ export function setEntityPosition(entity: number, position: Vector3, ragdoll = f
     if (noOffsets) {
         SetEntityCoordsNoOffset(entity, position.x, position.y, position.z, true, true, true);
     } else {
-    SetEntityCoords(entity, position.x, position.y, position.z, false, deadFlag, ragdoll, clearArea)
-}
+        SetEntityCoords(entity, position.x, position.y, position.z, false, deadFlag, ragdoll, clearArea)
+    }
 }
 
 export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets = false): void {
@@ -169,4 +169,40 @@ export function getWaypointPosition(): Vector3 | null {
 
     const coords = GetBlipCoords(waypoint);
     return Vector3.fromArray(coords);
+}
+
+export async function teleportToGroundHeight(ped: number, position: Vector3, includeWater = true, additionalHeight = 2.5): Promise<void> {
+    const testHeights = [
+        100,
+        150,
+        50,
+        0,
+        200,
+        250,
+        300,
+        350,
+        400,
+        450,
+        500,
+        550,
+        600,
+        650,
+        700,
+        750,
+        800,
+    ];
+
+    for (const height of testHeights) {
+        const testPosition = position.withZ(height);
+        teleportPedWithVehicle(ped, position, true);
+
+        const [found, ground] = GetGroundZFor_3dCoord(testPosition.x, testPosition.y, testPosition.z, includeWater);
+
+        if (found) {
+            teleportPedWithVehicle(ped, position.withZ(ground + additionalHeight));
+            return;
+        }
+
+        await delay(100);
+    }
 }

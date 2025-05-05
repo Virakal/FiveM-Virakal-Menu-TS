@@ -25,7 +25,6 @@ export default class AnimalBombHandler implements Handler {
         const heightVariance = 5;
 
         await withModel(model, async (model, loaded) => {
-            console.log(this)
             if (!loaded) {
                 notify('~r~Failed to load model for bomb');
                 return;

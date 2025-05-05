@@ -136,8 +136,8 @@ export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets
     setEntityPosition(entity, position, false, false, false, noOffsets);
 }
 
-export async function withModel(model: number, callback: (model: number, loaded: boolean) => any) {
-    async function* context(callback: (model: number, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
+export async function withModel(model: string | number, callback: (model: string | number, loaded: boolean) => any) {
+    async function* context(callback: (model: string | number, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
         try {
             const loaded = await loadModel(model);
 

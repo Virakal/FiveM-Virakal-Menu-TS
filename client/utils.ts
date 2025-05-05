@@ -23,6 +23,10 @@ export class Vector3 {
         return [this.x, this.y, this.z].map((n) => n.toFixed(floatPrecision)).join(', ');
     }
 
+    toArray(): number[] {
+        return [this.x, this.y, this.z];
+    }
+
     withX(value: number): Vector3 {
         return this.with('x', value);
     }

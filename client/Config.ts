@@ -63,7 +63,11 @@ export class Config {
     }
 
     fromJson(json: string): void {
-        this.store = new Map(Object.entries(JSON.parse(json)));
+        this.fromObject(JSON.parse(json));
+    }
+
+    fromObject(obj: { [key: string]: string }): void {
+        this.store = new Map(Object.entries(obj));
     }
 }
 

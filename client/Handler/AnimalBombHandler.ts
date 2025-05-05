@@ -25,20 +25,20 @@ export default class AnimalBombHandler implements Handler {
             }
 
             const playerPed = PlayerPedId();
-            const { x, y, z } = getEntityPosition(playerPed);
+            const position = getEntityPosition(playerPed);
 
             for (let i = 0; i < this.bombCount; i++) {
                 const heading = 360 * Math.random();
 
-                const pos = Vector3.fromObject({
-                    x: x + (halfVariance - (Math.random() * variance)),
-                    y: y + (halfVariance - (Math.random() * variance)),
-                    z: z + (height + (Math.random() * heightVariance)),
-                });
+                const spawnPosition = position.withOffsets(
+                    halfVariance - (Math.random() * variance),
+                    halfVariance - (Math.random() * variance),
+                    height + (Math.random() * heightVariance),
+                );
 
-                console.log(`Dropping animal ${i + 1} at ${pos}, heading ${heading.toFixed(2)}`);
+                console.log(`Dropping animal ${i + 1} at ${spawnPosition}, heading ${heading.toFixed(2)}`);
 
-                CreatePed(0, model, pos.x, pos.y, pos.z, heading, true, true);
+                CreatePed(0, model, spawnPosition.x, spawnPosition.y, spawnPosition.z, heading, true, true);
 
                 // Stagger spawns
                 await delay(Math.random() * 15);

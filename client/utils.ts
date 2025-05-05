@@ -108,6 +108,18 @@ export function setEntityPosition(entity: number, position: Vector3, ragdoll = f
     SetEntityCoords(entity, position.x, position.y, position.z, false, deadFlag, ragdoll, clearArea)
 }
 
+export function teleportPedWithVehicle(ped: number, position: Vector3): void {
+    const vehicle = GetVehiclePedIsIn(ped, false);
+    let entity = ped;
+
+    // If we're in the driver's seat of a vehicle, teleport the whole vehicle
+    if (vehicle && GetPedInVehicleSeat(vehicle, -1) === ped) {
+        entity = vehicle;
+    }
+
+    setEntityPosition(entity, position);
+}
+
 export async function withModel(model: number, callback: (model: number, loaded: boolean) => any) {
     async function* context(callback: (model: number, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
         try {

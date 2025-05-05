@@ -75,15 +75,8 @@ export default class TeleportHandler implements Handler {
         const coords = Vector3.fromArray(input);
 
         const ped = GetPlayerPed(-1);
-        const vehicle = GetVehiclePedIsIn(ped, false);
-        let entity = ped;
 
-        // If we're in the driver's seat of a vehicle, teleport the whole vehicle
-        if (vehicle && GetPedInVehicleSeat(vehicle, -1) === ped) {
-            entity = vehicle;
-        }
-
-        setEntityPosition(entity, coords);
+        teleportPedWithVehicle(ped, coords);
 
         cb('ok');
         return cb;

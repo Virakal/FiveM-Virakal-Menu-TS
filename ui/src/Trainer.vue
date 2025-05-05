@@ -359,8 +359,8 @@
         justify-content: center;
         font-size: 25px;
         height: 75px;
-        background: rgba(255, 64, 64, 0.8);
-        text-shadow: 0 0 3px #e04040;
+        background: rgba(29, 123, 185, 0.8);
+        text-shadow: 0 0 3px #340ba5;
     }
 
     .traineroption.trainertitle:after {

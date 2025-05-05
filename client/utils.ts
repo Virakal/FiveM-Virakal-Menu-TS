@@ -44,15 +44,23 @@ export class Vector3 {
     }
 
     withOffsetX(offset: number): Vector3 {
-        return this.withX(this.x + offset);
+        return this.withOffsets(offset, 0, 0);
     }
 
     withOffsetY(offset: number): Vector3 {
-        return this.withY(this.y + offset);
+        return this.withOffsets(0, offset, 0);
     }
 
     withOffsetZ(offset: number): Vector3 {
-        return this.withZ(this.z + offset);
+        return this.withOffsets(0, 0, offset);
+    }
+
+    withOffsets(x: number | number[], y: number, z: number) {
+        if (Array.isArray(x)) {
+            this.withOffsets.apply(this, x);
+        }
+
+        return new Vector3(this.x + (x as number), this.y + y, this.z + z);
     }
 
     private with(key: string, value: number): Vector3 {

@@ -35,9 +35,7 @@ export default class MenuManager {
         ];
 
         on('virakal:allMenusSent', () => this.onMenusSent())
-        // on('virakal:configFetched', () => this.onConfigFetched())
-        // TODO: Swap this when config storage is implemented
-        setTimeout(() => this.onConfigFetched(), 100);
+        on('virakal:configFetched', () => this.onConfigFetched())
     }
 
     onConfigFetched() {

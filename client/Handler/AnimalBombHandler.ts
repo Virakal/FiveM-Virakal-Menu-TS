@@ -1,4 +1,4 @@
-import { delay, getEntityPosition, loadModel, notify, Vector3 } from 'utils';
+import { delay, getEntityPosition, notify, Vector3, withModel } from 'utils';
 import type Trainer from '../Trainer';
 import type { Handler } from './Handler';
 
@@ -24,34 +24,34 @@ export default class AnimalBombHandler implements Handler {
         const height = 20;
         const heightVariance = 5;
 
-        const loaded = await loadModel(model);
+        await withModel(model, async (model, loaded) => {
+            console.log(this)
+            if (!loaded) {
+                notify('~r~Failed to load model for bomb');
+                return;
+            }
 
-        if (!loaded) {
-            notify('~r~Failed to load model for bomb');
-            return cb;
-        }
+            const playerPed = GetPlayerPed(-1);
+            const { x, y, z } = getEntityPosition(playerPed);
 
-        const playerPed = GetPlayerPed(-1);
-        const { x, y, z } = getEntityPosition(playerPed);
+            for (let i = 0; i < this.bombCount; i++) {
+                const heading = 360 * Math.random();
 
-        for (let i = 0; i < this.bombCount; i++) {
-            const heading = 360 * Math.random();
+                const pos = Vector3.fromObject({
+                    x: x + (halfVariance - (Math.random() * variance)),
+                    y: y + (halfVariance - (Math.random() * variance)),
+                    z: z + (height + (Math.random() * heightVariance)),
+                });
 
-            const pos = Vector3.fromObject({
-                x: x + (halfVariance - (Math.random() * variance)),
-                y: y + (halfVariance - (Math.random() * variance)),
-                z: z + (height + (Math.random() * heightVariance)),
-            });
+                console.log(`Dropping animal ${i + 1} at ${pos}, heading ${heading.toFixed(2)}`);
 
-            console.log(`Dropping animal ${i + 1} at ${pos}, heading ${heading.toFixed(2)}`);
+                CreatePed(0, model, pos.x, pos.y, pos.z, heading, true, true);
 
-            CreatePed(0, model, pos.x, pos.y, pos.z, heading, true, true);
+                // Stagger spawns
+                await delay(Math.random() * 15);
+            }
+        })
 
-            // Stagger spawns
-            await delay(Math.random() * 15);
-        }
-
-        SetModelAsNoLongerNeeded(model);
         return cb;
     }
 }

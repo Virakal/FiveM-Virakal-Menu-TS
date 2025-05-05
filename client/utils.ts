@@ -71,3 +71,21 @@ export function delay(ms: number): Promise<CitizenTimer> {
 export function getEntityPosition(ped: number): Vector3 {
     return Vector3.fromArray(GetEntityCoords(ped, true));
 }
+
+export async function withModel(model: number, callback: (model: number, loaded: boolean) => any) {
+    async function* context(callback: (model: number, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
+        try {
+            const loaded = await loadModel(model);
+
+            if ('then' in callback) {
+                yield setImmediate(async () => await callback(model, loaded));
+            } else {
+                yield setImmediate(() => callback(model, loaded));
+            }
+        } finally {
+            SetModelAsNoLongerNeeded(model);
+        }
+    }
+
+    return await context(callback).next();
+}

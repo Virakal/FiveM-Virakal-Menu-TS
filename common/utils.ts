@@ -2,6 +2,9 @@ import isPromise from "is-promise";
 
 type Model = number | string;
 
+export const RUNNING_ON_SERVER = IsDuplicityVersion();
+export const RUNNING_ON_CLIENT = !RUNNING_ON_SERVER;
+
 export class Vector3 {
     readonly x: number;
     readonly y: number;

@@ -1,14 +1,8 @@
-import { Config } from "Config";
-import WeatherList from "Data/WeatherList";
-import { CLEAN_STATION_COUNT, getRadioStationName } from "Data/RadioStation";
+import WeatherList from "@shared/Data/WeatherList";
+import { CLEAN_STATION_COUNT, getRadioStationName } from "@shared/Data/RadioStation";
+import getConfig from "Config";
 
 export default class SettingsMenuAdder implements MenuAdder {
-    config: Config;
-
-    constructor(config: Config) {
-        this.config = config;
-    }
-
     add(menus: MenuMap) {
         menus.set('settings', [
             {
@@ -33,12 +27,13 @@ export default class SettingsMenuAdder implements MenuAdder {
     }
 
     getDefaultRadioMenu(): MenuItem[] {
+        const config = getConfig();
         const menu: MenuItem[] = [];
         let defaultText = 'No Default';
         let currentDefaultStation = -1;
 
-        if (this.config.has('DefaultRadioStation')) {
-            currentDefaultStation = Number.parseInt(this.config.get('DefaultRadioStation'), 10) ?? -1;
+        if (config.has('DefaultRadioStation')) {
+            currentDefaultStation = Number.parseInt(config.get('DefaultRadioStation'), 10) ?? -1;
         }
 
         if (currentDefaultStation === -1) {

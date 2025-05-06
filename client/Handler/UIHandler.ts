@@ -1,6 +1,6 @@
 import getConfig from "Config";
 import Trainer from "Trainer";
-import { delay } from "utils";
+import { delay } from "@shared/utils";
 
 export default class UIHandler implements Handler {
     // Z / D-pad Down

@@ -1,14 +1,8 @@
-import { Config } from "Config";
-import PedModelList, { PedModelType } from "Data/PedModelList";
-import PedModelListItem from "Data/PedModelListItem";
+import getConfig from "Config";
+import PedModelList, { PedModelType } from "@shared/Data/PedModelList";
+import PedModelListItem from "@shared/Data/PedModelListItem";
 
 export default class PlayerMenuAdder implements MenuAdder {
-    config: Config;
-
-    constructor(config: Config) {
-        this.config = config;
-    }
-
     add(menus: MenuMap) {
         menus.set('player', [
             {
@@ -99,11 +93,12 @@ export default class PlayerMenuAdder implements MenuAdder {
     }
 
     getRecentSkinMenu(): MenuItem[] {
+        const config = getConfig();
         const menu: MenuItem[] = [];
         const actionPrefix = 'playerskin';
 
-        if (this.config.has('RecentSkins')) {
-            const recentSkins = this.parseRecentSkins(this.config.get('RecentSkins'));
+        if (config.has('RecentSkins')) {
+            const recentSkins = this.parseRecentSkins(config.get('RecentSkins'));
 
             for (const modelHash of recentSkins) {
                 const info = PedModelList.getByHash(modelHash);

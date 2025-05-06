@@ -1,5 +1,5 @@
-import PedModelList from "Data/PedModelList";
-import { PedModelType } from "Data/PedModelList";
+import PedModelList from "@shared/Data/PedModelList";
+import { PedModelType } from "@shared/Data/PedModelList";
 
 export default class AnimalBombMenuAdder implements MenuAdder {
     add(menus: MenuMap) {

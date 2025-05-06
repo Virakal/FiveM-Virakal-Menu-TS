@@ -1,4 +1,4 @@
-import PedModelListItem from "Data/PedModelListItem";
+import PedModelListItem from "./PedModelListItem";
 
 export enum PedModelType {
     Human,

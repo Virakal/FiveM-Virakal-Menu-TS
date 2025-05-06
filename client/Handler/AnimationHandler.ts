@@ -1,4 +1,4 @@
-import { loadAnimDict } from "utils";
+import { loadAnimDict } from "@shared/utils";
 
 export default class AnimationHandler implements Handler {
     constructor() {

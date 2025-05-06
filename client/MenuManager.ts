@@ -7,28 +7,20 @@ import SettingsMenuAdder from "Menu/SettingsMenuAdder";
 import TeleportMenuAdder from "Menu/TeleportMenuAdder";
 import UIMenuAdder from "Menu/UIMenuAdder";
 import WeaponsMenuAdder from "Menu/WeaponsMenuAdder";
-import type Trainer from "Trainer";
-import type { Config } from "Config";
-import { delay, sendUIMessage } from "utils";
+import { delay, sendUIMessage } from "@shared/utils";
 
 export default class MenuManager {
     menu: MenuMap = new Map();
     menuAdders: MenuAdder[] = [];
 
-    private trainer: Trainer;
-    private config;
-
-    constructor(trainer: Trainer, config: Config) {
-        this.trainer = trainer;
-        this.config = config;
-
+    constructor() {
         this.menuAdders = [
             new AnimalBombMenuAdder(),
             new AnimationMenuAdder(),
             new MainMenuAdder(),
-            new PlayerMenuAdder(config),
+            new PlayerMenuAdder(),
             new PoliceMenuAdder(),
-            new SettingsMenuAdder(config),
+            new SettingsMenuAdder(),
             new TeleportMenuAdder(),
             new UIMenuAdder(),
             new WeaponsMenuAdder(),

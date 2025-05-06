@@ -1,5 +1,5 @@
 import getConfig from "Config";
-import { delay, notify } from "utils";
+import { delay, notify } from "@shared/utils";
 
 export default class PoliceHandler implements Handler {
     private config;

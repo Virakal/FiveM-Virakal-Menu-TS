@@ -7,7 +7,7 @@ import SettingsHandler from "Handler/SettingsHandler";
 import TeleportHandler from "Handler/TeleportHandler";
 import UIHandler from "Handler/UIHandler";
 import MenuManager from "MenuManager";
-import { notify, sendUIMessage } from "utils";
+import { notify, sendUIMessage } from "@shared/utils";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
 const KEY_TOGGLE_MENU = 168; // F7
@@ -24,18 +24,9 @@ export default class Trainer {
 
     blockInput = false;
     showTrainer = false;
-    _config = getConfig();
-
-    get config() {
-        return this._config;
-    }
-
-    private set config(config) {
-        this._config = config;
-    }
 
     constructor() {
-        this.menuManager = new MenuManager(this, this.config);
+        this.menuManager = new MenuManager();
 
         setTick(() => this.handleMenuKeys());
         setImmediate(() => this.onLoad());

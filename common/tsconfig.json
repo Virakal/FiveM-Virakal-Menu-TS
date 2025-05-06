@@ -14,12 +14,5 @@
     "resolveJsonModule": true,
     "esModuleInterop": true,
     "noEmit": true,
-    "paths": {
-      "@shared/*": ["../common/*"],
-    }
-  },
-  "include": [
-    "./",
-    "../common"
-  ]
+  }
 }

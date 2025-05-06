@@ -96,7 +96,7 @@ export default class PlayerHandler {
         notify(`~g~Changed player skin to "${model}".`);
     }
 
-    async onVirakalSkinChange(model: number) {
+    async onVirakalSkinChange(modelName: string) {
         const ped = PlayerPedId();
 
         await delay(0);
@@ -104,7 +104,7 @@ export default class PlayerHandler {
         if (!IsPedHuman(ped)) {
             // This fixes crashes on some animal skins
             SetPedComponentVariation(ped, 0, 0, 0, 0);
-        } else if (model === GetHashKey('mp_m_freemode_01')) {
+        } else if (modelName === 'mp_m_freemode_01') {
             // Generic MP Male setup
             SetPedHeadBlendData(ped, 4, 4, 0, 4, 4, 0, 1.0, 1.0, 0.0, false);
             SetPedComponentVariation(ped, 2, 2, 4, 0);
@@ -114,7 +114,7 @@ export default class PlayerHandler {
             SetPedComponentVariation(ped, 6, 25, 0, 0);
             SetPedComponentVariation(ped, 8, 56, 1, 0);
             SetPedComponentVariation(ped, 11, 49, 0, 0);
-        } else if (model === GetHashKey('mp_f_freemode_01')) {
+        } else if (modelName === 'mp_f_freemode_01') {
             // Generic MP Female setup
             SetPedHeadBlendData(ped, 25, 25, 0, 25, 25, 0, 1.0, 1.0, 0.0, false);
             SetPedComponentVariation(ped, 2, 13, 3, 0);

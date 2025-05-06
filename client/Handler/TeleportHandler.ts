@@ -8,7 +8,7 @@ import {
     teleportPedWithVehicle,
     teleportToGroundHeight,
     Vector3,
-} from '@shared/utils';
+} from '@common/utils';
 
 const TP_TO_PLAYER_ADDITIONAL_HEIGHT = 2.5;
 const TP_TO_WAYPOINT_ADDITIONAL_HEIGHT = 2.5;

@@ -15,7 +15,7 @@
     "esModuleInterop": true,
     "noEmit": true,
     "paths": {
-      "@shared/*": ["../common/*"],
+      "@common/*": ["../common/*"],
     }
   },
   "include": [

@@ -1,5 +1,5 @@
-import getConfig from '@shared/Config';
-import { delay, sendUIMessage } from "@shared/utils";
+import getConfig from '@common/Config';
+import { delay, sendUIMessage } from "@common/utils";
 
 export default class ConfigCommsManager {
     constructor() {

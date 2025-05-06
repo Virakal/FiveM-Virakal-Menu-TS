@@ -7,7 +7,7 @@ import SettingsMenuAdder from "Menu/SettingsMenuAdder";
 import TeleportMenuAdder from "Menu/TeleportMenuAdder";
 import UIMenuAdder from "Menu/UIMenuAdder";
 import WeaponsMenuAdder from "Menu/WeaponsMenuAdder";
-import { delay, sendUIMessage } from "@shared/utils";
+import { delay, sendUIMessage } from "@common/utils";
 
 export default class MenuManager {
     menu: MenuMap = new Map();

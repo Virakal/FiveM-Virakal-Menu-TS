@@ -1,4 +1,4 @@
-import getConfig from '@shared/Config';
+import getConfig from '@common/Config';
 import ConfigCommsManager from "ConfigCommsManager";
 import AnimalBombHandler from "Handler/AnimalBombHandler";
 import AnimationHandler from "Handler/AnimationHandler";
@@ -7,7 +7,7 @@ import SettingsHandler from "Handler/SettingsHandler";
 import TeleportHandler from "Handler/TeleportHandler";
 import UIHandler from "Handler/UIHandler";
 import MenuManager from "MenuManager";
-import { notify, sendUIMessage } from "@shared/utils";
+import { notify, sendUIMessage } from "@common/utils";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
 const KEY_TOGGLE_MENU = 168; // F7

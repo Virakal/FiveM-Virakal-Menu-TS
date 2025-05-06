@@ -1,6 +1,6 @@
-import WeatherList from "@shared/Data/WeatherList";
-import { CLEAN_STATION_COUNT, getRadioStationName } from "@shared/Data/RadioStation";
-import getConfig from '@shared/Config';
+import WeatherList from "@common/Data/WeatherList";
+import { CLEAN_STATION_COUNT, getRadioStationName } from "@common/Data/RadioStation";
+import getConfig from '@common/Config';
 
 export default class SettingsMenuAdder implements MenuAdder {
     add(menus: MenuMap) {

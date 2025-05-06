@@ -1,6 +1,6 @@
-import getConfig from '@shared/Config';
-import PedModelList, { PedModelType } from "@shared/Data/PedModelList";
-import PedModelListItem from "@shared/Data/PedModelListItem";
+import getConfig from '@common/Config';
+import PedModelList, { PedModelType } from "@common/Data/PedModelList";
+import PedModelListItem from "@common/Data/PedModelListItem";
 
 export default class PlayerMenuAdder implements MenuAdder {
     add(menus: MenuMap) {

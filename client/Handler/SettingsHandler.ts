@@ -1,5 +1,5 @@
-import WeatherList from "@shared/Data/WeatherList";
-import { notify } from "@shared/utils";
+import WeatherList from "@common/Data/WeatherList";
+import { notify } from "@common/utils";
 
 const WEATHER_TRANSITION_TIME = 5;
 

@@ -20,14 +20,14 @@ export default class PoliceHandler implements Handler {
     }
 
     onPoliceDisable(data: NuiData, cb: NuiCallback): NuiCallback {
-        this.config.set('PoliceDisable', data.newstate ? 'true' : 'false');
+        this.config.set('PoliceDisable', data.newstate);
 
         cb('ok');
         return cb;
     }
 
     onPoliceIgnore(data: NuiData, cb: NuiCallback): NuiCallback {
-        this.config.set('PoliceIgnore', data.newstate ? 'true' : 'false');
+        this.config.set('PoliceIgnore', data.newstate);
 
         cb('ok');
         return cb;

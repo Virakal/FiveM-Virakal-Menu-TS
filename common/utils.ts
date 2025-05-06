@@ -1,7 +1,7 @@
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
 
-type Model = number | string;
+export type Model = number | string;
 
 export const RUNNING_ON_SERVER = IsDuplicityVersion();
 export const RUNNING_ON_CLIENT = !RUNNING_ON_SERVER;
@@ -180,4 +180,23 @@ export async function teleportToGroundHeight(ped: number, position: Vector3, inc
 
         await delay(100);
     }
+}
+
+export function getPedVehicleSeat(ped: number): number | null {
+    const vehicle = GetVehiclePedIsIn(ped, false);
+
+    if (!vehicle) {
+        return null;
+    }
+
+    // TODO: Is it faster to use GetEntityModel() and GetVehicleModelNumberOfSeats? Reasonably the model will be loaded in most cases.
+    for (let i = 0; i <= 128; i++) {
+        const pedInSeat = GetPedInVehicleSeat(vehicle, i);
+
+        if (ped === pedInSeat) {
+            return i;
+        }
+    }
+
+    return null;
 }

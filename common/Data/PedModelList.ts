@@ -1,4 +1,5 @@
 import PedModelListItem from "./PedModelListItem";
+import type { Model } from "../utils";
 
 export enum PedModelType {
     Human,
@@ -20,7 +21,11 @@ export default class PedModelList {
             .sort((a, b) => a.name.localeCompare(b.name));
     }
 
-    static getByHash(hash: number) {
+    static getByHash(hash: Model) {
+        if (typeof hash === 'string') {
+            hash = Number.parseInt(hash, 10);
+        }
+
         if (!this.modelHashCache.has(hash)) {
             const model: PedModelListItem = this.models.find((m) => m.modelHash === hash);
             this.modelHashCache.set(hash, model);

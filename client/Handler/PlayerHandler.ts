@@ -180,7 +180,7 @@ export default class PlayerHandler {
 
     updateRecentSkinsList(model: Model) {
         if (typeof model === 'string') {
-            model = Number.parseInt(model, 10);
+            model = GetHashKey(model);
         }
 
         const modelInfo = PedModelList.getByHash(model);
@@ -194,7 +194,7 @@ export default class PlayerHandler {
         this.recentSkins = [...new Set(this.recentSkins)];
 
         // Remove old entries from list
-        this.recentSkins.splice(0, RECENT_SKIN_COUNT);
+        this.recentSkins = this.recentSkins.slice(0, RECENT_SKIN_COUNT);
 
         getConfig().set('RecentSkins', this.recentSkins.join(','));
     }

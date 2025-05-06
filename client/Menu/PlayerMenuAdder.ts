@@ -2,10 +2,10 @@ import getConfig from '@common/Config';
 import PedModelList, { PedModelType } from "@common/Data/PedModelList";
 import PedModelListItem from "@common/Data/PedModelListItem";
 import PlayerHandler from 'Handler/PlayerHandler';
-import { MenuAdder } from "Menu/MenuAdder";
+import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
-export default class PlayerMenuAdder {
+export default class PlayerMenuAdder extends BaseMenuAdder {
     add(menus: MenuMap) {
         menus.set('player', [
             {
@@ -93,6 +93,16 @@ export default class PlayerMenuAdder {
         menus.set('player.skin.custom', this.toMenuItems(PedModelList.getByType(PedModelType.Custom)));
 
         return menus;
+    }
+
+    onMenusAdded() {
+        on('virakal:configChanged', this.onConfigChanged.bind(this));
+    }
+
+    onConfigChanged(key: string, value: string) {
+        if (key === 'CurrentSkin') {
+            this.menuManager.updateAndSend('player.skin.recent', this.getRecentSkinMenu());
+        }
     }
 
     getRecentSkinMenu(): MenuItem[] {

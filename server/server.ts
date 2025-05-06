@@ -34,6 +34,7 @@ class Server {
         this.currentWeather = weather;
         // TODO: Nice name
         console.log(`Weather changed to ${weather} by ${name}`);
+        emitNet('vitakal:setWeather', -1, weather);
     }
 
     onRequestWeather(weather: number) {

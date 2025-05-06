@@ -44,6 +44,11 @@ export default class MenuManager {
         })
     }
 
+    updateAndSend(key: string, menu: MenuItem[]): void {
+        this.menu.set(key, menu);
+        this.sendMenu(key);
+    }
+
     async sendAllMenus() {
         for (const [key, value] of this.menu) {
             this.sendMenu(key);

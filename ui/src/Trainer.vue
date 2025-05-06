@@ -22,6 +22,9 @@
     import PreviewImage from './components/PreviewImage.vue';
     import PageIndicator from './components/PageIndicator.vue';
 
+    type UnparsedConfig = { [key: string]: string };
+    type Config = { [key: string]: boolean };
+
     interface MenuItem {
         text: string,
         sub?: string,
@@ -47,7 +50,7 @@
         currentMenuKey = 'mainmenu';
         page = 0;
         selected = 0;
-        config: { [configKey: string]: boolean } = {};
+        config: Config = {};
         itemStates: { [action: string]: boolean } = {};
 
         get pageCount(): number {
@@ -254,9 +257,7 @@
             this.playSound('NO');
         }
 
-        updateFromConfig(json: string): void {
-            const config: { [key: string]: string; } = JSON.parse(json);
-
+        updateFromConfig(config: UnparsedConfig): void {
             for (const key in config) {
                 let value = config[key];
 

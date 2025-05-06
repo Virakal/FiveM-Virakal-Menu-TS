@@ -8,9 +8,9 @@ export default class ConfigCommsManager {
     }
 
     async onReturnConfig(configData: { [key: string]: string }) {
-        getConfig().fromObject(configData);
-        // console.log(getConfig().toJson());
-        sendUIMessage({ configUpdate: true, config: configData });
+        const config = getConfig();
+        config.fromObject(configData);
+        sendUIMessage({ configupdate: true, config: configData });
 
         await delay(1);
 

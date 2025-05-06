@@ -109,7 +109,7 @@ export default class PlayerMenuAdder {
                     menu.push({
                         text: info.name,
                         key: info.modelHash.toString(),
-                        action: `${actionPrefix} {info.model}`
+                        action: `${actionPrefix} ${info.model}`
                     });
                 }
             }

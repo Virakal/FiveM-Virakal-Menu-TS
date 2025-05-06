@@ -1,4 +1,3 @@
-import getConfig from '@common/Config';
 import ConfigCommsManager from "ConfigCommsManager";
 import AnimalBombHandler from "Handler/AnimalBombHandler";
 import AnimationHandler from "Handler/AnimationHandler";

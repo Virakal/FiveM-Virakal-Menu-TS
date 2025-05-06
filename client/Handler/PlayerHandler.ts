@@ -24,6 +24,8 @@ export default class PlayerHandler {
         on('virakal:configFetched', this.onConfigFetched.bind(this));
         on('virakal:skinChange', this.onVirakalSkinChange.bind(this));
         on('playerSpawned', this.onPlayerSpawned.bind(this));
+
+        setTick(this.onTick);
     }
 
     onPlayer(data: NuiData, cb: NuiCallback): NuiCallback {
@@ -195,5 +197,22 @@ export default class PlayerHandler {
 
     static parseRecentSkinsConfig(configData: string) {
         return configData.split(',').map((x) => Number.parseInt(x.trim(), 10));
+    }
+
+    async onTick() {
+        const config = getConfig();
+        const ped = PlayerPedId();
+        const playerId = PlayerId();
+
+        if (ped) {
+            // TODO: Allow toggling ragdoll
+            SetPlayerInvincibleKeepRagdollEnabled(playerId, config.getBool('GodMode'));
+
+            if (config.getBool('InfiniteStamina')) {
+                RestorePlayerStamina(playerId, 100);
+            }
+        }
+
+        await delay(500);
     }
 }

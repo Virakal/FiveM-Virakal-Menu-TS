@@ -1,4 +1,4 @@
-import getConfig from "Config";
+import getConfig from '@shared/Config';
 import PedModelList, { PedModelType } from "@shared/Data/PedModelList";
 import PedModelListItem from "@shared/Data/PedModelListItem";
 

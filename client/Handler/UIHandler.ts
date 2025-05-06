@@ -1,4 +1,4 @@
-import getConfig from "Config";
+import getConfig from '@shared/Config';
 import Trainer from "Trainer";
 import { delay } from "@shared/utils";
 

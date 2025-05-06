@@ -21,6 +21,10 @@ export default class PlayerHandler {
 
         RegisterNuiCallback('player', this.onPlayer.bind(this));
         RegisterNuiCallback('playerskin', this.onPlayerSkin.bind(this));
+        RegisterNuiCallback('savedefaultskin', this.onSaveDefaultSkin.bind(this));
+        RegisterNuiCallback('loaddefaultskin', this.onLoadDefaultSkin.bind(this));
+        RegisterNuiCallback('autoloaddefaultskin', this.onAutoLoadDefaultSkin.bind(this));
+
         on('virakal:configFetched', this.onConfigFetched.bind(this));
         on('virakal:skinChange', this.onVirakalSkinChange.bind(this));
         on('playerSpawned', this.onPlayerSpawned.bind(this));
@@ -64,6 +68,50 @@ export default class PlayerHandler {
 
         cb('ok');
         return cb;
+    }
+
+    async onLoadDefaultSkin(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const config = getConfig();
+
+        if (config.has('DefaultSkin')) {
+            this.loadDefaultSkin();
+            notify(`~g~Switched back to ${config.get('DefaultSkin')}.`);
+        } else {
+            notify('~r~You don\'t have a default skin saved.');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onSaveDefaultSkin(data: NuiData, cb: NuiCallback): NuiCallback {
+        const config = getConfig();
+        config.set('DefaultSkin', config.get('CurrentSkin'));
+        notify(`~g~Saved ${config.get('DefaultSkin')} as your default skin.`);
+
+        cb('ok');
+        return cb;
+    }
+
+    onAutoLoadDefaultSkin(data: NuiData, cb: NuiCallback): NuiCallback {
+        const config = getConfig();
+        config.set('AutoLoadDefaultSkin', data.newstate);
+
+        cb('ok');
+        return cb;
+    }
+
+    loadDefaultSkin() {
+        const config = getConfig();
+        const defaultSkin = config.get('DefaultSkin');
+        const ped = PlayerPedId();
+
+        console.log(defaultSkin);
+
+        withModel(defaultSkin, (model) => {
+            this.hasJustRunSpawnHandler = true;
+            this.changePlayerSkin(ped, model);
+        });
     }
 
     async onPlayerSkin(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
@@ -151,7 +199,7 @@ export default class PlayerHandler {
         getConfig().set('RecentSkins', this.recentSkins.join(','));
     }
 
-    onConfigFetched() {
+    async onConfigFetched() {
         const config = getConfig();
 
         if (!config.has('RecentSkins') || config.get('RecentSkins') === '') {
@@ -159,6 +207,12 @@ export default class PlayerHandler {
         }
 
         this.recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
+
+        if (config.has("DefaultSkin") && config.getBool('AutoLoadDefaultSkin')) {
+            // Wait to allow the game to load more fully
+            await delay(5000);
+            this.loadDefaultSkin();
+        }
     }
 
     async onPlayerSpawned() {

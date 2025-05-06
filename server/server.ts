@@ -49,22 +49,23 @@ class Server {
     }
 
     onChangeTime(hours: number, minutes: number, seconds: number) {
-        const name = GetPlayerName(source.toString());
-        this.currentTime = { hours, minutes, seconds };
-        // TODO: Nice name
-        console.log(`Weather changed to ${this.prettyTime} by ${name}`);
-    }
-
-    onRequestTime() {
         const sourceStr = source.toString();
         const name = GetPlayerName(sourceStr);
-        console.log(`Time requested by ${name}. Time is ${this.prettyTime}.`);
+        this.currentTime = { hours, minutes, seconds };
+        // TODO: Nice name
+        console.log(`Time changed to ${this.prettyTime} by ${name}`);
 
         const time = this.currentTime;
 
         if (time !== null) {
             emitNet('virakal:setTime', sourceStr, time.hours, time.minutes, time.seconds);
         }
+    }
+
+    onRequestTime() {
+        const sourceStr = source.toString();
+        const name = GetPlayerName(sourceStr);
+        console.log(`Time requested by ${name}. Time is ${this.prettyTime}.`);
     }
 
     async onGetConfig() {

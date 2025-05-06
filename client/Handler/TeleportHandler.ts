@@ -7,8 +7,9 @@ import {
     setEntityPosition,
     teleportPedWithVehicle,
     teleportToGroundHeight,
-    Vector3,
 } from '@common/utils';
+
+import Vector3 from '@common/Vector3';
 
 const TP_TO_PLAYER_ADDITIONAL_HEIGHT = 2.5;
 const TP_TO_WAYPOINT_ADDITIONAL_HEIGHT = 2.5;

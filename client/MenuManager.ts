@@ -44,6 +44,8 @@ export default class MenuManager {
             this.sendMenu(key);
             await delay(10);
         }
+
+        emit('virakal:allMenusSent', this);
     }
 
     private onMenusSent() {

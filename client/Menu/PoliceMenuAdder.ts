@@ -1,4 +1,7 @@
-export default class PoliceMenuAdder implements MenuAdder {
+import { MenuAdder } from "Menu/MenuAdder";
+
+@MenuAdder.register
+export default class PoliceMenuAdder {
     add(menus: MenuMap) {
         menus.set('police', this.getPoliceMenu());
         return menus;

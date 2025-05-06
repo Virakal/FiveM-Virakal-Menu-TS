@@ -1,4 +1,7 @@
-export default class AnimationMenuAdder implements MenuAdder {
+import { MenuAdder } from "Menu/MenuAdder";
+
+@MenuAdder.register
+export default class AnimationMenuAdder {
     add(menus: MenuMap) {
         menus.set('animation', [
             {

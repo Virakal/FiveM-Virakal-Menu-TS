@@ -1,4 +1,7 @@
-export default class UIMenuAdder implements MenuAdder {
+import { MenuAdder } from "Menu/MenuAdder";
+
+@MenuAdder.register
+export default class UIMenuAdder {
     add(menus: MenuMap) {
         menus.set('ui', [
             {

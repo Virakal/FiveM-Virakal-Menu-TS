@@ -1,8 +1,10 @@
 import WeatherList from "@common/Data/WeatherList";
 import { CLEAN_STATION_COUNT, getRadioStationName } from "@common/Data/RadioStation";
 import getConfig from '@common/Config';
+import { MenuAdder } from "Menu/MenuAdder";
 
-export default class SettingsMenuAdder implements MenuAdder {
+@MenuAdder.register
+export default class SettingsMenuAdder {
     add(menus: MenuMap) {
         menus.set('settings', [
             {

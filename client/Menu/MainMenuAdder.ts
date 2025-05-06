@@ -1,4 +1,7 @@
-export default class MainMenuAdder implements MenuAdder {
+import { MenuAdder } from "Menu/MenuAdder";
+
+@MenuAdder.register
+export default class MainMenuAdder {
     add(menus: MenuMap) {
         menus.set('mainmenu', [
             {

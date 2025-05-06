@@ -1,3 +1,5 @@
+import { MenuAdder } from "Menu/MenuAdder";
+
 const defaultTeleports = {
     'Donkey Punch Farm': '428,6553,28',
     'FIB Building': '134,-748,259',
@@ -8,7 +10,8 @@ const defaultTeleports = {
     'Trevor\'s Airport': '1777,3253,42',
 }
 
-export default class TeleportMenuAdder implements MenuAdder {
+@MenuAdder.register
+export default class TeleportMenuAdder {
     add(menus: MenuMap) {
         menus.set('teleport', this.buildTeleportMenu())
 

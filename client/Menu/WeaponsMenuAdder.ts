@@ -1,4 +1,7 @@
-export default class WeaponsMenuAdder implements MenuAdder {
+import { MenuAdder } from "Menu/MenuAdder";
+
+@MenuAdder.register
+export default class WeaponsMenuAdder {
     add(menus: MenuMap) {
         menus.set('weapons', [
             {

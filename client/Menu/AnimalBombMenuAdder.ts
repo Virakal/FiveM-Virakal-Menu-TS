@@ -1,7 +1,9 @@
 import PedModelList from "@common/Data/PedModelList";
 import { PedModelType } from "@common/Data/PedModelList";
+import { MenuAdder } from "Menu/MenuAdder";
 
-export default class AnimalBombMenuAdder implements MenuAdder {
+@MenuAdder.register
+export default class AnimalBombMenuAdder {
     add(menus: MenuMap) {
         menus.set('animalbomb', this.getAnimalBombMenu());
         return menus;

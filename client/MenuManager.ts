@@ -1,12 +1,13 @@
-import MainMenuAdder from "Menu/MainMenuAdder";
-import AnimalBombMenuAdder from "Menu/AnimalBombMenuAdder";
-import AnimationMenuAdder from "Menu/AnimationMenuAdder";
-import PlayerMenuAdder from "Menu/PlayerMenuAdder";
-import PoliceMenuAdder from "Menu/PoliceMenuAdder";
-import SettingsMenuAdder from "Menu/SettingsMenuAdder";
-import TeleportMenuAdder from "Menu/TeleportMenuAdder";
-import UIMenuAdder from "Menu/UIMenuAdder";
-import WeaponsMenuAdder from "Menu/WeaponsMenuAdder";
+import { MenuAdder } from "Menu/MenuAdder";
+import "Menu/MainMenuAdder";
+import "Menu/AnimalBombMenuAdder";
+import "Menu/AnimationMenuAdder";
+import "Menu/PlayerMenuAdder";
+import "Menu/PoliceMenuAdder";
+import "Menu/SettingsMenuAdder";
+import "Menu/TeleportMenuAdder";
+import "Menu/UIMenuAdder";
+import "Menu/WeaponsMenuAdder";
 import { delay, sendUIMessage } from "@common/utils";
 
 export default class MenuManager {
@@ -14,17 +15,11 @@ export default class MenuManager {
     menuAdders: MenuAdder[] = [];
 
     constructor() {
-        this.menuAdders = [
-            new AnimalBombMenuAdder(),
-            new AnimationMenuAdder(),
-            new MainMenuAdder(),
-            new PlayerMenuAdder(),
-            new PoliceMenuAdder(),
-            new SettingsMenuAdder(),
-            new TeleportMenuAdder(),
-            new UIMenuAdder(),
-            new WeaponsMenuAdder(),
-        ];
+        const menuAdderClasses = MenuAdder.getImplementations();
+
+        for (const adderClass of menuAdderClasses) {
+            this.menuAdders.push(new adderClass());
+        }
 
         on('virakal:allMenusSent', () => this.onMenusSent())
         on('virakal:configFetched', () => this.onConfigFetched())

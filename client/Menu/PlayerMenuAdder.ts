@@ -1,8 +1,10 @@
 import getConfig from '@common/Config';
 import PedModelList, { PedModelType } from "@common/Data/PedModelList";
 import PedModelListItem from "@common/Data/PedModelListItem";
+import { MenuAdder } from "Menu/MenuAdder";
 
-export default class PlayerMenuAdder implements MenuAdder {
+@MenuAdder.register
+export default class PlayerMenuAdder {
     add(menus: MenuMap) {
         menus.set('player', [
             {

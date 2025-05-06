@@ -26,10 +26,14 @@ export default class SettingsHandler implements Handler {
             return;
         }
 
+        const niceName = WeatherList.getNiceName(weather) ?? 'Unknown';
+
         SetWeatherTypeOverTime(WeatherList.getInternalName(weather), WEATHER_TRANSITION_TIME);
 
         if (name) {
-            notify(`~s~Weather changed to ${WeatherList.getNiceName(weather)} by ${name}.`);
+            notify(`~s~Weather changed to ${niceName} by ${name}.`);
+        } else {
+            notify(`~s~Weather changed to ${niceName}.`);
         }
     }
 

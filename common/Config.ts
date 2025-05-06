@@ -1,3 +1,5 @@
+import { RUNNING_ON_CLIENT } from "utils";
+
 export class Config {
     private store = new Map<string, string>();
     private defaults = new Map<string, string>();
@@ -32,8 +34,11 @@ export class Config {
     set(key: string, value: string | boolean): void {
         this.store.set(key, value.toString());
 
-        TriggerServerEvent('virakal:setConfig', this.store);
-        TriggerEvent('virakal:configChanged', key, value);
+        if (RUNNING_ON_CLIENT) {
+            emitNet('virakal:setConfig', this.store);
+        }
+
+        emit('virakal:configChanged', key, value);
     }
 
     setDefault(key: string, value: string | boolean): void {

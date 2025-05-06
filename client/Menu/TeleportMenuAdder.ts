@@ -1,4 +1,5 @@
-import { MenuAdder } from "Menu/MenuAdder";
+import { delay } from "@common/utils";
+import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 const defaultTeleports = {
     'Donkey Punch Farm': '428,6553,28',
@@ -11,12 +12,21 @@ const defaultTeleports = {
 }
 
 @MenuAdder.register
-export default class TeleportMenuAdder {
+export default class TeleportMenuAdder extends BaseMenuAdder {
+    onMenusAdded() {
+        setTick(this.updatePlayerMenu.bind(this));
+    }
+
     add(menus: MenuMap) {
         menus.set('teleport', this.buildTeleportMenu())
         menus.set('teleport.toPlayer', this.getToPlayerMenu());
 
         return menus;
+    }
+
+    async updatePlayerMenu() {
+        await delay(10000);
+        this.menuManager.updateAndSend('teleport.toPlayer', this.getToPlayerMenu());
     }
 
     private buildTeleportMenu(): MenuItem[] {

@@ -43,7 +43,7 @@ export default class SettingsHandler implements Handler {
     }
 
     onTime(data: NuiData, cb: NuiCallback): NuiCallback {
-        emitNet('virakal:changeTime', Number.parseInt(data.action), 0, 0);
+        emitNet('virakal:changeTime', Number.parseInt(data.action, 10), 0, 0);
         cb('ok');
         return cb;
     }

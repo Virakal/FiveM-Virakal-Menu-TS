@@ -20,14 +20,13 @@ export default class MenuManager {
         for (const adderClass of menuAdderClasses) {
             const adder = new adderClass();
 
-            if (adder.hasOwnProperty('setManager')) {
+            if (adder.setManager) {
                 adder.setManager(this);
             }
 
             this.menuAdders.push(adder);
         }
 
-        on('virakal:allMenusSent', () => this.onMenusSent())
         on('virakal:configFetched', () => this.onConfigFetched())
     }
 
@@ -51,13 +50,13 @@ export default class MenuManager {
             await delay(10);
         }
 
-        emit('virakal:allMenusSent', this);
+        this.onMenusSent();
     }
 
     private onMenusSent() {
         // We register actions here so we know menus are loaded already
         for (const adder of this.menuAdders) {
-            if (adder.hasOwnProperty('onMenusAdded')) {
+            if (adder.onMenusAdded) {
                 adder.onMenusAdded();
             }
         }

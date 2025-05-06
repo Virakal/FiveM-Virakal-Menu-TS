@@ -35,7 +35,7 @@ export class Config {
         this.store.set(key, value.toString());
 
         if (RUNNING_ON_CLIENT) {
-            emitNet('virakal:setConfig', this.store);
+            emitNet('virakal:setConfig', this.toJson());
         }
 
         emit('virakal:configChanged', key, value);
@@ -61,6 +61,10 @@ export class Config {
         }
 
         return false;
+    }
+
+    get size() {
+        return this.store.size;
     }
 
     toJson(): string {

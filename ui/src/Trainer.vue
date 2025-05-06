@@ -170,6 +170,9 @@
                 } else if (item.configkey != null && item.configkey in this.config) {
                     this.itemStates[item.action] = this.config[item.configkey];
                     item.state = this.getStateText(this.config[item.configkey]);
+                } else {
+                    this.itemStates[item.action] = item.state === 'ON';
+                    item.state = this.getStateText(item.state);
                 }
 
                 menuData[key] = item;

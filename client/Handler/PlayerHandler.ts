@@ -1,6 +1,6 @@
 import getConfig from "@common/Config";
 import PedModelList from "@common/Data/PedModelList";
-import { delay, getPedVehicleSeat, notify, withModel } from "@common/utils";
+import { delay, getPedVehicleSeat, Model, notify, withModel } from "@common/utils";
 
 const RECENT_SKIN_COUNT = 5;
 
@@ -78,7 +78,7 @@ export default class PlayerHandler {
         return cb;
     }
 
-    async changePlayerSkin(ped: number, model: number | string): Promise<void> {
+    async changePlayerSkin(ped: number, model: Model): Promise<void> {
         const vehicle = GetVehiclePedIsIn(ped, false);
         const seat = getPedVehicleSeat(ped);
 
@@ -126,7 +126,7 @@ export default class PlayerHandler {
         }
     }
 
-    updateRecentSkinsList(model: number | string) {
+    updateRecentSkinsList(model: Model) {
         if (typeof model === 'string') {
             model = Number.parseInt(model, 10);
         }

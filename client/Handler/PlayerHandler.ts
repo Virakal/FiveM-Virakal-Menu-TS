@@ -1,7 +1,12 @@
 import getConfig from "@common/Config";
-import { notify } from "@common/utils";
+import PedModelList from "@common/Data/PedModelList";
+import { delay, getPedVehicleSeat, notify, withModel } from "@common/utils";
+
+const RECENT_SKIN_COUNT = 5;
 
 export default class PlayerHandler {
+    recentSkins: number[];
+
     constructor() {
         const config = getConfig();
 
@@ -14,6 +19,9 @@ export default class PlayerHandler {
         });
 
         RegisterNuiCallback('player', this.onPlayer.bind(this));
+        RegisterNuiCallback('playerskin', this.onPlayerSkin.bind(this));
+        on('virakal:configFetched', this.onConfigFetched.bind(this));
+        on('virakal:skinChange', this.onVirakalSkinChange.bind(this));
     }
 
     onPlayer(data: NuiData, cb: NuiCallback): NuiCallback {
@@ -52,5 +60,104 @@ export default class PlayerHandler {
 
         cb('ok');
         return cb;
+    }
+
+    async onPlayerSkin(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const modelName = data.action;
+
+        await withModel(modelName, async (model, loaded) => {
+            if (loaded) {
+                await this.changePlayerSkin(PlayerPedId(), model);
+                getConfig().set("CurrentSkin", modelName);
+            } else {
+                notify(`~r~Failed to load model "${model}"!`);
+            }
+        });
+
+        cb('ok');
+        return cb;
+    }
+
+    async changePlayerSkin(ped: number, model: number | string): Promise<void> {
+        const vehicle = GetVehiclePedIsIn(ped, false);
+        const seat = getPedVehicleSeat(ped);
+
+        SetPlayerModel(PlayerId(), model);
+
+        this.updateRecentSkinsList(model);
+
+        emit('playerSpawned');
+        emit('virakal:skinChange', model);
+
+        if (seat !== null) {
+            SetPedIntoVehicle(ped, vehicle, seat);
+        }
+
+        notify(`~g~Changed player skin to "${model}".`);
+    }
+
+    async onVirakalSkinChange(model: number) {
+        const ped = PlayerPedId();
+
+        await delay(0);
+
+        if (!IsPedHuman(ped)) {
+            // This fixes crashes on some animal skins
+            SetPedComponentVariation(ped, 0, 0, 0, 0);
+        } else if (model === GetHashKey('mp_m_freemode_01')) {
+            // Generic MP Male setup
+            SetPedHeadBlendData(ped, 4, 4, 0, 4, 4, 0, 1.0, 1.0, 0.0, false);
+            SetPedComponentVariation(ped, 2, 2, 4, 0);
+            SetPedComponentVariation(ped, 3, 1, 0, 0);
+            SetPedComponentVariation(ped, 4, 33, 0, 0);
+            SetPedComponentVariation(ped, 5, 45, 0, 0);
+            SetPedComponentVariation(ped, 6, 25, 0, 0);
+            SetPedComponentVariation(ped, 8, 56, 1, 0);
+            SetPedComponentVariation(ped, 11, 49, 0, 0);
+        } else if (model === GetHashKey('mp_f_freemode_01')) {
+            // Generic MP Female setup
+            SetPedHeadBlendData(ped, 25, 25, 0, 25, 25, 0, 1.0, 1.0, 0.0, false);
+            SetPedComponentVariation(ped, 2, 13, 3, 0);
+            SetPedComponentVariation(ped, 3, 3, 0, 0);
+            SetPedComponentVariation(ped, 5, 45, 0, 0);
+            SetPedComponentVariation(ped, 6, 25, 0, 0);
+            SetPedComponentVariation(ped, 8, 33, 1, 0);
+            SetPedComponentVariation(ped, 11, 42, 0, 0);
+        }
+    }
+
+    updateRecentSkinsList(model: number | string) {
+        if (typeof model === 'string') {
+            model = Number.parseInt(model, 10);
+        }
+
+        const modelInfo = PedModelList.getByHash(model);
+
+        if (!modelInfo) {
+            return;
+        }
+
+        this.recentSkins.unshift(model);
+        // Remove duplicates
+        this.recentSkins = [...new Set(this.recentSkins)];
+
+        // Remove old entries from list
+        this.recentSkins.splice(0, RECENT_SKIN_COUNT);
+
+        getConfig().set('RecentSkins', this.recentSkins.join(','));
+    }
+
+    onConfigFetched() {
+        const config = getConfig();
+
+        if (!config.has('RecentSkins') || config.get('RecentSkins') === '') {
+            return;
+        }
+
+        this.recentSkins = this.parseRecentSkinsConfig(config.get('RecentSkins'));
+    }
+
+    parseRecentSkinsConfig(configData: string) {
+        return configData.split(',').map((x) => Number.parseInt(x.trim(), 10));
     }
 }

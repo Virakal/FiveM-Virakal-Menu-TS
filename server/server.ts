@@ -2,6 +2,7 @@ console.log("[virakal-menu] Server Resource Started");
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { realpathSync } from 'node:fs';
+import WeatherList from '@shared/Data/WeatherList';
 
 interface Time {
     hours: number,
@@ -32,17 +33,16 @@ class Server {
     onChangeWeather(weather: number) {
         const name = GetPlayerName(source.toString());
         this.currentWeather = weather;
-        // TODO: Nice name
-        console.log(`Weather changed to ${weather} by ${name}`);
+        console.log(`Weather changed to ${WeatherList.getNiceName(weather)} (${weather}) by ${name}`);
         emitNet('virakal:setWeather', -1, weather);
     }
 
-    onRequestWeather(weather: number) {
+    onRequestWeather() {
         const sourceStr = source.toString();
         const name = GetPlayerName(sourceStr);
-        // TODO Nice name
-        console.log(`Weather requested by ${name}. Weather is ${this.currentWeather}.`);
-        this.currentWeather = weather;
+        const weather = this.currentWeather;
+
+        console.log(`Weather requested by ${name}. Weather is ${WeatherList.getNiceName(weather)} (${weather}).`);
 
         if (weather !== -1) {
             emitNet('virakal:setWeather', sourceStr, weather);

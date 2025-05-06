@@ -16,8 +16,8 @@ export default class UIHandler implements Handler {
             BigMapOnDown: true,
         });
 
-        RegisterNuiCallback('bigmap', this.toggleBigMap);
-        RegisterNuiCallback('bigmapondown', this.toggleBigMapOnDown);
+        RegisterNuiCallback('bigmap', this.toggleBigMap.bind(this));
+        RegisterNuiCallback('bigmapondown', this.toggleBigMapOnDown.bind(this));
 
         on('virakal:configFetched', this.onConfigFetched.bind(this));
 

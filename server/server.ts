@@ -97,7 +97,7 @@ class Server {
     get prettyTime(): string {
         const time = this.currentTime;
 
-        if (time === null) {
+        if (time === undefined) {
             return '[none]';
         }
 

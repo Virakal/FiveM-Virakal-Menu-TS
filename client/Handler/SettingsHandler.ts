@@ -8,15 +8,15 @@ export default class SettingsHandler implements Handler {
 
     constructor() {
         on('playerSpawned', this.onFirstSpawn.bind(this));
-        onNet('virakal:setWeather', this.onSetWeather);
-        onNet('virakal:setTime', this.onSetTime);
+        onNet('virakalMenu:setWeather', this.onSetWeather);
+        onNet('virakalMenu:setTime', this.onSetTime);
 
         RegisterNuiCallback('weather', this.onWeather);
         RegisterNuiCallback('time', this.onTime);
     }
 
     onWeather(data: NuiData, cb: NuiCallback): NuiCallback {
-        emitNet('virakal:changeWeather', data.action);
+        emitNet('virakalMenu:changeWeather', data.action);
         cb('ok');
         return cb;
     }
@@ -47,7 +47,7 @@ export default class SettingsHandler implements Handler {
     }
 
     onTime(data: NuiData, cb: NuiCallback): NuiCallback {
-        emitNet('virakal:changeTime', Number.parseInt(data.action, 10), 0, 0);
+        emitNet('virakalMenu:changeTime', Number.parseInt(data.action, 10), 0, 0);
         cb('ok');
         return cb;
     }
@@ -59,7 +59,7 @@ export default class SettingsHandler implements Handler {
 
         this.firstSpawn = false;
 
-        emitNet('virakal:requestWeather');
-        emitNet('virakal:requestTime');
+        emitNet('virakalMenu:requestWeather');
+        emitNet('virakalMenu:requestTime');
     }
 }

@@ -16,14 +16,14 @@ class Server {
     currentTime: Time
 
     constructor() {
-        onNet('virakal:requestWeather', this.onRequestWeather.bind(this));
-        onNet('virakal:changeWeather', this.onChangeWeather.bind(this));
+        onNet('virakalMenu:requestWeather', this.onRequestWeather.bind(this));
+        onNet('virakalMenu:changeWeather', this.onChangeWeather.bind(this));
 
-        onNet('virakal:requestTime', this.onRequestTime.bind(this));
-        onNet('virakal:changeTime', this.onChangeTime.bind(this));
+        onNet('virakalMenu:requestTime', this.onRequestTime.bind(this));
+        onNet('virakalMenu:changeTime', this.onChangeTime.bind(this));
 
-        onNet('virakal:getConfig', this.onGetConfig.bind(this));
-        onNet('virakal:setConfig', this.onSetConfig.bind(this));
+        onNet('virakalMenu:getConfig', this.onGetConfig.bind(this));
+        onNet('virakalMenu:setConfig', this.onSetConfig.bind(this));
 
         const realPath = realpathSync(this.configPath);
         console.log(`Virakal Menu configs at ${realPath}`);
@@ -34,7 +34,7 @@ class Server {
         const name = GetPlayerName(source.toString());
         this.currentWeather = weather;
         console.log(`Weather changed to ${WeatherList.getNiceName(weather)} (${weather}) by ${name}`);
-        emitNet('virakal:setWeather', -1, weather);
+        emitNet('virakalMenu:setWeather', -1, weather);
     }
 
     onRequestWeather() {
@@ -45,7 +45,7 @@ class Server {
         console.log(`Weather requested by ${name}. Weather is ${WeatherList.getNiceName(weather)} (${weather}).`);
 
         if (weather !== -1) {
-            emitNet('virakal:setWeather', sourceStr, weather);
+            emitNet('virakalMenu:setWeather', sourceStr, weather);
         }
     }
 
@@ -59,7 +59,7 @@ class Server {
         const time = this.currentTime;
 
         if (time !== null) {
-            emitNet('virakal:setTime', sourceStr, time.hours, time.minutes, time.seconds);
+            emitNet('virakalMenu:setTime', sourceStr, time.hours, time.minutes, time.seconds);
         }
     }
 
@@ -82,7 +82,7 @@ class Server {
             contents = {};
         }
 
-        emitNet('virakal:returnConfig', playerId, contents);
+        emitNet('virakalMenu:returnConfig', playerId, contents);
     }
 
     async onSetConfig(config: any) {

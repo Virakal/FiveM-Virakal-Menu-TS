@@ -3,8 +3,8 @@ import { delay, sendUIMessage } from "@common/utils";
 
 export default class ConfigCommsManager {
     constructor() {
-        onNet('virakal:returnConfig', this.onReturnConfig);
-        emitNet('virakal:getConfig');
+        onNet('virakalMenu:returnConfig', this.onReturnConfig);
+        emitNet('virakalMenu:getConfig');
     }
 
     async onReturnConfig(configData: { [key: string]: string }) {
@@ -14,6 +14,6 @@ export default class ConfigCommsManager {
 
         await delay(1);
 
-        emit('virakal:configFetched');
+        emit('virakalMenu:configFetched');
     }
 }

@@ -25,8 +25,8 @@ export default class PlayerHandler {
         RegisterNuiCallback('loaddefaultskin', this.onLoadDefaultSkin.bind(this));
         RegisterNuiCallback('autoloaddefaultskin', this.onAutoLoadDefaultSkin.bind(this));
 
-        on('virakal:configFetched', this.onConfigFetched.bind(this));
-        on('virakal:skinChange', this.onVirakalSkinChange.bind(this));
+        on('virakalMenu:configFetched', this.onConfigFetched.bind(this));
+        on('virakalMenu:skinChange', this.onVirakalSkinChange.bind(this));
         on('playerSpawned', this.onPlayerSpawned.bind(this));
 
         setTick(this.onTick);
@@ -139,7 +139,7 @@ export default class PlayerHandler {
         this.updateRecentSkinsList(model);
 
         emit('playerSpawned');
-        emit('virakal:skinChange', model);
+        emit('virakalMenu:skinChange', model);
 
         if (seat !== null) {
             SetPedIntoVehicle(ped, vehicle, seat);

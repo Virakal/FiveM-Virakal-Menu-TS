@@ -35,10 +35,10 @@ export class Config {
         this.store.set(key, value.toString());
 
         if (RUNNING_ON_CLIENT) {
-            emitNet('virakal:setConfig', this.toJson());
+            emitNet('virakalMenu:setConfig', this.toJson());
         }
 
-        emit('virakal:configChanged', key, value);
+        emit('virakalMenu:configChanged', key, value);
     }
 
     setDefault(key: string, value: string | boolean): void {

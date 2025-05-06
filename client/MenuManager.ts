@@ -27,7 +27,7 @@ export default class MenuManager {
             this.menuAdders.push(adder);
         }
 
-        on('virakal:configFetched', () => this.onConfigFetched())
+        on('virakalMenu:configFetched', () => this.onConfigFetched())
     }
 
     onConfigFetched() {

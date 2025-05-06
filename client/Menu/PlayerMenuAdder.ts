@@ -96,7 +96,7 @@ export default class PlayerMenuAdder extends BaseMenuAdder {
     }
 
     onMenusAdded() {
-        on('virakal:configChanged', this.onConfigChanged.bind(this));
+        on('virakalMenu:configChanged', this.onConfigChanged.bind(this));
     }
 
     onConfigChanged(key: string, value: string) {

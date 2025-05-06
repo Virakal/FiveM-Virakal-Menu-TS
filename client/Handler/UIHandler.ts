@@ -19,7 +19,7 @@ export default class UIHandler implements Handler {
         RegisterNuiCallback('bigmap', this.toggleBigMap.bind(this));
         RegisterNuiCallback('bigmapondown', this.toggleBigMapOnDown.bind(this));
 
-        on('virakal:configFetched', this.onConfigFetched.bind(this));
+        on('virakalMenu:configFetched', this.onConfigFetched.bind(this));
 
         setTick(this.mapOnDownTick.bind(this));
     }

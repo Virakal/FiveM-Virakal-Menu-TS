@@ -7,3 +7,4 @@ ui/src/*.config.js
 package.json
 build.js
 ui/node_modules
+node_modules

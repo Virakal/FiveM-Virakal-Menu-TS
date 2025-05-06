@@ -70,7 +70,7 @@ export default class PlayerHandler {
         await withModel(modelName, async (model, loaded) => {
             if (loaded) {
                 await this.changePlayerSkin(PlayerPedId(), model);
-                getConfig().set("CurrentSkin", modelName);
+                getConfig().set('CurrentSkin', modelName);
             } else {
                 notify(`~r~Failed to load model "${model}"!`);
             }

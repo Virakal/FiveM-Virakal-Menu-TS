@@ -14,8 +14,8 @@ const defaultTeleports = {
 export default class TeleportMenuAdder {
     add(menus: MenuMap) {
         menus.set('teleport', this.buildTeleportMenu())
-
         menus.set('teleport.toPlayer', this.getToPlayerMenu());
+
         return menus;
     }
 

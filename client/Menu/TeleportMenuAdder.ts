@@ -15,6 +15,7 @@ const defaultTeleports = {
 export default class TeleportMenuAdder extends BaseMenuAdder {
     onMenusAdded() {
         setTick(this.updatePlayerMenu.bind(this));
+        on('playerSpawned', () => this.updatePlayerMenu(0));
     }
 
     add(menus: MenuMap) {
@@ -24,8 +25,8 @@ export default class TeleportMenuAdder extends BaseMenuAdder {
         return menus;
     }
 
-    async updatePlayerMenu() {
-        await delay(10000);
+    async updatePlayerMenu(delayMs = 10000) {
+        await delay(delayMs);
         this.menuManager.updateAndSend('teleport.toPlayer', this.getToPlayerMenu());
     }
 

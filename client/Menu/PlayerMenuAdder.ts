@@ -1,6 +1,7 @@
 import getConfig from '@common/Config';
 import PedModelList, { PedModelType } from "@common/Data/PedModelList";
 import PedModelListItem from "@common/Data/PedModelListItem";
+import PlayerHandler from 'Handler/PlayerHandler';
 import { MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
@@ -100,7 +101,7 @@ export default class PlayerMenuAdder {
         const actionPrefix = 'playerskin';
 
         if (config.has('RecentSkins')) {
-            const recentSkins = this.parseRecentSkins(config.get('RecentSkins'));
+            const recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
 
             for (const modelHash of recentSkins) {
                 const info = PedModelList.getByHash(modelHash);
@@ -120,11 +121,6 @@ export default class PlayerMenuAdder {
         }
 
         return menu;
-    }
-
-    // TODO: Wants to be moved to the player handler later
-    parseRecentSkins(data: string): number[] {
-        return data.split(',').map((x) => Number.parseInt(x, 10));
     }
 
     toMenuItems(models: PedModelListItem[]) {

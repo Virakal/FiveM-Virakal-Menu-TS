@@ -154,10 +154,10 @@ export default class PlayerHandler {
             return;
         }
 
-        this.recentSkins = this.parseRecentSkinsConfig(config.get('RecentSkins'));
+        this.recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
     }
 
-    parseRecentSkinsConfig(configData: string) {
+    static parseRecentSkinsConfig(configData: string) {
         return configData.split(',').map((x) => Number.parseInt(x.trim(), 10));
     }
 }

@@ -2,7 +2,7 @@ console.log("[virakal-menu] Server Resource Started");
 
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { realpathSync } from 'node:fs';
-import WeatherList from '@shared/Data/WeatherList';
+import WeatherList from '@common/Data/WeatherList';
 
 interface Time {
     hours: number,
@@ -23,7 +23,7 @@ class Server {
         onNet('virakal:changeTime', this.onChangeTime.bind(this));
 
         onNet('virakal:getConfig', this.onGetConfig.bind(this));
-        onNet('virakal:setConfig', this.onGetConfig.bind(this));
+        onNet('virakal:setConfig', this.onSetConfig.bind(this));
 
         const realPath = realpathSync(this.configPath);
         console.log(`Virakal Menu configs at ${realPath}`);

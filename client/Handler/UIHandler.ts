@@ -53,7 +53,7 @@ export default class UIHandler implements Handler {
 
     toggleBigMapOnDown(data: NuiData, cb: NuiCallback): NuiCallback {
         const state = data.newstate;
-        getConfig().set('BigMap', state);
+        getConfig().set('BigMapOnDown', state);
 
         cb('ok');
         return cb;

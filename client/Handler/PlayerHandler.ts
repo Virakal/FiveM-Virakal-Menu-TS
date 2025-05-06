@@ -5,7 +5,8 @@ import { delay, getPedVehicleSeat, Model, notify, withModel } from "@common/util
 const RECENT_SKIN_COUNT = 5;
 
 export default class PlayerHandler {
-    recentSkins: number[];
+    recentSkins: number[] = [];
+    private hasJustRunSpawnHandler = false;
 
     constructor() {
         const config = getConfig();
@@ -22,6 +23,7 @@ export default class PlayerHandler {
         RegisterNuiCallback('playerskin', this.onPlayerSkin.bind(this));
         on('virakal:configFetched', this.onConfigFetched.bind(this));
         on('virakal:skinChange', this.onVirakalSkinChange.bind(this));
+        on('playerSpawned', this.onPlayerSpawned.bind(this));
     }
 
     onPlayer(data: NuiData, cb: NuiCallback): NuiCallback {
@@ -155,6 +157,40 @@ export default class PlayerHandler {
         }
 
         this.recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
+    }
+
+    async onPlayerSpawned() {
+        // Avoids some timing bugs
+        await delay(0);
+
+        // Infinite recursion guard
+        if (this.hasJustRunSpawnHandler) {
+            this.hasJustRunSpawnHandler = false;
+            return;
+        }
+
+        const config = getConfig();
+        const configSkin = config.get('CurrentSkin');
+
+        if (!configSkin) {
+            return;
+        }
+
+        const actualSkin = GetEntityModel(PlayerPedId());
+        const configSkinHash = GetHashKey(configSkin);
+
+        this.hasJustRunSpawnHandler = true;
+
+        if (actualSkin !== configSkinHash) {
+            withModel(configSkin, (model, loaded) => {
+                if (loaded) {
+                    SetPlayerModel(PlayerId(), model);
+                    emit('playerSpawned', model);
+                } else {
+                    notify(`Failed to restore skin - couldn't load ${configSkin}`);
+                }
+            });
+        }
     }
 
     static parseRecentSkinsConfig(configData: string) {

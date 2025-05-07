@@ -1,4 +1,5 @@
 import getConfig from '@common/Config';
+import { SeatPosition } from '@common/Data/ParamEnums';
 import { delay, notify } from "@common/utils";
 
 export default class PoliceHandler implements Handler {
@@ -60,7 +61,7 @@ export default class PoliceHandler implements Handler {
                 // On foot...
                 !vehicle
                 // Or in driving seat
-                || GetPedInVehicleSeat(vehicle, -1)
+                || GetPedInVehicleSeat(vehicle, SeatPosition.SF_FrontDriverSide)
                 // Or alone in the vehicle
                 || GetVehicleNumberOfPassengers(vehicle) < 2
             ) {

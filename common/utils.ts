@@ -1,5 +1,6 @@
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
+import { SeatPosition } from "Data/ParamEnums";
 
 export type Model = number | string;
 
@@ -104,7 +105,7 @@ export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets
     let entity = ped;
 
     // If we're in the driver's seat of a vehicle, teleport the whole vehicle
-    if (vehicle && GetPedInVehicleSeat(vehicle, -1) === ped) {
+    if (vehicle && GetPedInVehicleSeat(vehicle, SeatPosition.SF_FrontDriverSide) === ped) {
         entity = vehicle;
     }
 

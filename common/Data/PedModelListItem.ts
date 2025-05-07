@@ -2,12 +2,19 @@ import { PedModelType } from "./PedModelList";
 
 export default class PedModelListItem {
     name: string;
-    image?: string;
     model: string;
     type: PedModelType = PedModelType.Human;
     tags?: object = {};
 
     private hash: number;
+
+    get image(): string | undefined {
+        if ([PedModelType.Custom, PedModelType.MainCharacter].includes(this.type)) {
+            return;
+        }
+
+        return `https://docs.fivem.net/peds/${this.model}.webp`;
+    }
 
     get modelHash(): number {
         if (!this.hash) {

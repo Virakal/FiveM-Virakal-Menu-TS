@@ -7,6 +7,7 @@ import "Menu/PoliceMenuAdder";
 import "Menu/SettingsMenuAdder";
 import "Menu/TeleportMenuAdder";
 import "Menu/UIMenuAdder";
+import "Menu/VehicleMenuAdder";
 import "Menu/WeaponsMenuAdder";
 import { delay, sendUIMessage } from "@common/utils";
 

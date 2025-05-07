@@ -142,6 +142,7 @@ export default class PlayerMenuAdder extends BaseMenuAdder {
                 text: model.name,
                 action: `${actionPrefix} ${model.model}`,
                 key: model.model,
+                image: model.image,
             });
         }
 

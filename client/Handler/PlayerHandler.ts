@@ -212,7 +212,7 @@ export default class PlayerHandler {
             && GetHashKey(config.get('DefaultSkin')) !== GetEntityModel(PlayerPedId())
         ) {
             // Wait to allow the game to load more fully
-            await delay(5000);
+            await delay(1000);
             this.loadDefaultSkin();
         }
     }

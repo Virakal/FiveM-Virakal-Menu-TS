@@ -206,7 +206,11 @@ export default class PlayerHandler {
 
         this.recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
 
-        if (config.has("DefaultSkin") && config.getBool('AutoLoadDefaultSkin')) {
+        if (
+            config.has('DefaultSkin')
+            && config.getBool('AutoLoadDefaultSkin')
+            && GetHashKey(config.get('DefaultSkin')) !== GetEntityModel(PlayerPedId())
+        ) {
             // Wait to allow the game to load more fully
             await delay(5000);
             this.loadDefaultSkin();

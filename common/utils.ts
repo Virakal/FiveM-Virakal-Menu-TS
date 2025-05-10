@@ -1,3 +1,5 @@
+export type Colour = [r: number, g: number, b: number];
+
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
 import { SeatPosition } from "Data/ParamEnums";
@@ -145,6 +147,25 @@ export function getWaypointPosition(): Vector3 | null {
 
     const coords = GetBlipCoords(waypoint);
     return Vector3.fromArray(coords);
+}
+
+function makeColourWithOffset(offset: number, frequency: number, now: number): number {
+    return Math.round(Math.sin((now / 5000) * frequency + offset) * 127 + 128);
+}
+
+export function rainbowRgb(frequency: number): Colour {
+    const now = GetGameTimer();
+
+    return [
+        makeColourWithOffset(0, frequency, now),
+        makeColourWithOffset(2, frequency, now),
+        makeColourWithOffset(4, frequency, now),
+    ];
+}
+
+export function invertColour(colour: Colour): Colour {
+    const [r, g, b] = colour;
+    return [255 - r, 255 - g, 255 - b];
 }
 
 export async function teleportToGroundHeight(ped: number, position: Vector3, includeWater = true, additionalHeight = 2.5): Promise<void> {

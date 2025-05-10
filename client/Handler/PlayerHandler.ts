@@ -106,8 +106,6 @@ export default class PlayerHandler {
         const defaultSkin = config.get('DefaultSkin');
         const ped = PlayerPedId();
 
-        console.log(defaultSkin);
-
         withModel(defaultSkin, (model) => {
             this.hasJustRunSpawnHandler = true;
             this.changePlayerSkin(ped, model);

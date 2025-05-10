@@ -6,6 +6,7 @@ import SettingsHandler from "Handler/SettingsHandler";
 import TeleportHandler from "Handler/TeleportHandler";
 import PlayerHandler from 'Handler/PlayerHandler';
 import UIHandler from "Handler/UIHandler";
+import VehicleHandler from "Handler/VehicleHandler";
 import MenuManager from "MenuManager";
 import { notify, sendUIMessage } from "@common/utils";
 
@@ -131,6 +132,7 @@ export default class Trainer {
             new SettingsHandler(),
             new TeleportHandler(),
             new UIHandler(this),
+            new VehicleHandler(this),
         ];
     }
 }

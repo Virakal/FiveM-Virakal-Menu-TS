@@ -1,4 +1,4 @@
-import getConfig from '@common/Config';
+import getConfig, { Config } from '@common/Config';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
@@ -22,7 +22,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
         // // Add vehicle appearance menus
         menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());
-        // menus.set('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
+        menus.set('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
         // menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
         // menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
         // menus.set('vehicles.appearance.livery', this.getLiveryMenu());
@@ -50,6 +50,16 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         // menus = this.addOtherModsMenus(menus);
 
         return menus;
+    }
+
+    onMenusAdded(): void {
+        on('virakalMenu:configChanged', this.onConfigChanged.bind(this));
+    }
+
+    onConfigChanged(key: string, value: string): void {
+        if (key === 'RainbowSpeed') {
+            this.menuManager.updateAndSend('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
+        }
     }
 
     getVehiclesMenu(): MenuItem[] {
@@ -177,6 +187,41 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 sub: 'vehicles.appearance.rainbowSettings.speed',
             },
         ];
+    }
+
+    getRainbowSpeedMenu(): MenuItem[] {
+        const list = [];
+        const config = getConfig();
+        const defaultSpeed = 50;
+        let current = defaultSpeed;
+
+        if (config.has('RainbowSpeed', true)) {
+            const configuredSpeed = Number.parseFloat(config.get('RainbowSpeed'));
+
+            if (configuredSpeed > 0) {
+                current = Math.round(configuredSpeed * 100);
+            }
+        }
+
+        for (let speed = 0.1; speed <= 1; speed += 0.1) {
+            speed = Number.parseFloat(speed.toFixed(1));
+            const percentage = Math.round(100 * speed);
+
+            let text = `${percentage}% Speed`;
+
+            if (percentage === current) {
+                text += ' (Current)';
+            } else if (percentage === defaultSpeed) {
+                text += ' (Default)';
+            }
+
+            list.push({
+                text,
+                action: `rainbowspeed ${speed}`,
+            });
+        }
+
+        return list;
     }
 
     getAppearanceMenu(): MenuItem[] {

@@ -200,11 +200,10 @@ export default class PlayerHandler {
     async onConfigFetched() {
         const config = getConfig();
 
-        if (!config.has('RecentSkins') || config.get('RecentSkins') === '') {
-            return;
+        if (config.has('RecentSkins') && config.get('RecentSkins') !== '') {
+            this.recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
         }
 
-        this.recentSkins = PlayerHandler.parseRecentSkinsConfig(config.get('RecentSkins'));
 
         if (
             config.has('DefaultSkin')

@@ -495,6 +495,10 @@ function getModTypeNameInternal(vehicle: number, modType: VehicleModType): strin
             return getLocalisedName('CMM_MOD_S23');
         default:
             const name = GetModSlotName(vehicle, modType);
-            return DoesTextLabelExist(name) ? getLocalisedName(name) : null;
+            return getLocalisedName(name) || addSpacesToCamelCase(VehicleModType[modType]);
     }
+}
+
+export function addSpacesToCamelCase(name: string): string {
+    return name.replaceAll(/([A-Z|\d+])/g, ' $1').trim();
 }

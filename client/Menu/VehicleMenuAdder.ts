@@ -397,10 +397,11 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
     async getOtherModsMenus(): Promise<MenuMap> {
         const menus: MenuMap = new Map();
+        const menuParent = 'vehicles.mods.other';
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 
         if (!vehicle) {
-            menus.set('vehicle.mods.other', [{
+            menus.set(menuParent, [{
                 text: 'Please enter a vehicle to view mods',
             }]);
 
@@ -433,7 +434,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 });
             }
 
-            const menuKey = `vehicles.mods.other.${type}`;
+            const menuKey = `${menuParent}.${type}`;
 
             menus.set(menuKey, modMenu);
 
@@ -444,7 +445,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         }
 
         modTypeMenu.sort((a, b) => a.text.localeCompare(b.text));
-        menus.set('vehicles.mods.other', modTypeMenu);
+        menus.set(menuParent, modTypeMenu);
 
         return menus;
     }

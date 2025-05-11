@@ -1,4 +1,4 @@
-import getConfig, { Config } from '@common/Config';
+import getConfig from '@common/Config';
 import { VehicleModType } from '@common/Data/ParamEnums';
 import { getModTypeName, getVehicleMods } from '@common/utils';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";

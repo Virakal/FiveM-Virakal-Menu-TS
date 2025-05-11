@@ -1,5 +1,6 @@
 import getConfig, { Config } from '@common/Config';
-import { getVehicleMods } from '@common/utils';
+import { VehicleModType } from '@common/Data/ParamEnums';
+import { getModTypeName, getVehicleMods } from '@common/utils';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
@@ -48,18 +49,38 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.mods.performance', this.getModPerformanceMenu());
         menus.set('vehicles.mods.wheels', this.getModWheelsMenu());
         // menus.set('vehicles.mods.wheels.tyreSmokeColour', this.getCustomColourMenu("vehtyresmokecolour"));
-        // menus = this.addOtherModsMenus(menus);
+        menus = this.addOtherModsMenus(menus);
 
         return menus;
     }
 
     onMenusAdded(): void {
         on('virakalMenu:configChanged', this.onConfigChanged.bind(this));
+        on('virakalMenu:enteredVehicle', this.updateMenus.bind(this));
+        on('virakalMenu:leftVehicle', this.updateMenus.bind(this));
     }
 
     onConfigChanged(key: string, value: string): void {
         if (key === 'RainbowSpeed') {
             this.menuManager.updateAndSend('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
+        }
+    }
+
+    updateMenus() {
+        console.log('um');
+        const menuManager = this.menuManager;
+        // menuManager.updateAndSend('vehicles.appearance.livery', this.getLiveryMenu());
+        // menuManager.updateAndSend('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
+        // menuManager.updateAndSend('vehicles.seats', this.getSeatsMenu());
+        this.onNewVehicleMods(-1, -1);
+    }
+
+    onNewVehicleMods(type: VehicleModType, index: number) {
+        // TODO: Limit this to the specific modtype and index
+        const menus = this.getOtherModsMenus();
+
+        for (const [k, v] of menus.entries()) {
+            this.menuManager.updateAndSend(k, v);
         }
     }
 
@@ -155,6 +176,23 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 configkey: 'SpawnInVehicle',
             },
         ];
+    }
+
+    getSpawnSearchMenu(): MenuItem[] {
+        const config = getConfig();
+
+        const list = [
+            {
+                text: 'Search for a name...',
+                action: 'vehsearch',
+            }
+        ];
+
+        if (config.has('VehicleSpawnSearchTerm')) {
+            const term = config.get('VehicleSpawnSearchTerm');
+        }
+
+        return list;
     }
 
     getRainbowMenu(): MenuItem[] {
@@ -347,5 +385,68 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 action: 'vehmod turbooff',
             },
         ];
+    }
+
+    addOtherModsMenus(menus: MenuMap) {
+        // TODO: If we ever get Node 23+ we can merge the maps with https://github.com/tc39/proposal-set-methods instead
+        for (const [k, v] of this.getOtherModsMenus()) {
+            menus.set(k, v);
+        }
+
+        return menus;
+    }
+
+    getOtherModsMenus(): MenuMap {
+        const menus: MenuMap = new Map();
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (!vehicle) {
+            menus.set('vehicle.mods.other', [{
+                text: 'Please enter a vehicle to view mods',
+            }]);
+
+            return menus;
+        }
+
+        const mods = getVehicleMods(vehicle);
+        const modTypeMenu: MenuItem[] = [];
+
+        for (const [type, currentIndex] of mods) {
+            const typeName = getModTypeName(vehicle, type);
+            const modMenu: MenuItem[] = [];
+
+            for (let index = -1; index < GetNumVehicleMods(vehicle, type); index++) {
+                // TODO: Get localised name
+                // let name = getModName(vehicle, type, index);
+                let name = '';
+
+                if (!name) {
+                    name = `${typeName} ${index}`;
+                }
+
+                if (index === currentIndex) {
+                    name += ' (Current)';
+                }
+
+                modMenu.push({
+                    text: name,
+                    action: `vehmodother ${type}=${index}`,
+                });
+            }
+
+            const menuKey = `vehicles.mods.other.${type}`;
+
+            menus.set(menuKey, modMenu);
+
+            modTypeMenu.push({
+                text: typeName ? typeName : `Unknown mod type ${GetHashKey(typeName)}`,
+                sub: menuKey,
+            });
+        }
+
+        modTypeMenu.sort((a, b) => a.text.localeCompare(b.text));
+        menus.set('vehicles.mods.other', modTypeMenu);
+
+        return menus;
     }
 }

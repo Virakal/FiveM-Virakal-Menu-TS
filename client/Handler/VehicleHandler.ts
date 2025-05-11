@@ -1,6 +1,6 @@
 import getConfig from "@common/Config";
-import { SeatPosition } from "@common/Data/ParamEnums";
-import { delay, invertColour, notify, rainbowRgb } from "@common/utils";
+import { SeatPosition, WindowTitle } from "@common/Data/ParamEnums";
+import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle } from "@common/utils";
 import type Trainer from "Trainer";
 
 const RAINBOW_TICK_DELAY = 100;
@@ -30,7 +30,7 @@ export default class VehicleHandler implements Handler {
 
         // // General
         RegisterNuiCallback('veh', this.onVeh.bind(this));
-        // RegisterNuiCallback('vehspawn', this.onVehSpawn.bind(this));
+        RegisterNuiCallback('vehspawn', this.onVehSpawn.bind(this));
         // RegisterNuiCallback('vehsearch', this.onVehSearch.bind(this));
         // RegisterNuiCallback('vehseat', this.onVehSeat.bind(this));
 
@@ -184,6 +184,30 @@ export default class VehicleHandler implements Handler {
         return cb;
     }
 
+    async onVehSpawn(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const { action, newstate: state } = data;
+        const config = getConfig();
+
+        cb('ok');
+
+        switch (action) {
+            case 'despawn':
+                config.set('AutoDespawnVehicle', state);
+                break;
+            case 'spawninveh':
+                config.set('SpawnInVehicle', state);
+                break;
+            case 'input':
+                this.spawnUserInputVehicle();
+                break;
+            default:
+                spawnVehicle(action);
+                break;
+        }
+
+        return cb;
+    }
+
     onRainbowSpeed(data: NuiData, cb: NuiCallback): NuiCallback {
         const config = getConfig();
         const speed = Number.parseFloat(data.action);
@@ -245,5 +269,18 @@ export default class VehicleHandler implements Handler {
             SetEntityCanBeDamaged(vehicle, !invincible);
             SetVehicleExplodesOnHighExplosionDamage(vehicle, !invincible);
         }
+    }
+
+    async spawnUserInputVehicle() {
+        this.trainer.blockInput = true;
+
+        const model = await getUserInput(64, WindowTitle.FMMC_KEY_TIP8);
+        const vehicle = await spawnVehicle(model);
+
+        // Wait a few frames so that the messagebox doesn't start again immediately
+        await delay(10);
+        this.trainer.blockInput = false;
+
+        return vehicle;
     }
 }

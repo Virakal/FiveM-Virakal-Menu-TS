@@ -1,4 +1,5 @@
 import getConfig, { Config } from '@common/Config';
+import { getVehicleMods } from '@common/utils';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
@@ -15,7 +16,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         // menus.set('vehicles.boostPower', this.getBoostPowerMenu());
 
         // // Add vehicle spawn menus
-        // menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
+        menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
         // menus = this.addSpawnByTypeMenus(menus);
         // menus = this.addSpawnByDlcMenus(menus);
         // menus.set('vehicles.spawn.fun', this.getVehicleSpawnMenu(VehicleList.GetByTag("fun")));

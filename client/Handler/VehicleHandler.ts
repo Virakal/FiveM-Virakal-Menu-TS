@@ -138,7 +138,7 @@ export default class VehicleHandler implements Handler {
                 }
 
                 break;
-            case 'rainbowcar':
+            case 'rainbowchrome':
                 config.set('RainbowChrome', state);
 
                 if (state) {

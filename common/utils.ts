@@ -2,7 +2,7 @@ export type Colour = [r: number, g: number, b: number];
 
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
-import { OnScreenKeyboardStatus, SeatPosition, WindowTitle } from "Data/ParamEnums";
+import getConfig from "Config";
 
 export type Model = number | string;
 
@@ -236,4 +236,88 @@ export function getPedVehicleSeat(ped: number): number | null {
     }
 
     return null;
+}
+
+export async function spawnVehicle(model: Model): Promise<number> {
+    const config = getConfig();
+    const ped = PlayerPedId();
+    const playerVehicle = GetVehiclePedIsUsing(ped);
+    let position = Vector3.fromArray(GetEntityCoords(ped, true));
+
+    if (!config.getBool('SpawnInVehicle')) {
+        position = position.withOffsets(2.5, 2.5, 1);
+    }
+
+    const vehicle = await withModel(model, (model, loaded) => {
+        if (!loaded) {
+            notify(`~r~Failed to load vehicle model ${model}!`);
+            return 0;
+        }
+
+        const { x, y, z } = position;
+        const playerHeading = GetEntityHeading(ped);
+
+        return CreateVehicle(model, x, y, z, playerHeading, true, false);
+    });
+
+    if (!vehicle) {
+        notify(`~r~Failed to load vehicle model ${model}!`);
+        return 0;
+    }
+
+    if (config.getBool('SpawnInVehicle')) {
+        SetPedIntoVehicle(ped, vehicle, SeatPosition.SF_FrontDriverSide);
+
+        if (playerVehicle) {
+            if (config.getBool('MaintainVehicleVelocityOnSwitch')) {
+                SetVehicleEngineOn(vehicle, true, true, false);
+                SetVehicleSteeringAngle(vehicle, GetVehicleSteeringAngle(vehicle));
+                SetEntityVelocity.apply(null, [vehicle, ...GetEntityVelocity(playerVehicle)]);
+                SetVehicleCurrentRpm(vehicle, GetVehicleCurrentRpm(playerVehicle));
+                SetEntityHeading(vehicle, GetEntityHeading(playerVehicle));
+                SetVehicleHighGear(vehicle, GetVehicleHighGear(playerVehicle));
+                SetEntityRotation.apply(null, [vehicle, ...GetEntityRotation(playerVehicle, 0), 0, false]);
+            }
+
+            setImmediate(() => {
+                transferVehiclePassengers(playerVehicle, vehicle);
+                DeleteVehicle(playerVehicle);
+            });
+        }
+    }
+
+    notify(`~g~Spawned vehicle '${GetDisplayNameFromVehicleModel(model)}'.`);
+    return vehicle;
+}
+
+/**
+ * Attempt to move all passengers from one vehicle to another
+ *
+ * @param from the vehicle to move passengers from
+ * @param to the vehicle to move passengers to
+ * @returns true if there was enough space to move everybody
+ */
+export function transferVehiclePassengers(from: number, to: number): boolean {
+    const toPassengerCount = GetVehicleNumberOfPassengers(to);
+    const toMaxPassengers = GetVehicleMaxNumberOfPassengers(to);
+    const fromSeatCount = GetVehicleModelNumberOfSeats(GetEntityModel(from));
+
+    let amountSeated = toPassengerCount;
+
+    // Seats start at -1, for driver
+    for (let seat = -1; seat < (fromSeatCount - 1); seat++) {
+        const pedInSeat = GetPedInVehicleSeat(from, seat);
+
+        if (pedInSeat) {
+            SetPedIntoVehicle(pedInSeat, to, SeatPosition.FirstAvailable);
+            amountSeated++;
+        }
+
+        // We've run out of space
+        if (amountSeated > toMaxPassengers) {
+            return false;
+        }
+    }
+
+    return true;
 }

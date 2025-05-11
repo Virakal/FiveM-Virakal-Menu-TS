@@ -59,7 +59,7 @@ export default class VehicleHandler implements Handler {
         // RegisterNuiCallback('vehneon', this.onVehNeon.bind(this));
         // RegisterNuiCallback('vehtyresmokecolour', this.onVehTyreSmokeColour.bind(this));
         // RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
-        // RegisterNuiCallback('vehmodother', this.onVehModOther.bind(this));
+        RegisterNuiCallback('vehmodother', this.onVehModOther.bind(this));
 
         // // Boost
         // RegisterNuiCallback('boostpower', this.onBoostPower.bind(this));
@@ -219,6 +219,24 @@ export default class VehicleHandler implements Handler {
         } else {
             this.rainbowSpeed = 0.5;
             notify(`~r~Error setting rainbow speed! Set to ${this.rainbowSpeed * 100}`);
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehModOther(data: NuiData, cb: NuiCallback): NuiCallback {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            const { action } = data;
+            const [modType, index] = action.split('=').map((i) => Number.parseInt(i, 10));
+
+            // You have to call this before setting a mod for some reason
+            SetVehicleModKit(vehicle, 0);
+            SetVehicleMod(vehicle, modType, index, GetVehicleModVariation(modType, index));
+
+            emit('virakalMenu:vehicleModsChanged', modType, index);
         }
 
         cb('ok');

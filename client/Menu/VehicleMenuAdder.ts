@@ -67,7 +67,6 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
     }
 
     updateMenus() {
-        console.log('um');
         const menuManager = this.menuManager;
         // menuManager.updateAndSend('vehicles.appearance.livery', this.getLiveryMenu());
         // menuManager.updateAndSend('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());

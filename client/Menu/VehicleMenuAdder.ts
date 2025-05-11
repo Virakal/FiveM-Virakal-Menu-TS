@@ -5,7 +5,7 @@ import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
 export default class VehicleMenuAdder extends BaseMenuAdder {
-    add(menus: MenuMap): MenuMap {
+    async add(menus: MenuMap): Promise<MenuMap> {
         menus.set('vehicles', this.getVehiclesMenu());
 
         menus.set('vehicles.spawn', this.getSpawnMenu());
@@ -49,7 +49,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.mods.performance', this.getModPerformanceMenu());
         menus.set('vehicles.mods.wheels', this.getModWheelsMenu());
         // menus.set('vehicles.mods.wheels.tyreSmokeColour', this.getCustomColourMenu("vehtyresmokecolour"));
-        menus = this.addOtherModsMenus(menus);
+        menus = await this.addOtherModsMenus(menus);
 
         return menus;
     }
@@ -74,11 +74,11 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         this.onNewVehicleMods(-1, -1);
     }
 
-    onNewVehicleMods(type: VehicleModType, index: number) {
+    async onNewVehicleMods(type: VehicleModType, index: number) {
         // TODO: Limit this to the specific modtype and index
-        const menus = this.getOtherModsMenus();
+        const menus = await this.getOtherModsMenus();
 
-        for (const [k, v] of menus.entries()) {
+        for (const [k, v] of menus) {
             this.menuManager.updateAndSend(k, v);
         }
     }
@@ -386,16 +386,16 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         ];
     }
 
-    addOtherModsMenus(menus: MenuMap) {
+    async addOtherModsMenus(menus: MenuMap) {
         // TODO: If we ever get Node 23+ we can merge the maps with https://github.com/tc39/proposal-set-methods instead
-        for (const [k, v] of this.getOtherModsMenus()) {
+        for (const [k, v] of await this.getOtherModsMenus()) {
             menus.set(k, v);
         }
 
         return menus;
     }
 
-    getOtherModsMenus(): MenuMap {
+    async getOtherModsMenus(): Promise<MenuMap> {
         const menus: MenuMap = new Map();
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 
@@ -411,7 +411,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         const modTypeMenu: MenuItem[] = [];
 
         for (const [type, currentIndex] of mods) {
-            const typeName = getModTypeName(vehicle, type);
+            const typeName = await getModTypeName(vehicle, type);
             const modMenu: MenuItem[] = [];
 
             for (let index = -1; index < GetNumVehicleMods(vehicle, type); index++) {

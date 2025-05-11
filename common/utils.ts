@@ -345,12 +345,29 @@ export function getLocalisedName(gxtEntry: string): string {
     return DoesTextLabelExist(gxtEntry) ? GetLabelText(gxtEntry) : '';
 }
 
-export function getModTypeName(vehicle: number, modType: VehicleModType): string {
-    if (!HasThisAdditionalTextLoaded('mod_mnu', 10)) {
-        ClearAdditionalText(10, true);
-        RequestAdditionalText('mod_mnu', 10);
+export async function loadTranslationText(key: string, slot: number, timeout = 1000): Promise<boolean> {
+    if (HasThisAdditionalTextLoaded(key, slot)) {
+        return true;
     }
 
+    const end = GetGameTimer() + timeout;
+
+    ClearAdditionalText(slot, true);
+    RequestAdditionalText(key, slot);
+
+    while (GetGameTimer() < end) {
+        if (HasThisAdditionalTextLoaded(key, slot)) {
+            return true;
+        }
+
+        await delay(0);
+    }
+
+    return false;
+}
+
+export async function getModTypeName(vehicle: number, modType: VehicleModType): Promise<string> {
+    await loadTranslationText('mod_mnu', 10);
     const name = getModTypeNameInternal(vehicle, modType);
 
     return name ?? ``;

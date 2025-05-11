@@ -1,7 +1,10 @@
 export type Colour = [r: number, g: number, b: number];
+export type ModList = Map<VehicleModType, number>;
+
 
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
+import { OnScreenKeyboardStatus, SeatPosition, VehicleModType, WindowTitle } from "Data/ParamEnums";
 import getConfig from "Config";
 
 export type Model = number | string;
@@ -236,6 +239,21 @@ export function getPedVehicleSeat(ped: number): number | null {
     }
 
     return null;
+}
+
+export function getVehicleMods(vehicle: number): ModList {
+    // We divide by 2 because enums compile to have a reverse mapping
+    const mods: ModList = new Map();
+
+    for (const key of Object.values(VehicleModType)) {
+        if (typeof key === 'string') {
+            continue;
+        }
+
+        mods.set(key, GetVehicleMod(vehicle, key));
+    }
+
+    return mods;
 }
 
 export async function spawnVehicle(model: Model): Promise<number> {

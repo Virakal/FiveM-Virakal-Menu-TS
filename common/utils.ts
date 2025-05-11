@@ -251,6 +251,10 @@ export function getVehicleMods(vehicle: number): ModList {
             continue;
         }
 
+        if (GetNumVehicleMods(vehicle, key) < 1) {
+            continue;
+        }
+
         mods.set(key, GetVehicleMod(vehicle, key));
     }
 

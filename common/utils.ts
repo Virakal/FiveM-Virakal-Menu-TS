@@ -114,22 +114,23 @@ export function teleportPedWithVehicle(ped: number, position: Vector3, noOffsets
     setEntityPosition(entity, position, false, false, false, noOffsets);
 }
 
-export async function withModel(model: Model, callback: (model: Model, loaded: boolean) => any, timeoutMs: number = 5000) {
-    async function* context(callback: (model: Model, loaded: boolean) => any): AsyncGenerator<CitizenImmediate> {
+export async function withModel<T>(model: Model, callback: (model: Model, loaded: boolean) => T, timeoutMs: number = 5000): Promise<T> {
+    async function* context(callback: (model: Model, loaded: boolean) => T): AsyncGenerator<T> {
         try {
             const loaded = await loadModel(model, timeoutMs);
+            await delay(0);
 
             if (isPromise(callback)) {
-                yield setImmediate(async () => await callback(model, loaded));
+                yield await callback(model, loaded);
             } else {
-                yield setImmediate(() => callback(model, loaded));
+                yield callback(model, loaded);
             }
         } finally {
             SetModelAsNoLongerNeeded(model);
         }
     }
 
-    return await context(callback).next();
+    return (await context(callback).next()).value;
 }
 
 export function getWaypoint(): number | null {

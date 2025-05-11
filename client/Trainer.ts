@@ -9,6 +9,7 @@ import UIHandler from "Handler/UIHandler";
 import VehicleHandler from "Handler/VehicleHandler";
 import MenuManager from "MenuManager";
 import { notify, sendUIMessage } from "@common/utils";
+import Events from "Events";
 
 // const KEY_TOGGLE_MENU = 167; // temp disabled - F6
 const KEY_TOGGLE_MENU = 168; // F7
@@ -36,6 +37,7 @@ export default class Trainer {
     onLoad() {
         this.registerHandlers();
 
+        new Events();
         new ConfigCommsManager();
 
         RegisterNuiCallback('trainerclose', this.onTrainerClose.bind(this));

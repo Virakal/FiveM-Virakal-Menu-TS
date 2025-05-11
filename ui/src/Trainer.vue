@@ -96,6 +96,8 @@
             window.addEventListener('message', this.handleMessage, {
                 passive: true,
             });
+
+            this.sendData('uiReady');
         }
 
         async sendData(name: string, data: any = {}): Promise<Response> {

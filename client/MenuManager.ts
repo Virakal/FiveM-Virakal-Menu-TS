@@ -10,6 +10,7 @@ import "Menu/UIMenuAdder";
 import "Menu/VehicleMenuAdder";
 import "Menu/WeaponsMenuAdder";
 import { delay, sendUIMessage } from "@common/utils";
+import isPromise from "is-promise";
 
 export default class MenuManager {
     menu: MenuMap = new Map();
@@ -31,9 +32,9 @@ export default class MenuManager {
         on('virakalMenu:configFetched', () => this.onConfigFetched())
     }
 
-    onConfigFetched() {
+    async onConfigFetched() {
         console.log('Config fetched');
-        this.initMenus();
+        await this.initMenus();
         this.sendAllMenus();
     }
 
@@ -68,9 +69,15 @@ export default class MenuManager {
         }
     }
 
-    private initMenus() {
+    private async initMenus() {
         for (const adder of this.menuAdders) {
-            this.menu = adder.add(this.menu);
+            let menu = adder.add(this.menu);
+
+            if (isPromise(menu)) {
+                menu = await menu;
+            }
+
+            this.menu = menu;
         }
 
         console.log(`Done adding menus: ${this.menu.size} menus.`);

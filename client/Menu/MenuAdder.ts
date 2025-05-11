@@ -1,7 +1,7 @@
 import MenuManager from "MenuManager";
 
 export interface MenuAdder {
-    add(menus: MenuMap): MenuMap
+    add(menus: MenuMap): MenuMap | Promise<MenuMap>
     setManager?(menuManager: MenuManager): void
     onMenusAdded?(): void;
 }
@@ -32,5 +32,5 @@ export abstract class BaseMenuAdder implements MenuAdder {
         this.menuManager = menuManager
     }
 
-    abstract add(menus: MenuMap): MenuMap;
+    abstract add(menus: MenuMap): MenuMap | Promise<MenuMap>;
 }

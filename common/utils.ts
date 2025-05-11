@@ -346,9 +346,9 @@ export function getLocalisedName(gxtEntry: string): string {
 }
 
 export function getModTypeName(vehicle: number, modType: VehicleModType): string {
-    if (!HasThisAdditionalTextLoaded("mod_mnu", 10)) {
+    if (!HasThisAdditionalTextLoaded('mod_mnu', 10)) {
         ClearAdditionalText(10, true);
-        RequestAdditionalText("mod_mnu", 10);
+        RequestAdditionalText('mod_mnu', 10);
     }
 
     const name = getModTypeNameInternal(vehicle, modType);

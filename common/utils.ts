@@ -339,3 +339,7 @@ export function transferVehiclePassengers(from: number, to: number): boolean {
 
     return true;
 }
+
+export function getLocalisedName(gxtEntry: string): string {
+    return DoesTextLabelExist(gxtEntry) ? GetLabelText(gxtEntry) : '';
+}

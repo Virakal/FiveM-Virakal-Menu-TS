@@ -2,7 +2,7 @@ export type Colour = [r: number, g: number, b: number];
 
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
-import { SeatPosition } from "Data/ParamEnums";
+import { OnScreenKeyboardStatus, SeatPosition, WindowTitle } from "Data/ParamEnums";
 
 export type Model = number | string;
 
@@ -62,6 +62,20 @@ export async function loadAnimDict(animation: string, timeoutMs = 5000): Promise
 
 export function sendUIMessage(message: object) {
     SendNUIMessage(message);
+}
+
+export async function getUserInput(maxLength: number, windowTitle = WindowTitle.FMMC_KEY_TIP8, defaultText = '') {
+    showKeyboard(maxLength, windowTitle, defaultText);
+
+    while (UpdateOnscreenKeyboard() === OnScreenKeyboardStatus.OSK_PENDING) {
+        await delay(0);
+    }
+
+    return GetOnscreenKeyboardResult();
+}
+
+export function showKeyboard(maxLength: number, windowTitle = WindowTitle.FMMC_KEY_TIP8, defaultText = '') {
+    DisplayOnscreenKeyboard(1, windowTitle.toString(), null, defaultText, null, null, null, maxLength + 1)
 }
 
 export function delay(ms: number): Promise<CitizenTimer> {

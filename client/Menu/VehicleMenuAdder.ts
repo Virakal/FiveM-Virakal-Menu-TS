@@ -1,6 +1,6 @@
 import getConfig from '@common/Config';
 import { VehicleModType } from '@common/Data/ParamEnums';
-import { getModTypeName, getVehicleMods } from '@common/utils';
+import { getModName, getModTypeName, getVehicleMods } from '@common/utils';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 @MenuAdder.register
@@ -416,9 +416,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             const modMenu: MenuItem[] = [];
 
             for (let index = -1; index < GetNumVehicleMods(vehicle, type); index++) {
-                // TODO: Get localised name
-                // let name = getModName(vehicle, type, index);
-                let name = '';
+                let name = await getModName(vehicle, type, index);
 
                 if (!name) {
                     name = `${typeName} ${index}`;

@@ -444,7 +444,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             });
         }
 
-        modTypeMenu.sort((a, b) => a.text.localeCompare(b.text));
+        modTypeMenu.sort((a, b) => a.text.toLocaleLowerCase().localeCompare(b.text.toLocaleLowerCase()));
         menus.set(menuParent, modTypeMenu);
 
         return menus;

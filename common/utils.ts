@@ -19,8 +19,10 @@ export function notify(message: string, isImportant = false, showOnInfoTab = fal
     DrawNotification(isImportant, showOnInfoTab);
 }
 
-export async function loadModel(model: Model, timeoutMs = 5000): Promise<boolean> {
-    console.log(`Loading model ${model}...`);
+export async function loadModel(model: Model, timeoutMs = 5000, silent = true): Promise<boolean> {
+    if (!silent) {
+        console.log(`Loading model ${model}...`);
+    }
 
     const timeout = Date.now() + timeoutMs;
 
@@ -35,7 +37,9 @@ export async function loadModel(model: Model, timeoutMs = 5000): Promise<boolean
         }
     }
 
-    console.log(`Loaded model ${model}...`);
+    if (!silent) {
+        console.log(`Loaded model ${model}...`);
+    }
 
     return true;
 }

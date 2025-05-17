@@ -7,6 +7,7 @@ import Vector3 from "Vector3";
 import { OnScreenKeyboardStatus, SeatPosition, VehicleModType, WindowTitle } from "Data/ParamEnums";
 import getConfig from "Config";
 import { VehicleHash } from "Data/VehicleHash";
+import { VehicleHorn, VehicleHornName } from "Data/VehicleHorns";
 
 export type Model = number | string;
 
@@ -372,6 +373,91 @@ export async function loadTranslationText(key: string, slot: number, timeout = 1
     }
 
     return false;
+}
+
+export async function getModName(vehicle: number, modType: VehicleModType, index: number): Promise<string> {
+    const modCount = GetNumVehicleMods(vehicle, modType);
+
+    if (!modCount || modCount < -1 || index > modCount) {
+        return null;
+    }
+
+    const model = GetEntityModel(vehicle)
+
+    await Promise.all([
+        loadModel(model, 1000),
+        loadTranslationText('mod_mnu', 10),
+    ]);
+
+    if (modType === VehicleModType.Horns) {
+        if (DoesTextLabelExist(VehicleHorn[index])) {
+            return translate(VehicleHorn[index]);
+        }
+
+        return VehicleHornName[index];
+    }
+
+    if ([VehicleModType.FrontWheel, VehicleModType.RearWheel].includes(modType)) {
+        if (index === -1) {
+            if (!IsThisModelABike(model) && IsThisModelABicycle(model)) {
+                return translate('CMOD_WHE_0');
+            } else {
+                return translate('CMOD_WHE_B_0');
+            }
+        }
+
+        const name = GetModTextLabel(vehicle, modType, index);
+
+        if (index >= modCount / 2) {
+            return `${translate('CHROME')} ${name}`;
+        }
+
+        return name;
+    }
+
+    switch (modType) {
+        case VehicleModType.Armor:
+            return translate(`CMOD_ARM_${index + 1}`);
+        case VehicleModType.Brakes:
+            return translate(`CMOD_BRA_${index + 1}`);
+        case VehicleModType.Engine:
+            return index === -1 ? translate('CMOD_ARM_0') : translate(`CMOD_ENG_${index + 2}`);
+        case VehicleModType.Suspension:
+            return translate(`CMOD_SUS_${index + 1}`);
+        case VehicleModType.Transmission:
+            return translate(`CMOD_GBX_${index + 1}`);
+    }
+
+    if (index === -1) {
+        switch (modType) {
+            case VehicleModType.AirFilter:
+                // TODO: NYI - The C# API doesn't do anything for this
+                break;
+            case VehicleModType.Struts:
+                switch (model) {
+                    case VehicleHash.Banshee:
+                    case VehicleHash.Banshee2:
+                    case VehicleHash.SultanRS:
+                        return translate('CMOD_COL5_41');
+                }
+
+                break;
+        }
+
+        return translate('CMOD_DEF_0');
+    }
+
+    let label = GetModTextLabel(vehicle, modType, index);
+
+    if (DoesTextLabelExist(label)) {
+        label = translate(label);
+
+        if (label && label.toLocaleLowerCase() !== 'null') {
+            return label;
+        }
+    }
+
+    return `${await getModTypeName(vehicle, modType)} ${index + 1}`;
 }
 
 export async function getModTypeName(vehicle: number, modType: VehicleModType): Promise<string> {

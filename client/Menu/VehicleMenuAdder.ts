@@ -439,7 +439,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             menus.set(menuKey, modMenu);
 
             modTypeMenu.push({
-                text: typeName ? typeName : `Unknown mod type ${GetHashKey(typeName)}`,
+                text: typeName ? typeName : `Unknown mod type ${typeName}`,
                 sub: menuKey,
             });
         }

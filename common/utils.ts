@@ -349,7 +349,7 @@ export function transferVehiclePassengers(from: number, to: number): boolean {
     return true;
 }
 
-export function getLocalisedName(gxtEntry: string): string {
+export function translate(gxtEntry: string): string {
     return DoesTextLabelExist(gxtEntry) ? GetLabelText(gxtEntry) : '';
 }
 
@@ -386,120 +386,120 @@ function getModTypeNameInternal(vehicle: number, modType: VehicleModType): strin
 
     switch (modType) {
         case VehicleModType.Armor:
-            return getLocalisedName('CMOD_MOD_ARM');
+            return translate('CMOD_MOD_ARM');
         case VehicleModType.Brakes:
-            return getLocalisedName('CMOD_MOD_BRA');
+            return translate('CMOD_MOD_BRA');
         case VehicleModType.Engine:
-            return getLocalisedName('CMOD_MOD_ENG');
+            return translate('CMOD_MOD_ENG');
         case VehicleModType.Suspension:
-            return getLocalisedName('CMOD_MOD_SUS');
+            return translate('CMOD_MOD_SUS');
         case VehicleModType.Transmission:
-            return getLocalisedName('CMOD_MOD_TRN');
+            return translate('CMOD_MOD_TRN');
         case VehicleModType.Horns:
-            return getLocalisedName('CMOD_MOD_HRN');
+            return translate('CMOD_MOD_HRN');
         case VehicleModType.FrontWheel:
             if (!IsThisModelABike(model) && IsThisModelABicycle(model)) {
-                return getLocalisedName('CMOD_MOD_WHEM') ?? 'Wheels';
+                return translate('CMOD_MOD_WHEM') ?? 'Wheels';
             }
 
-            return getLocalisedName('CMOD_WHE0_0');
+            return translate('CMOD_WHE0_0');
         case VehicleModType.RearWheel:
-            return getLocalisedName('CMOD_WHE0_1');
+            return translate('CMOD_WHE0_1');
 
         // Bennys
         case VehicleModType.PlateHolder:
-            return getLocalisedName('CMM_MOD_S0');
+            return translate('CMM_MOD_S0');
         case VehicleModType.VanityPlates:
-            return getLocalisedName('CMM_MOD_S1');
+            return translate('CMM_MOD_S1');
         case VehicleModType.TrimDesign:
             if (model === VehicleHash.SultanRS) {
-                return getLocalisedName('CMM_MOD_S2b');
+                return translate('CMM_MOD_S2b');
             }
 
-            return getLocalisedName('CMM_MOD_S2');
+            return translate('CMM_MOD_S2');
         case VehicleModType.Ornaments:
-            return getLocalisedName('CMM_MOD_S3');
+            return translate('CMM_MOD_S3');
         case VehicleModType.Dashboard:
-            return getLocalisedName('CMM_MOD_S4');
+            return translate('CMM_MOD_S4');
         case VehicleModType.DialDesign:
-            return getLocalisedName('CMM_MOD_S5');
+            return translate('CMM_MOD_S5');
         case VehicleModType.DoorSpeakers:
-            return getLocalisedName('CMM_MOD_S6');
+            return translate('CMM_MOD_S6');
         case VehicleModType.Seats:
-            return getLocalisedName('CMM_MOD_S7');
+            return translate('CMM_MOD_S7');
         case VehicleModType.SteeringWheels:
-            return getLocalisedName('CMM_MOD_S8');
+            return translate('CMM_MOD_S8');
         case VehicleModType.ColumnShifterLevers:
-            return getLocalisedName('CMM_MOD_S9');
+            return translate('CMM_MOD_S9');
         case VehicleModType.Plaques:
-            return getLocalisedName('CMM_MOD_S10');
+            return translate('CMM_MOD_S10');
         case VehicleModType.Speakers:
-            return getLocalisedName('CMM_MOD_S11');
+            return translate('CMM_MOD_S11');
         case VehicleModType.Trunk:
-            return getLocalisedName('CMM_MOD_S12');
+            return translate('CMM_MOD_S12');
         case VehicleModType.Hydraulics:
-            return getLocalisedName('CMM_MOD_S13');
+            return translate('CMM_MOD_S13');
         case VehicleModType.EngineBlock:
-            return getLocalisedName('CMM_MOD_S14');
+            return translate('CMM_MOD_S14');
         case VehicleModType.AirFilter:
             if (model === VehicleHash.SultanRS) {
-                return getLocalisedName('CMM_MOD_S15b');
+                return translate('CMM_MOD_S15b');
             }
 
-            return getLocalisedName('CMM_MOD_S15');
+            return translate('CMM_MOD_S15');
         case VehicleModType.Struts:
             if (model === VehicleHash.SultanRS || model === VehicleHash.Banshee2) {
-                return getLocalisedName('CMM_MOD_S16b');
+                return translate('CMM_MOD_S16b');
             }
 
-            return getLocalisedName('CMM_MOD_S16');
+            return translate('CMM_MOD_S16');
         case VehicleModType.ArchCover:
             if (model === VehicleHash.SultanRS) {
-                return getLocalisedName('CMM_MOD_S17b');
+                return translate('CMM_MOD_S17b');
             }
 
-            return getLocalisedName('CMM_MOD_S17');
+            return translate('CMM_MOD_S17');
         case VehicleModType.Aerials:
             if (model === VehicleHash.SultanRS) {
-                return getLocalisedName('CMM_MOD_S18b');
+                return translate('CMM_MOD_S18b');
             } else if (model === VehicleHash.BType3) {
-                return getLocalisedName('CMM_MOD_S18c');
+                return translate('CMM_MOD_S18c');
             }
 
-            return getLocalisedName('CMM_MOD_S18');
+            return translate('CMM_MOD_S18');
         case VehicleModType.Trim:
             if (model === VehicleHash.SultanRS) {
-                return getLocalisedName('CMM_MOD_S19b');
+                return translate('CMM_MOD_S19b');
             } else if (model === VehicleHash.BType3) {
-                return getLocalisedName('CMM_MOD_S19c');
+                return translate('CMM_MOD_S19c');
             } else if (model === VehicleHash.Virgo2) {
-                return getLocalisedName('CMM_MOD_S19d');
+                return translate('CMM_MOD_S19d');
             }
 
-            return getLocalisedName('CMM_MOD_S19');
+            return translate('CMM_MOD_S19');
         case VehicleModType.Tank:
             if (model === VehicleHash.SlamVan3) {
-                return getLocalisedName('CMM_MOD_S27');
+                return translate('CMM_MOD_S27');
             }
 
-            return getLocalisedName('CMM_MOD_S20');
+            return translate('CMM_MOD_S20');
         case VehicleModType.Windows:
             if (model === VehicleHash.BType3) {
-                return getLocalisedName('CMM_MOD_S21b');
+                return translate('CMM_MOD_S21b');
             }
 
-            return getLocalisedName('CMM_MOD_S21');
+            return translate('CMM_MOD_S21');
         case 47 as VehicleModType:
             if (model === VehicleHash.SlamVan3) {
-                return getLocalisedName('SLVAN3_RDOOR');
+                return translate('SLVAN3_RDOOR');
             }
 
-            return getLocalisedName('CMM_MOD_S22');
+            return translate('CMM_MOD_S22');
         case VehicleModType.Livery:
-            return getLocalisedName('CMM_MOD_S23');
+            return translate('CMM_MOD_S23');
         default:
             const name = GetModSlotName(vehicle, modType);
-            return getLocalisedName(name) || addSpacesToCamelCase(VehicleModType[modType]);
+            return translate(name) || addSpacesToCamelCase(VehicleModType[modType]);
     }
 }
 

@@ -21,7 +21,7 @@ export default class Events {
             this.lastVehicle = 0;
         } else if (vehicle !== this.lastVehicle) {
             console.log(`Got new vehicle ${vehicle} instead of ${this.lastVehicle}`);
-            emit('virakal:enteredVehicle', vehicle, this.lastVehicle);
+            emit('virakalMenu:enteredVehicle', vehicle, this.lastVehicle);
             this.lastVehicle = vehicle;
         }
 

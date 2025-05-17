@@ -58,6 +58,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         on('virakalMenu:configChanged', this.onConfigChanged.bind(this));
         on('virakalMenu:enteredVehicle', this.updateMenus.bind(this));
         on('virakalMenu:leftVehicle', this.updateMenus.bind(this));
+        on('virakalMenu:vehicleModsChanged', this.onNewVehicleMods.bind(this));
     }
 
     onConfigChanged(key: string, value: string): void {

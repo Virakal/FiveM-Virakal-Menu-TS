@@ -409,6 +409,7 @@ export default class VehicleHandler implements Handler {
 			);
 		} else {
 			const name = await getLiveryName(vehicle, liveryId);
+			SetVehicleLivery(vehicle, liveryId);
 
 			if (name) {
 				console.log(
@@ -420,8 +421,6 @@ export default class VehicleHandler implements Handler {
 				);
 			}
 		}
-
-		await this.changeCustomColours(vehicle, data.action, false, true);
 
 		cb('ok');
 		return cb;

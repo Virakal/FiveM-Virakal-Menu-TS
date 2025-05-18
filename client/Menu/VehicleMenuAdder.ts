@@ -50,7 +50,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
         // // Add mods menus
         menus.set('vehicles.mods.lights', this.getModLightsMenu());
-        // menus.set('vehicles.mods.lights.neonColour', this.getCustomColourMenu("vehneon"));
+        menus.set('vehicles.mods.lights.neonColour', this.getCustomColourMenu('vehneon'));
         menus.set('vehicles.mods.performance', this.getModPerformanceMenu());
         menus.set('vehicles.mods.wheels', this.getModWheelsMenu());
         // menus.set('vehicles.mods.wheels.tyreSmokeColour', this.getCustomColourMenu("vehtyresmokecolour"));

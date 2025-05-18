@@ -1,7 +1,7 @@
 import getConfig from "@common/Config";
 import { Control } from "@common/Data/Controls";
-import { SeatPosition, VehicleColor, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
-import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle, stringToColour, translate } from "@common/utils";
+import { SeatPosition, VehicleColor, VehicleModType } from "@common/Data/ParamEnums";
+import { delay, getUserInput, getUserInputColour, invertColour, notify, rainbowRgb, spawnVehicle, stringToColour, translate } from "@common/utils";
 import getGarage from "Garage";
 import type Trainer from "Trainer";
 
@@ -378,7 +378,7 @@ export default class VehicleHandler implements Handler {
         return cb;
     }
 
-    onVehNeon(data: NuiData, cb: NuiCallback): NuiCallback {
+    async onVehNeon(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
         const { action } = data;
 
@@ -389,7 +389,10 @@ export default class VehicleHandler implements Handler {
             return cb;
         }
 
-        if (action === 'allon') {
+        if (action === 'input') {
+            const colour = await getUserInputColour();
+            SetVehicleNeonLightsColour.apply(null, [vehicle, ...colour]);
+        } else if (action === 'allon') {
             for (let i = 0; i < 4; i++) {
                 SetVehicleNeonLightEnabled(vehicle, i, true);
             }

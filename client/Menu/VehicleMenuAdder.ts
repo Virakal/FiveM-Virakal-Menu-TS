@@ -1,5 +1,6 @@
 import getConfig from '@common/Config';
 import { CustomColour } from '@common/Data/CustomColour';
+import { Dlc, DlcName } from '@common/Data/Dlc';
 
 import {
 	LicensePlateStyle,
@@ -51,7 +52,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		// Add vehicle spawn menus
 		menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
 		this.addSpawnByTypeMenus(menus);
-		// this.addSpawnByDlcMenus(menus);
+		this.addSpawnByDlcMenus(menus);
 		menus.set(
 			'vehicles.spawn.fun',
 			this.getVehicleSpawnMenu(getVehicles().getByTag('fun')),
@@ -929,6 +930,39 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
 			baseMenu.push({
 				text: addSpacesToCamelCase(className),
+				sub: name,
+			});
+		}
+
+		for (const key of Object.keys(menu).sort()) {
+			menus.set(key, menu[key]);
+		}
+
+		menus.set(prefix, baseMenu);
+	}
+
+	addSpawnByDlcMenus(menus: MenuMap) {
+		const vehicles = getVehicles();
+		const menu: Record<string, MenuItem[]> = {};
+		const baseMenu: MenuItem[] = [];
+		const prefix = 'vehicles.spawn.dlc';
+
+		for (const [className, id] of Object.entries(Dlc)) {
+			if (typeof id === 'string') {
+				continue;
+			}
+
+			const name = `${prefix}.${className.toLocaleLowerCase()}`;
+			menu[name] = this.getVehicleSpawnMenu(vehicles.getByDlc(id));
+
+			if (menu[name].length === 0) {
+				menu[name] = [{
+					text: 'No vehicles from this DLC added yet',
+				}];
+			}
+
+			baseMenu.push({
+				text: DlcName[id],
 				sub: name,
 			});
 		}

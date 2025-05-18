@@ -1,6 +1,6 @@
 import getConfig from '@common/Config';
 import { CustomColour } from '@common/Data/CustomColour';
-import { LicensePlateStyle, VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat } from '@common/Data/ParamEnums';
+import { LicensePlateStyle, VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat, VehicleWindowTint } from '@common/Data/ParamEnums';
 import type { MenuItem, MenuMap } from '@common/Menu';
 import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, hexToColour, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
@@ -31,7 +31,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());
         menus.set('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
         menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
-        // menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
+        menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
         // menus.set('vehicles.appearance.livery', this.getLiveryMenu());
         // menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
         // menus.set('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
@@ -263,6 +263,23 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             text: 'Change Text',
             action: 'vehplatetext',
         });
+
+        return list;
+    }
+
+    getWindowTintMenu(): MenuItem[] {
+        const list: MenuItem[] = [];
+
+        for (const [key, value] of Object.entries(VehicleWindowTint)) {
+            if (typeof value !== 'string') {
+                continue;
+            }
+
+            list.push({
+                text: addSpacesToCamelCase(value),
+                action: `vehtint ${key}`,
+            });
+        }
 
         return list;
     }

@@ -53,7 +53,7 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehrim', this.onVehRim.bind(this));
         RegisterNuiCallback('vehdashcolour', this.onVehDashColour.bind(this));
         RegisterNuiCallback('vehtrimcolour', this.onVehTrimColour.bind(this));
-        // RegisterNuiCallback('vehtint', this.onVehTint.bind(this));
+        RegisterNuiCallback('vehtint', this.onVehTint.bind(this));
         // RegisterNuiCallback('vehcolourcombo', this.onVehColourCombo.bind(this));
         RegisterNuiCallback('rainbowspeed', this.onRainbowSpeed.bind(this));
         RegisterNuiCallback('vehplatetext', this.onVehPlateText.bind(this));
@@ -368,6 +368,21 @@ export default class VehicleHandler implements Handler {
         if (vehicle) {
             SetVehicleModKit(vehicle, 0);
             SetVehicleInteriorColour(vehicle, Number.parseInt(colour));
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehTint(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleModKit(vehicle, 0);
+            SetVehicleWindowTint(vehicle, Number.parseInt(action));
         } else {
             notify('~r~Not in a vehicle!');
         }

@@ -300,23 +300,37 @@ export async function spawnVehicle(model: Model): Promise<number> {
     }
 
     if (config.getBool('SpawnInVehicle')) {
+        let steeringAngle;
+        let velocity;
+        let rpm;
+        let heading;
+        let highGear;
+        let rotation;
+
+        if (playerVehicle) {
+            steeringAngle = GetVehicleSteeringAngle(vehicle);
+            velocity = GetEntityVelocity(playerVehicle);
+            rpm = GetVehicleCurrentRpm(playerVehicle);
+            heading = GetEntityHeading(playerVehicle);
+            highGear = GetVehicleHighGear(playerVehicle);
+            rotation = GetEntityRotation(playerVehicle, 0);
+
+            transferVehiclePassengers(playerVehicle, vehicle, true);
+            deleteVehicle(playerVehicle);
+        }
+
         SetPedIntoVehicle(ped, vehicle, SeatPosition.SF_FrontDriverSide);
 
         if (playerVehicle) {
             if (config.getBool('MaintainVehicleVelocityOnSwitch')) {
                 SetVehicleEngineOn(vehicle, true, true, false);
-                SetVehicleSteeringAngle(vehicle, GetVehicleSteeringAngle(vehicle));
-                SetEntityVelocity.apply(null, [vehicle, ...GetEntityVelocity(playerVehicle)]);
-                SetVehicleCurrentRpm(vehicle, GetVehicleCurrentRpm(playerVehicle));
-                SetEntityHeading(vehicle, GetEntityHeading(playerVehicle));
-                SetVehicleHighGear(vehicle, GetVehicleHighGear(playerVehicle));
-                SetEntityRotation.apply(null, [vehicle, ...GetEntityRotation(playerVehicle, 0), 0, false]);
+                SetVehicleSteeringAngle(vehicle, steeringAngle);
+                SetEntityVelocity.apply(null, [vehicle, ...velocity]);
+                SetVehicleCurrentRpm(vehicle, rpm);
+                SetEntityHeading(vehicle, heading);
+                SetVehicleHighGear(vehicle, highGear);
+                SetEntityRotation.apply(null, [vehicle, ...rotation, 0, false]);
             }
-
-            setImmediate(() => {
-                transferVehiclePassengers(playerVehicle, vehicle);
-                DeleteVehicle(playerVehicle);
-            });
         }
     }
 

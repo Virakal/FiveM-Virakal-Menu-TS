@@ -10,15 +10,16 @@ import VehicleHandler from "Handler/VehicleHandler";
 import MenuManager from "MenuManager";
 import { notify, sendUIMessage } from "@common/utils";
 import Events from "Events";
+import { Control } from "@common/Data/Controls";
 
-// const KEY_TOGGLE_MENU = 167; // temp disabled - F6
-const KEY_TOGGLE_MENU = 168; // F7
-const KEY_SELECT = 176; // Enter/LMB
-const KEY_BACK = 177; // Backspace/Esc/RMB
-const KEY_UP = 172;
-const KEY_DOWN = 173;
-const KEY_LEFT = 174;
-const KEY_RIGHT = 175;
+// const KEY_TOGGLE_MENU = Control.SelectCharacterMichael; // temp disabled - F6
+const KEY_TOGGLE_MENU = Control.SelectCharacterTrevor; // F7
+const KEY_SELECT = Control.PhoneSelect; // Enter/LMB
+const KEY_BACK = Control.PhoneCancel; // Backspace/Esc/RMB
+const KEY_UP = Control.PhoneUp;
+const KEY_DOWN = Control.PhoneDown;
+const KEY_LEFT = Control.PhoneLeft;
+const KEY_RIGHT = Control.PhoneRight;
 
 export default class Trainer {
     menuManager: MenuManager;

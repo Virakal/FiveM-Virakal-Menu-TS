@@ -21,19 +21,10 @@
     import { Component, Vue } from 'vue-property-decorator';
     import PreviewImage from './components/PreviewImage.vue';
     import PageIndicator from './components/PageIndicator.vue';
+    import { MenuItem } from '@common/Menu';
 
     type UnparsedConfig = { [key: string]: string };
     type Config = { [key: string]: boolean };
-
-    interface MenuItem {
-        text: string,
-        sub?: string,
-        image?: string,
-        state?: string,
-        action?: string,
-        configkey?: string,
-        key?: string,
-    }
 
     @Component({
         components: {

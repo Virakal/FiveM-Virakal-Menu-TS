@@ -19,7 +19,8 @@
     "paths": {
       "@/*": [
         "src/*"
-      ]
+      ],
+      "@common/*": ["../common/*"],
     },
     "lib": [
       "esnext",

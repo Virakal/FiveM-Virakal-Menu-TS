@@ -1,6 +1,7 @@
 import PedModelList from "@common/Data/PedModelList";
 import { PedModelType } from "@common/Data/PedModelList";
 import { MenuAdder } from "Menu/MenuAdder";
+import type { MenuItem, MenuMap } from '@common/Menu';
 
 @MenuAdder.register
 export default class AnimalBombMenuAdder {

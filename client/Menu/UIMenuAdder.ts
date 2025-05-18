@@ -1,4 +1,5 @@
 import { MenuAdder } from "Menu/MenuAdder";
+import type { MenuMap } from '@common/Menu';
 
 @MenuAdder.register
 export default class UIMenuAdder {

@@ -3,6 +3,7 @@ import PedModelList, { PedModelType } from "@common/Data/PedModelList";
 import PedModelListItem from "@common/Data/PedModelListItem";
 import PlayerHandler from 'Handler/PlayerHandler';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
+import type { MenuItem, MenuMap } from '@common/Menu';
 
 @MenuAdder.register
 export default class PlayerMenuAdder extends BaseMenuAdder {

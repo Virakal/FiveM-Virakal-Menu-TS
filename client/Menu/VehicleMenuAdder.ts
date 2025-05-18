@@ -1,6 +1,6 @@
 import getConfig from '@common/Config';
-import { VehicleModType } from '@common/Data/ParamEnums';
-import { getModName, getModTypeName, getVehicleMods } from '@common/utils';
+import { VehicleModType, VehicleSeat } from '@common/Data/ParamEnums';
+import { addSpacesToCamelCase, getModName, getModTypeName, getVehicleMods, loadModel } from '@common/utils';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 const DEFAULT_BOOST_POWER = 75;
@@ -15,7 +15,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         // menus.set('vehicles.load', this.getGarageLoadMenu());
         menus.set('vehicles.appearance', this.getAppearanceMenu());
         menus.set('vehicles.mods', this.getModsMenu());
-        // menus.set('vehicles.seats', this.getSeatsMenu());
+        menus.set('vehicles.seats', await this.getSeatsMenu());
         menus.set('vehicles.boostPower', this.getBoostPowerMenu());
 
         // // Add vehicle spawn menus
@@ -74,11 +74,11 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         }
     }
 
-    updateMenus() {
+    async updateMenus() {
         const menuManager = this.menuManager;
         // menuManager.updateAndSend('vehicles.appearance.livery', this.getLiveryMenu());
         // menuManager.updateAndSend('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
-        // menuManager.updateAndSend('vehicles.seats', this.getSeatsMenu());
+        menuManager.updateAndSend('vehicles.seats', await this.getSeatsMenu());
         this.onNewVehicleMods(-1, -1);
     }
 
@@ -362,6 +362,39 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 sub: 'vehicles.mods.other',
             }
         ];
+    }
+
+    async getSeatsMenu(): Promise<MenuItem[]> {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (!vehicle) {
+            return [{
+                text: 'Please enter a vehicle to view mods',
+            }];
+        }
+
+        const model = GetEntityModel(vehicle);
+        await loadModel(model, 1000, true);
+        const seatCount = GetVehicleModelNumberOfSeats(model);
+
+        const items = [{
+            text: 'Driver Seat',
+            action: 'vehseat -1',
+        }];
+
+        for (let i = 0; i < seatCount; i++) {
+            items.push({
+                text: `Seat ${i + 1} (${addSpacesToCamelCase(VehicleSeat[i])})`,
+                action: `vehseat ${i}`,
+            });
+        }
+
+        items.push({
+            text: 'Any Seat',
+            action: 'vehseat -2',
+        })
+
+        return items;
     }
 
     getBoostPowerMenu(): MenuItem[] {

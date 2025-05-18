@@ -33,7 +33,7 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('veh', this.onVeh.bind(this));
         RegisterNuiCallback('vehspawn', this.onVehSpawn.bind(this));
         // RegisterNuiCallback('vehsearch', this.onVehSearch.bind(this));
-        // RegisterNuiCallback('vehseat', this.onVehSeat.bind(this));
+        RegisterNuiCallback('vehseat', this.onVehSeat.bind(this));
 
         // // Garage
         // RegisterNuiCallback('vehsave', this.onVehSave.bind(this));
@@ -178,6 +178,21 @@ export default class VehicleHandler implements Handler {
                 }
 
                 break;
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehSeat(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action } = data;
+        const ped = PlayerPedId();
+        const vehicle = GetVehiclePedIsUsing(ped);
+
+        if (vehicle) {
+            SetPedIntoVehicle(ped, vehicle, Number.parseInt(action));
+        } else {
+            notify('~r~Not in a vehicle!');
         }
 
         cb('ok');

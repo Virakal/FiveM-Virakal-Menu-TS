@@ -1,6 +1,6 @@
 import getConfig from "@common/Config";
 import { VehicleModType, VehicleNeonLight, VehicleToggleModType } from "@common/Data/ParamEnums";
-import { addSpacesToCamelCase, delay, getModName, getModTypeName, getVehicleMods, ModList, spawnVehicle, translate } from "@common/utils";
+import { addSpacesToCamelCase, delay, getModName, getModTypeName, getVehicleModelName, getVehicleMods, ModList, spawnVehicle } from "@common/utils";
 
 export const GARAGE_CONFIG_KEY_PREFIX = 'VehicleSlot';
 export const GARAGE_MAX_VEHICLE_SLOTS = 30;
@@ -29,7 +29,7 @@ class Garage {
         const mods = getVehicleMods(vehicle);
         const modString = this.toModString(vehicle, mods);
         const model = GetEntityModel(vehicle);
-        const modelName = translate(GetDisplayNameFromVehicleModel(model));
+        const modelName = getVehicleModelName(model);
         const serialised = [
             `v${SERIAL_VERSION}`,
             model.toString(),

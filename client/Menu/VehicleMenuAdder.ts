@@ -3,6 +3,7 @@ import { CustomColour } from '@common/Data/CustomColour';
 
 import {
 	LicensePlateStyle,
+	VehicleClass,
 	VehicleColor,
 	VehicleModType,
 	VehicleNeonLight,
@@ -49,8 +50,8 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
 		// Add vehicle spawn menus
 		menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
-		// menus = this.addSpawnByTypeMenus(menus);
-		// menus = this.addSpawnByDlcMenus(menus);
+		this.addSpawnByTypeMenus(menus);
+		// this.addSpawnByDlcMenus(menus);
 		menus.set(
 			'vehicles.spawn.fun',
 			this.getVehicleSpawnMenu(getVehicles().getByTag('fun')),
@@ -904,6 +905,39 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		const colour = hex.replace(/^#/, '');
 
 		return `https://dummyimage.com/${width}x${height}/${colour}/${colour}.png&text=Sample`;
+	}
+
+	addSpawnByTypeMenus(menus: MenuMap) {
+		const vehicles = getVehicles();
+		const menu: Record<string, MenuItem[]> = {};
+		const baseMenu: MenuItem[] = [];
+		const prefix = 'vehicles.spawn.type';
+
+		for (const [className, id] of Object.entries(VehicleClass)) {
+			if (typeof id === 'string') {
+				continue;
+			}
+
+			const name = `${prefix}.${className.toLocaleLowerCase()}`;
+			menu[name] = this.getVehicleSpawnMenu(vehicles.getByVehicleClass(id));
+
+			if (menu[name].length === 0) {
+				menu[name] = [{
+					text: 'No vehicles of this type added yet',
+				}];
+			}
+
+			baseMenu.push({
+				text: addSpacesToCamelCase(className),
+				sub: name,
+			});
+		}
+
+		for (const key of Object.keys(menu).sort()) {
+			menus.set(key, menu[key]);
+		}
+
+		menus.set(prefix, baseMenu);
 	}
 
 	getVehicleSpawnMenu(vehicles: VehicleListItem[]): MenuItem[] {

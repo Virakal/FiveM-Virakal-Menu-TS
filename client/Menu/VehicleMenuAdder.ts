@@ -285,7 +285,6 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
     }
 
     async getLiveryMenu(): Promise<MenuItem[]> {
-        // TODO: We should use mod liveries here instead if applicable
         const actionPrefix = 'vehlivery';
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 
@@ -303,6 +302,18 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         SetVehicleModKit(vehicle, 0);
 
         const liveryCount = GetVehicleLiveryCount(vehicle);
+
+        // This vehicle might use the livery mod instead of the regular livery system - swap that in if appropriate
+        if (liveryCount === -1) {
+            const modsMenu = await this.getOtherModsMenus();
+            const liveryKey = `vehicles.mods.other.${VehicleModType.Livery}`;
+            const liveryMenu = modsMenu.get(liveryKey);
+
+            if (liveryMenu?.length > 1) {
+                liveryMenu[0].text = 'No Livery';
+                return liveryMenu;
+            }
+        }
 
         for (let i = 0; i < liveryCount; i++) {
             list.push({

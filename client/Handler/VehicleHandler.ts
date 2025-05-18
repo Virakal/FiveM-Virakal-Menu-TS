@@ -56,8 +56,8 @@ export default class VehicleHandler implements Handler {
         // RegisterNuiCallback('vehtint', this.onVehTint.bind(this));
         // RegisterNuiCallback('vehcolourcombo', this.onVehColourCombo.bind(this));
         RegisterNuiCallback('rainbowspeed', this.onRainbowSpeed.bind(this));
-        // RegisterNuiCallback('vehplatetext', this.onVehPlateText.bind(this));
-        // RegisterNuiCallback('vehplatestyle', this.onVehPlateStyle.bind(this));
+        RegisterNuiCallback('vehplatetext', this.onVehPlateText.bind(this));
+        RegisterNuiCallback('vehplatestyle', this.onVehPlateStyle.bind(this));
         RegisterNuiCallback('vehneon', this.onVehNeon.bind(this));
         RegisterNuiCallback('vehtyresmokecolour', this.onVehTyreSmokeColour.bind(this));
         RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
@@ -411,6 +411,44 @@ export default class VehicleHandler implements Handler {
         } else {
             this.rainbowSpeed = 0.5;
             notify(`~r~Error setting rainbow speed! Set to ${this.rainbowSpeed * 100}`);
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    async onVehPlateText(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const { action } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        cb('ok');
+
+        if (!vehicle) {
+            notify('~r~Not in a vehicle!');
+            return cb;
+        }
+
+        this.trainer.blockInput = true;
+        const text = await getUserInput(7, 'Numberplate text', GetVehicleNumberPlateText(vehicle));
+
+        SetVehicleNumberPlateText(vehicle, text);
+
+        await delay(10);
+        this.trainer.blockInput = false;
+
+        notify(`~g~Set number plate to "${GetVehicleNumberPlateText(vehicle)}".`);
+
+        return cb;
+    }
+
+    onVehPlateStyle(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleNumberPlateTextIndex(vehicle, Number.parseInt(action));
+        } else {
+            notify('~r~Not in a vehicle!');
         }
 
         cb('ok');

@@ -1,5 +1,5 @@
 import getConfig from '@common/Config';
-import { VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat } from '@common/Data/ParamEnums';
+import { LicensePlateStyle, VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat } from '@common/Data/ParamEnums';
 import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, hexToColour, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
@@ -30,7 +30,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         // // Add vehicle appearance menus
         menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());
         menus.set('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
-        // menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
+        menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
         // menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
         // menus.set('vehicles.appearance.livery', this.getLiveryMenu());
         // menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
@@ -241,6 +241,30 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 sub: 'vehicles.appearance.rainbowSettings.speed',
             },
         ];
+    }
+
+    getPlatesMenu(): MenuItem[] {
+        const list: MenuItem[] = [];
+
+        for (const [key, value] of Object.entries(LicensePlateStyle)) {
+            if (typeof value !== 'string') {
+                continue;
+            }
+
+            list.push({
+                text: addSpacesToCamelCase(value),
+                action: `vehplatestyle ${key}`,
+            });
+        }
+
+        list.sort((a, b) => a.text.localeCompare(b.text));
+
+        list.unshift({
+            text: 'Change Text',
+            action: 'vehplatetext',
+        });
+
+        return list;
     }
 
     getRainbowSpeedMenu(): MenuItem[] {

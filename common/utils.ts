@@ -266,6 +266,12 @@ export function getVehicleMods(vehicle: number): ModList {
     return mods;
 }
 
+export function deleteVehicle(vehicle: number) {
+    SetEntityAsMissionEntity(vehicle, false, true);
+    DeleteEntity(vehicle);
+    DeleteVehicle(vehicle);
+}
+
 export async function spawnVehicle(model: Model): Promise<number> {
     const config = getConfig();
     const ped = PlayerPedId();

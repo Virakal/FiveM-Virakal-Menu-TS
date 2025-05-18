@@ -1,26 +1,19 @@
 {
-  "compilerOptions": {
-    "experimentalDecorators": true,
-    "baseUrl": ".",
-    "noImplicitAny": true,
-    "module": "commonjs",
-    "target": "es2021",
-    "lib": [
-      "es2021"
-    ],
-    "types": [
-      "@citizenfx/client"
-    ],
-    "moduleResolution": "node",
-    "resolveJsonModule": true,
-    "esModuleInterop": true,
-    "noEmit": true,
-    "paths": {
-      "@common/*": ["../common/*"],
-    }
-  },
-  "include": [
-    "./",
-    "../common"
-  ]
+	"compilerOptions": {
+		"experimentalDecorators": true,
+		"baseUrl": ".",
+		"noImplicitAny": true,
+		"module": "commonjs",
+		"target": "es2021",
+		"lib": ["es2021"],
+		"types": ["@citizenfx/client"],
+		"moduleResolution": "node",
+		"resolveJsonModule": true,
+		"esModuleInterop": true,
+		"noEmit": true,
+		"paths": {
+			"@common/*": ["../common/*"]
+		}
+	},
+	"include": ["./", "../common"]
 }

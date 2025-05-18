@@ -18,307 +18,322 @@
 </template>
 
 <script lang="ts">
-    import { Component, Vue } from 'vue-property-decorator';
-    import PreviewImage from './components/PreviewImage.vue';
-    import PageIndicator from './components/PageIndicator.vue';
-    import { MenuItem } from '@common/Menu';
+import { MenuItem } from '@common/Menu';
+import { Component, Vue } from 'vue-property-decorator';
+import PageIndicator from './components/PageIndicator.vue';
+import PreviewImage from './components/PreviewImage.vue';
 
-    type UnparsedConfig = { [key: string]: string };
-    type Config = { [key: string]: boolean };
+type UnparsedConfig = { [key: string]: string };
+type Config = { [key: string]: boolean };
 
-    @Component({
-        components: {
-            PreviewImage,
-            PageIndicator,
-        }
-    })
-    export default class Trainer extends Vue {
-        trainerTitle = 'Virakal Menu';
-        maxPageSize = 15;
-        showTrainer = false;
-        menus: { [menuName: string]: MenuItem[] } = { 'mainmenu': [{ text: "Waiting for menus to download..." }] };
-        currentMenuKey = 'mainmenu';
-        page = 0;
-        selected = 0;
-        config: Config = {};
-        itemStates: { [action: string]: boolean } = {};
+@Component({
+	components: {
+		PreviewImage,
+		PageIndicator,
+	},
+})
+export default class Trainer extends Vue {
+	trainerTitle = 'Virakal Menu';
+	maxPageSize = 15;
+	showTrainer = false;
+	menus: { [menuName: string]: MenuItem[] } = {
+		mainmenu: [{ text: 'Waiting for menus to download...' }],
+	};
+	currentMenuKey = 'mainmenu';
+	page = 0;
+	selected = 0;
+	config: Config = {};
+	itemStates: { [action: string]: boolean } = {};
 
-        get pageCount(): number {
-            return Math.ceil(this.menus[this.currentMenuKey].length / this.maxPageSize);
-        };
+	get pageCount(): number {
+		return Math.ceil(this.menus[this.currentMenuKey].length / this.maxPageSize);
+	}
 
-        get menuPage(): MenuItem[] {
-            return this.menus[this.currentMenuKey].slice(this.page * this.maxPageSize, (this.page + 1) * this.maxPageSize);
-        };
+	get menuPage(): MenuItem[] {
+		return this.menus[this.currentMenuKey].slice(
+			this.page * this.maxPageSize,
+			(this.page + 1) * this.maxPageSize,
+		);
+	}
 
-        get currentItem(): MenuItem {
-            const currentIndex = this.page * this.maxPageSize + this.selected;
-            return this.menus[this.currentMenuKey][currentIndex];
-        };
+	get currentItem(): MenuItem {
+		const currentIndex = this.page * this.maxPageSize + this.selected;
+		return this.menus[this.currentMenuKey][currentIndex];
+	}
 
-        get currentImage(): string | undefined {
-            const currentIndex = this.page * this.maxPageSize + this.selected;
-            return this.menus[this.currentMenuKey][currentIndex] ? this.menus[this.currentMenuKey][currentIndex].image : undefined;
-        };
+	get currentImage(): string | undefined {
+		const currentIndex = this.page * this.maxPageSize + this.selected;
+		return this.menus[this.currentMenuKey][currentIndex]
+			? this.menus[this.currentMenuKey][currentIndex].image
+			: undefined;
+	}
 
-        get currentMenu(): MenuItem[] {
-            return this.menus[this.currentMenuKey];
-        };
+	get currentMenu(): MenuItem[] {
+		return this.menus[this.currentMenuKey];
+	}
 
-        get parentKey(): string | undefined {
-            // The main menu has no parent
-            if (this.currentMenuKey === 'mainmenu') {
-                return;
-            }
+	get parentKey(): string | undefined {
+		// The main menu has no parent
+		if (this.currentMenuKey === 'mainmenu') {
+			return;
+		}
 
-            const lastDot = this.currentMenuKey.lastIndexOf('.');
+		const lastDot = this.currentMenuKey.lastIndexOf('.');
 
-            // A key without a dot is a top-level one, so the parent is the main menu
-            if (lastDot === -1) {
-                return 'mainmenu';
-            }
+		// A key without a dot is a top-level one, so the parent is the main menu
+		if (lastDot === -1) {
+			return 'mainmenu';
+		}
 
-            // Get the string up to the last dot, so a.b.c returns a.b
-            return this.currentMenuKey.substring(0, lastDot);
-        }
+		// Get the string up to the last dot, so a.b.c returns a.b
+		return this.currentMenuKey.substring(0, lastDot);
+	}
 
-        created() {
-            window.addEventListener('message', this.handleMessage, {
-                passive: true,
-            });
+	created() {
+		window.addEventListener('message', this.handleMessage, {
+			passive: true,
+		});
 
-            this.sendData('uiReady');
-        }
+		this.sendData('uiReady');
+	}
 
-        async sendData(name: string, data: any = {}): Promise<Response> {
-            // @ts-ignore
-            return fetch(`https://${GetParentResourceName()}/${name}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: JSON.stringify(data),
-            });
-        }
+	async sendData(name: string, data: any = {}): Promise<Response> {
+		// @ts-ignore
+		return fetch(`https://${GetParentResourceName()}/${name}`, {
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/json; charset=UTF-8',
+			},
+			body: JSON.stringify(data),
+		});
+	}
 
-        playSound(sound: string): void {
-            this.sendData('playsound', { name: sound });
-        }
+	playSound(sound: string): void {
+		this.sendData('playsound', { name: sound });
+	}
 
-        showPage(page: number): void {
-            this.page = page;
-            this.selected = 0;
-        }
+	showPage(page: number): void {
+		this.page = page;
+		this.selected = 0;
+	}
 
-        pageExists(page: number): boolean {
-            return page >= 0 && page < this.pageCount;
-        }
+	pageExists(page: number): boolean {
+		return page >= 0 && page < this.pageCount;
+	}
 
-        nextPage(): void {
-            if (this.pageExists(this.page + 1)) {
-                this.showPage(this.page + 1);
-            } else if (this.pageCount > 1) {
-                this.showPage(0);
-            }
+	nextPage(): void {
+		if (this.pageExists(this.page + 1)) {
+			this.showPage(this.page + 1);
+		} else if (this.pageCount > 1) {
+			this.showPage(0);
+		}
 
-            this.playSound('NAV_UP_DOWN');
-        }
+		this.playSound('NAV_UP_DOWN');
+	}
 
-        previousPage(): void {
-            if (this.pageExists(this.page - 1)) {
-                this.showPage(this.page - 1);
-            } else if (this.pageCount > 1) {
-                this.showPage(this.pageCount - 1);
-            }
+	previousPage(): void {
+		if (this.pageExists(this.page - 1)) {
+			this.showPage(this.page - 1);
+		} else if (this.pageCount > 1) {
+			this.showPage(this.pageCount - 1);
+		}
 
-            this.playSound('NAV_UP_DOWN');
-        }
+		this.playSound('NAV_UP_DOWN');
+	}
 
-        selectUp(): void {
-            this.selected = this.selected ? this.selected - 1 : this.menuPage.length - 1;
-            this.playSound('NAV_UP_DOWN');
-        }
+	selectUp(): void {
+		this.selected = this.selected
+			? this.selected - 1
+			: this.menuPage.length - 1;
+		this.playSound('NAV_UP_DOWN');
+	}
 
-        selectDown(): void {
-            this.selected = (this.selected + 1) % this.menuPage.length;
-            this.playSound('NAV_UP_DOWN');
-        }
+	selectDown(): void {
+		this.selected = (this.selected + 1) % this.menuPage.length;
+		this.playSound('NAV_UP_DOWN');
+	}
 
-        resetTrainer(): void {
-            this.showMenu('mainmenu');
-        }
+	resetTrainer(): void {
+		this.showMenu('mainmenu');
+	}
 
-        setMenu(menuName: string, menuData: MenuItem[]): void {
-            // Grab any initial states that are included and update states on those we already have
-            for (let key in menuData) {
-                let item = menuData[key];
+	setMenu(menuName: string, menuData: MenuItem[]): void {
+		// Grab any initial states that are included and update states on those we already have
+		for (const key in menuData) {
+			const item = menuData[key];
 
-                if (item.state == null || item.action == null) {
-                    continue;
-                }
+			if (item.state == null || item.action == null) {
+				continue;
+			}
 
-                if (item.action in this.itemStates) {
-                    item.state = this.getStateText(this.itemStates[item.action]);
-                } else if (item.configkey != null && item.configkey in this.config) {
-                    this.itemStates[item.action] = this.config[item.configkey];
-                    item.state = this.getStateText(this.config[item.configkey]);
-                } else {
-                    this.itemStates[item.action] = item.state === 'ON';
-                    item.state = this.getStateText(item.state);
-                }
+			if (item.action in this.itemStates) {
+				item.state = this.getStateText(this.itemStates[item.action]);
+			} else if (item.configkey != null && item.configkey in this.config) {
+				this.itemStates[item.action] = this.config[item.configkey];
+				item.state = this.getStateText(this.config[item.configkey]);
+			} else {
+				this.itemStates[item.action] = item.state === 'ON';
+				item.state = this.getStateText(item.state);
+			}
 
-                menuData[key] = item;
-            }
+			menuData[key] = item;
+		}
 
-            // Update the menus list
-            this.menus[menuName] = menuData;
+		// Update the menus list
+		this.menus[menuName] = menuData;
 
-            if (this.currentMenuKey === menuName) {
-                // Because the underlying menu has changed, we need to force the update
-                this.updateCurrentMenu();
-            }
-        }
+		if (this.currentMenuKey === menuName) {
+			// Because the underlying menu has changed, we need to force the update
+			this.updateCurrentMenu();
+		}
+	}
 
-        // Only use this if the underlying structure for the current menu is changed. Vue doesn't seem to like that.
-        updateCurrentMenu(): void {
-            const newMenuKey = this.currentMenuKey;
-            // Briefly change the currentMenuKey to force a recompute
-            this.currentMenuKey = 'mainmenu';
-            this.$forceUpdate();
-            this.currentMenuKey = newMenuKey;
+	// Only use this if the underlying structure for the current menu is changed. Vue doesn't seem to like that.
+	updateCurrentMenu(): void {
+		const newMenuKey = this.currentMenuKey;
+		// Briefly change the currentMenuKey to force a recompute
+		this.currentMenuKey = 'mainmenu';
+		this.$forceUpdate();
+		this.currentMenuKey = newMenuKey;
 
-            // If our selection is no longer available on the list, reset to 0
-            if (this.selected >= this.currentMenu.length) {
-                this.page = 0;
-                this.selected = 0;
-            }
-        }
+		// If our selection is no longer available on the list, reset to 0
+		if (this.selected >= this.currentMenu.length) {
+			this.page = 0;
+			this.selected = 0;
+		}
+	}
 
-        showMenu(menuName: string): void {
-            if (!this.menus[menuName]) {
-                console.log(`No such menu as '${menuName}'`);
-                this.showMenu('mainmenu');
-                return;
-            }
+	showMenu(menuName: string): void {
+		if (!this.menus[menuName]) {
+			console.log(`No such menu as '${menuName}'`);
+			this.showMenu('mainmenu');
+			return;
+		}
 
-            this.selected = 0;
-            this.page = 0;
-            this.currentMenuKey = menuName;
-        }
+		this.selected = 0;
+		this.page = 0;
+		this.currentMenuKey = menuName;
+	}
 
-        handleSelection(): void {
-            const sel = this.currentItem;
+	handleSelection(): void {
+		const sel = this.currentItem;
 
-            if (sel.sub) {
-                this.showMenu(sel.sub);
-            } else if (sel.action) {
-                let newState = true;
+		if (sel.sub) {
+			this.showMenu(sel.sub);
+		} else if (sel.action) {
+			let newState = true;
 
-                if (sel.action in this.itemStates) {
-                    newState = !this.itemStates[sel.action];
-                    this.itemStates[sel.action] = newState;
-                    this.$forceUpdate();
-                }
+			if (sel.action in this.itemStates) {
+				newState = !this.itemStates[sel.action];
+				this.itemStates[sel.action] = newState;
+				this.$forceUpdate();
+			}
 
-                const data = sel.action.split(' ');
+			const data = sel.action.split(' ');
 
-                console.log(`Sending message to server: ${data[0]}, action: ${data[1]}, newState: ${newState}`);
-                this.sendData(data[0], { action: data[1], newstate: newState, itemtext: sel.text });
-            }
+			console.log(
+				`Sending message to server: ${data[0]}, action: ${data[1]}, newState: ${newState}`,
+			);
+			this.sendData(data[0], {
+				action: data[1],
+				newstate: newState,
+				itemtext: sel.text,
+			});
+		}
 
-            this.playSound('SELECT');
-        }
+		this.playSound('SELECT');
+	}
 
-        goBack(): void {
-            if (typeof this.parentKey === 'undefined') {
-                this.closeTrainer();
-            } else {
-                this.showMenu(this.parentKey);
-            }
+	goBack(): void {
+		if (typeof this.parentKey === 'undefined') {
+			this.closeTrainer();
+		} else {
+			this.showMenu(this.parentKey);
+		}
 
-            this.playSound('BACK');
-        }
+		this.playSound('BACK');
+	}
 
-        openTrainer(): void {
-            this.resetTrainer();
-            this.showTrainer = true;
-            this.playSound('YES');
-        }
+	openTrainer(): void {
+		this.resetTrainer();
+		this.showTrainer = true;
+		this.playSound('YES');
+	}
 
-        closeTrainer(): void {
-            this.resetTrainer();
-            this.showTrainer = false;
-            this.sendData('trainerclose');
-            this.playSound('NO');
-        }
+	closeTrainer(): void {
+		this.resetTrainer();
+		this.showTrainer = false;
+		this.sendData('trainerclose');
+		this.playSound('NO');
+	}
 
-        updateFromConfig(config: UnparsedConfig): void {
-            for (const key in config) {
-                let value = config[key];
+	updateFromConfig(config: UnparsedConfig): void {
+		for (const key in config) {
+			const value = config[key];
 
-                if (value !== 'true' && value !== 'false') {
-                    // We only care about boolean configs from a UI perspective
-                    continue;
-                }
+			if (value !== 'true' && value !== 'false') {
+				// We only care about boolean configs from a UI perspective
+				continue;
+			}
 
-                this.config[key] = value === 'true';
-            }
-        }
+			this.config[key] = value === 'true';
+		}
+	}
 
-        getStateText(value: boolean | string): string {
-            if (typeof value === 'string') {
-                value = value === 'true';
-            }
+	getStateText(value: boolean | string): string {
+		if (typeof value === 'string') {
+			value = value === 'true';
+		}
 
-            return value ? 'ON' : 'OFF';
-        }
+		return value ? 'ON' : 'OFF';
+	}
 
-        getItemKey(item: MenuItem): string {
-            return item.key || item.action || item.text;
-        }
+	getItemKey(item: MenuItem): string {
+		return item.key || item.action || item.text;
+	}
 
-        getItemStateString(action: string): string | undefined {
-            if (action in this.itemStates) {
-                return this.itemStates[action] ? 'ON' : 'OFF';
-            }
-        }
+	getItemStateString(action: string): string | undefined {
+		if (action in this.itemStates) {
+			return this.itemStates[action] ? 'ON' : 'OFF';
+		}
+	}
 
-        handleMessage(event: MessageEvent): void {
-            const item = event.data;
+	handleMessage(event: MessageEvent): void {
+		const item = event.data;
 
-            if (item.showtrainer) {
-                this.openTrainer();
-            } else if (item.hidetrainer) {
-                this.closeTrainer();
-            }
+		if (item.showtrainer) {
+			this.openTrainer();
+		} else if (item.hidetrainer) {
+			this.closeTrainer();
+		}
 
-            if (item.trainerenter) {
-                this.handleSelection();
-            } else if (item.trainerback) {
-                this.goBack();
-            }
+		if (item.trainerenter) {
+			this.handleSelection();
+		} else if (item.trainerback) {
+			this.goBack();
+		}
 
-            if (item.trainerleft) {
-                this.previousPage();
-            } else if (item.trainerright) {
-                this.nextPage();
-            }
+		if (item.trainerleft) {
+			this.previousPage();
+		} else if (item.trainerright) {
+			this.nextPage();
+		}
 
-            if (item.trainerup) {
-                this.selectUp();
-            } else if (item.trainerdown) {
-                this.selectDown();
-            }
+		if (item.trainerup) {
+			this.selectUp();
+		} else if (item.trainerdown) {
+			this.selectDown();
+		}
 
-            if (item.setmenu) {
-                this.setMenu(item.menuname, item.menudata);
-            }
+		if (item.setmenu) {
+			this.setMenu(item.menuname, item.menudata);
+		}
 
-            if (item.configupdate) {
-                this.updateFromConfig(item.config);
-            }
-        }
-    }
+		if (item.configupdate) {
+			this.updateFromConfig(item.config);
+		}
+	}
+}
 </script>
 
 <style>

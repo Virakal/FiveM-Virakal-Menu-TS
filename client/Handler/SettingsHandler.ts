@@ -1,65 +1,70 @@
-import WeatherList from "@common/Data/WeatherList";
-import { notify } from "@common/utils";
+import WeatherList from '@common/Data/WeatherList';
+import { notify } from '@common/utils';
 
 const WEATHER_TRANSITION_TIME = 5;
 
 export default class SettingsHandler implements Handler {
-    firstSpawn = true;
+	firstSpawn = true;
 
-    constructor() {
-        on('playerSpawned', this.onFirstSpawn.bind(this));
-        onNet('virakalMenu:setWeather', this.onSetWeather);
-        onNet('virakalMenu:setTime', this.onSetTime);
+	constructor() {
+		on('playerSpawned', this.onFirstSpawn.bind(this));
+		onNet('virakalMenu:setWeather', this.onSetWeather);
+		onNet('virakalMenu:setTime', this.onSetTime);
 
-        RegisterNuiCallback('weather', this.onWeather);
-        RegisterNuiCallback('time', this.onTime);
-    }
+		RegisterNuiCallback('weather', this.onWeather);
+		RegisterNuiCallback('time', this.onTime);
+	}
 
-    onWeather(data: NuiData, cb: NuiCallback): NuiCallback {
-        emitNet('virakalMenu:changeWeather', data.action);
-        cb('ok');
-        return cb;
-    }
+	onWeather(data: NuiData, cb: NuiCallback): NuiCallback {
+		emitNet('virakalMenu:changeWeather', data.action);
+		cb('ok');
+		return cb;
+	}
 
-    onSetWeather(weather: number, name: string) {
-        if (weather < 0) {
-            return;
-        }
+	onSetWeather(weather: number, name: string) {
+		if (weather < 0) {
+			return;
+		}
 
-        const niceName = WeatherList.getNiceName(weather) ?? 'Unknown';
+		const niceName = WeatherList.getNiceName(weather) ?? 'Unknown';
 
-        SetWeatherTypeOverTime(WeatherList.getInternalName(weather), WEATHER_TRANSITION_TIME);
+		SetWeatherTypeOverTime(
+			WeatherList.getInternalName(weather),
+			WEATHER_TRANSITION_TIME,
+		);
 
-        if (name) {
-            notify(`~s~Weather changed to ${niceName} by ${name}.`);
-        } else {
-            notify(`~s~Weather changed to ${niceName}.`);
-        }
-    }
+		if (name) {
+			notify(`~s~Weather changed to ${niceName} by ${name}.`);
+		} else {
+			notify(`~s~Weather changed to ${niceName}.`);
+		}
+	}
 
-    onSetTime(h: number, m: number, s: number, name: string | null) {
-        NetworkOverrideClockTime(h, m, s);
-        SetClockTime(h, m, s);
+	onSetTime(h: number, m: number, s: number, name: string | null) {
+		NetworkOverrideClockTime(h, m, s);
+		SetClockTime(h, m, s);
 
-        if (name) {
-            notify(`~s~Time changed to ${('00' + h).slice(-2)}:${('00' + m).slice(-2)} by ${name}.`);
-        }
-    }
+		if (name) {
+			notify(
+				`~s~Time changed to ${(`00${h}`).slice(-2)}:${(`00${m}`).slice(-2)} by ${name}.`,
+			);
+		}
+	}
 
-    onTime(data: NuiData, cb: NuiCallback): NuiCallback {
-        emitNet('virakalMenu:changeTime', Number.parseInt(data.action, 10), 0, 0);
-        cb('ok');
-        return cb;
-    }
+	onTime(data: NuiData, cb: NuiCallback): NuiCallback {
+		emitNet('virakalMenu:changeTime', Number.parseInt(data.action, 10), 0, 0);
+		cb('ok');
+		return cb;
+	}
 
-    onFirstSpawn() {
-        if (!this.firstSpawn) {
-            return;
-        }
+	onFirstSpawn() {
+		if (!this.firstSpawn) {
+			return;
+		}
 
-        this.firstSpawn = false;
+		this.firstSpawn = false;
 
-        emitNet('virakalMenu:requestWeather');
-        emitNet('virakalMenu:requestTime');
-    }
+		emitNet('virakalMenu:requestWeather');
+		emitNet('virakalMenu:requestTime');
+	}
 }

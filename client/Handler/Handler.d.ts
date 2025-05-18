@@ -1,2 +1,1 @@
-interface Handler {
-}
+type Handler = {};

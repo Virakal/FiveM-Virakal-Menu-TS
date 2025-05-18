@@ -1,25 +1,28 @@
 import getConfig from '@common/Config';
-import { delay, sendUIMessage } from "@common/utils";
+import { delay, sendUIMessage } from '@common/utils';
 
 export default class ConfigCommsManager {
-    constructor() {
-        onNet('virakalMenu:returnConfig', this.onReturnConfig);
+	constructor() {
+		onNet('virakalMenu:returnConfig', this.onReturnConfig);
 
-        RegisterNuiCallback('uiReady', (data: NuiData, cb: NuiCallback): NuiCallback => {
-            console.log('UI is ready');
-            emitNet('virakalMenu:getConfig');
-            cb('ok');
-            return cb;
-        });
-    }
+		RegisterNuiCallback(
+			'uiReady',
+			(data: NuiData, cb: NuiCallback): NuiCallback => {
+				console.log('UI is ready');
+				emitNet('virakalMenu:getConfig');
+				cb('ok');
+				return cb;
+			},
+		);
+	}
 
-    async onReturnConfig(configData: { [key: string]: string }) {
-        const config = getConfig();
-        config.fromObject(configData);
-        sendUIMessage({ configupdate: true, config: configData });
+	async onReturnConfig(configData: { [key: string]: string }) {
+		const config = getConfig();
+		config.fromObject(configData);
+		sendUIMessage({ configupdate: true, config: configData });
 
-        await delay(1);
+		await delay(1);
 
-        emit('virakalMenu:configFetched');
-    }
+		emit('virakalMenu:configFetched');
+	}
 }

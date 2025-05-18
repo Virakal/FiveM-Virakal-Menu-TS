@@ -49,7 +49,7 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehcustomprimary', this.onVehCustomPrimary.bind(this));
         RegisterNuiCallback('vehcustomsecondary', this.onVehCustomSecondary.bind(this));
         RegisterNuiCallback('vehlivery', this.onVehLivery.bind(this));
-        // RegisterNuiCallback('vehrooflivery', this.onVehRoofLivery.bind(this));
+        RegisterNuiCallback('vehrooflivery', this.onVehRoofLivery.bind(this));
         RegisterNuiCallback('vehrim', this.onVehRim.bind(this));
         RegisterNuiCallback('vehdashcolour', this.onVehDashColour.bind(this));
         RegisterNuiCallback('vehtrimcolour', this.onVehTrimColour.bind(this));
@@ -368,6 +368,22 @@ export default class VehicleHandler implements Handler {
         }
 
         await this.changeCustomColours(vehicle, data.action, false, true);
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehRoofLivery(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleRoofLivery(vehicle, Number.parseInt(action));
+            notify('~y~Note that very few vehicles support roof livery.');
+            notify(`~g~Set ${getVehicleName(vehicle)} roof livery to ${action}!`);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
 
         cb('ok');
         return cb;

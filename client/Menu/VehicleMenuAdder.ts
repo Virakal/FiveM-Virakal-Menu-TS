@@ -33,7 +33,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
         menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
         menus.set('vehicles.appearance.livery', await this.getLiveryMenu());
-        // menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
+        menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
         menus.set('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
 
         menus.set('vehicles.appearance.customBothColour', this.getCustomColourMenu('vehcustomboth'));
@@ -318,6 +318,31 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         for (let i = 0; i < liveryCount; i++) {
             list.push({
                 text: await getLiveryName(vehicle, i) ?? `Livery ${i}`,
+                action: `${actionPrefix} ${i}`,
+            });
+        }
+
+        return list;
+    }
+
+    getRoofLiveryMenu(): MenuItem[] {
+        const actionPrefix = 'vehrooflivery';
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (!vehicle) {
+            return [{
+                text: 'Enter a vehicle to view liveries',
+            }];
+        }
+
+        const list: MenuItem[] = [{
+            text: 'No Livery',
+            action: `${actionPrefix} -1`,
+        }];
+
+        for (let i = 0; i < 25; i++) {
+            list.push({
+                text: `Livery ${i}`,
                 action: `${actionPrefix} ${i}`,
             });
         }

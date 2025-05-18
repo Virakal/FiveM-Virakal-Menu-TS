@@ -1,4 +1,5 @@
 import getConfig from "@common/Config";
+import { Control } from "@common/Data/Controls";
 import { SeatPosition, VehicleColor, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
 import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle } from "@common/utils";
 import type Trainer from "Trainer";
@@ -67,7 +68,7 @@ export default class VehicleHandler implements Handler {
         on('virakalMenu:enteredVehicle', this.onNewVehicle.bind(this));
 
         setTick(this.rainbowTick.bind(this));
-        // setTick(this.boostTick.bind(this));
+        setTick(this.boostTick.bind(this));
         setTick(this.invincibleCarTick.bind(this));
 
         if (config.has('RainbowSpeed')) {
@@ -323,6 +324,35 @@ export default class VehicleHandler implements Handler {
         } else if (config.getBool('RainbowNeon')) {
             SetVehicleNeonLightsColour(vehicle, r, g, b);
         }
+    }
+
+    async boostTick(): Promise<void> {
+        const config = getConfig();
+
+        if (config.getBool('BoostOnHorn')) {
+            const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+            if (vehicle) {
+                if (IsControlPressed(1, Control.VehicleHorn)) {
+                    let power = Number.parseFloat(config.get('BoostPower'));
+
+                    if (isNaN(power)) {
+                        console.log('Failed to parse boost power config variable.');
+                        power = 75;
+                    }
+
+                    if (IsControlPressed(1, Control.VehicleAccelerate)) {
+                        SetVehicleBoostActive(vehicle, true);
+                        SetVehicleForwardSpeed(vehicle, power);
+                    } else if (IsControlPressed(1, Control.VehicleBrake)) {
+                        SetVehicleBoostActive(vehicle, true);
+                        SetVehicleForwardSpeed(vehicle, -1 * power);
+                    }
+                }
+            }
+        }
+
+        await delay(0);
     }
 
     async invincibleCarTick(): Promise<void> {

@@ -40,19 +40,19 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehsave', this.onVehSave.bind(this));
         RegisterNuiCallback('vehload', this.onVehLoad.bind(this));
 
-        // // Colours
-        // RegisterNuiCallback('vehprimary', this.onVehPrimary.bind(this));
-        // RegisterNuiCallback('vehsecondary', this.onVehSecondary.bind(this));
-        // RegisterNuiCallback('vehboth', this.onVehBoth.bind(this));
-        // RegisterNuiCallback('vehpearl', this.onVehPearl.bind(this));
+        // Colours
+        RegisterNuiCallback('vehprimary', this.onVehPrimary.bind(this));
+        RegisterNuiCallback('vehsecondary', this.onVehSecondary.bind(this));
+        RegisterNuiCallback('vehboth', this.onVehBoth.bind(this));
+        RegisterNuiCallback('vehpearl', this.onVehPearl.bind(this));
         // RegisterNuiCallback('vehcustomboth', this.onVehCustomBoth.bind(this));
         // RegisterNuiCallback('vehcustomprimary', this.onVehCustomPrimary.bind(this));
         // RegisterNuiCallback('vehcustomsecondary', this.onVehCustomSecondary.bind(this));
         // RegisterNuiCallback('vehlivery', this.onVehLivery.bind(this));
         // RegisterNuiCallback('vehrooflivery', this.onVehRoofLivery.bind(this));
-        // RegisterNuiCallback('vehrim', this.onVehRim.bind(this));
-        // RegisterNuiCallback('vehdashcolour', this.onVehDashColour.bind(this));
-        // RegisterNuiCallback('vehdashtrimcolour', this.onVehTrimColour.bind(this));
+        RegisterNuiCallback('vehrim', this.onVehRim.bind(this));
+        RegisterNuiCallback('vehdashcolour', this.onVehDashColour.bind(this));
+        RegisterNuiCallback('vehtrimcolour', this.onVehTrimColour.bind(this));
         // RegisterNuiCallback('vehtint', this.onVehTint.bind(this));
         // RegisterNuiCallback('vehcolourcombo', this.onVehColourCombo.bind(this));
         RegisterNuiCallback('rainbowspeed', this.onRainbowSpeed.bind(this));
@@ -230,6 +230,110 @@ export default class VehicleHandler implements Handler {
             notify(`~r~No vehicle saved in slot ${slot}!`)
         }
 
+        return cb;
+    }
+
+    onVehPrimary(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            ClearVehicleCustomPrimaryColour(vehicle);
+            SetVehicleColours(vehicle, Number.parseInt(colour), GetVehicleColours(vehicle)[1]);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehSecondary(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            ClearVehicleCustomSecondaryColour(vehicle);
+            SetVehicleColours(vehicle, GetVehicleColours(vehicle)[0], Number.parseInt(colour));
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehBoth(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            ClearVehicleCustomPrimaryColour(vehicle);
+            ClearVehicleCustomSecondaryColour(vehicle);
+            SetVehicleColours(vehicle, Number.parseInt(colour), Number.parseInt(colour));
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehPearl(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleExtraColours(vehicle, Number.parseInt(colour), GetVehicleExtraColours(vehicle)[1]);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehRim(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleExtraColours(vehicle, GetVehicleExtraColours(vehicle)[0], Number.parseInt(colour));
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehDashColour(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleModKit(vehicle, 0);
+            GetVehicleDashboardColour(vehicle, Number.parseInt(colour));
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    onVehTrimColour(data: NuiData, cb: NuiCallback): NuiCallback {
+        const { action: colour } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            SetVehicleModKit(vehicle, 0);
+            SetVehicleInteriorColour(vehicle, Number.parseInt(colour));
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
         return cb;
     }
 

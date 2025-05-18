@@ -1,8 +1,9 @@
 import getConfig from '@common/Config';
-import { VehicleModType, VehicleSeat } from '@common/Data/ParamEnums';
-import { addSpacesToCamelCase, getModName, getModTypeName, getVehicleMods, loadModel } from '@common/utils';
+import { VehicleColor, VehicleModType, VehicleSeat } from '@common/Data/ParamEnums';
+import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
+import type { MenuItem, MenuMap } from '@common/Menu';
 
 const DEFAULT_BOOST_POWER = 75;
 
@@ -38,13 +39,13 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         // menus.set('vehicles.appearance.customPrimaryColour', this.getCustomColourMenu("vehcustomprimary"));
         // menus.set('vehicles.appearance.customSecondaryColour', this.getCustomColourMenu("vehcustomsecondary"));
 
-        // menus.set('vehicles.appearance.bothColour', this.getPaintColourMenu("vehboth"));
-        // menus.set('vehicles.appearance.primaryColour', this.getPaintColourMenu("vehprimary"));
-        // menus.set('vehicles.appearance.secondaryColour', this.getPaintColourMenu("vehsecondary"));
-        // menus.set('vehicles.appearance.pearlescentColour', this.getPaintColourMenu("vehpearl"));
-        // menus.set('vehicles.appearance.rimColour', this.getPaintColourMenu("vehrim"));
-        // menus.set('vehicles.appearance.dashColour', this.getPaintColourMenu("vehdashcolour"));
-        // menus.set('vehicles.appearance.trimColour', this.getPaintColourMenu("vehtrimcolour"));
+        menus.set('vehicles.appearance.bothColour', this.getPaintColourMenu('vehboth'));
+        menus.set('vehicles.appearance.primaryColour', this.getPaintColourMenu('vehprimary'));
+        menus.set('vehicles.appearance.secondaryColour', this.getPaintColourMenu('vehsecondary'));
+        menus.set('vehicles.appearance.pearlescentColour', this.getPaintColourMenu('vehpearl'));
+        menus.set('vehicles.appearance.rimColour', this.getPaintColourMenu('vehrim'));
+        menus.set('vehicles.appearance.dashColour', this.getPaintColourMenu('vehdashcolour'));
+        menus.set('vehicles.appearance.trimColour', this.getPaintColourMenu('vehtrimcolour'));
 
         // // Add mods menus
         // menus.set('vehicles.mods.lights', this.getModLightsMenu());
@@ -270,6 +271,23 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             list.push({
                 text,
                 action: `rainbowspeed ${speed}`,
+            });
+        }
+
+        return list;
+    }
+
+    getPaintColourMenu(actionPrefix: string): MenuItem[] {
+        const list: MenuItem[] = [];
+
+        for (const [key, value] of Object.entries(VehicleColor)) {
+            if (typeof value !== 'string') {
+                continue;
+            }
+
+            list.push({
+                text: cleanColourName(value),
+                action: `${actionPrefix} ${key}`,
             });
         }
 

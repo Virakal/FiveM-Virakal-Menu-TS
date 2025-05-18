@@ -1,5 +1,6 @@
 import getConfig from '@common/Config';
 import { CustomColour } from '@common/Data/CustomColour';
+
 import {
 	LicensePlateStyle,
 	VehicleColor,
@@ -8,9 +9,11 @@ import {
 	VehicleSeat,
 	VehicleWindowTint,
 } from '@common/Data/ParamEnums';
+
 import { getVehicles } from '@common/Data/VehicleList';
-import VehicleListItem from '@common/Data/VehicleListItem';
+import type VehicleListItem from '@common/Data/VehicleListItem';
 import type { MenuItem, MenuMap } from '@common/Menu';
+
 import {
 	addSpacesToCamelCase,
 	cleanColourName,
@@ -21,10 +24,12 @@ import {
 	hexToColour,
 	loadModel,
 } from '@common/utils';
+
 import getGarage, {
 	GARAGE_CONFIG_KEY_PREFIX,
 	GARAGE_MAX_VEHICLE_SLOTS,
 } from 'Garage';
+
 import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 
 const DEFAULT_BOOST_POWER = 75;
@@ -46,7 +51,10 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
 		// menus = this.addSpawnByTypeMenus(menus);
 		// menus = this.addSpawnByDlcMenus(menus);
-		menus.set('vehicles.spawn.fun', this.getVehicleSpawnMenu(getVehicles().getByTag('fun')));
+		menus.set(
+			'vehicles.spawn.fun',
+			this.getVehicleSpawnMenu(getVehicles().getByTag('fun')),
+		);
 
 		// Add vehicle appearance menus
 		menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());

@@ -1,5 +1,5 @@
-import { Dlc } from "./Dlc";
-import type { VehicleClass } from "./ParamEnums";
+import { Dlc } from './Dlc';
+import type { VehicleClass } from './ParamEnums';
 
 type VehicleListItemArgs = {
 	name: string;
@@ -8,7 +8,7 @@ type VehicleListItemArgs = {
 	image?: string;
 	tags?: string[];
 	dlc?: Dlc;
-}
+};
 
 export default class VehicleListItem {
 	name: string;
@@ -19,7 +19,14 @@ export default class VehicleListItem {
 	dlc: Dlc = Dlc.BaseGame;
 	private hash: number;
 
-	constructor({ name, model, vehicleClass = null, image = undefined, tags = [], dlc = Dlc.BaseGame}: VehicleListItemArgs) {
+	constructor({
+		name,
+		model,
+		vehicleClass = null,
+		image = undefined,
+		tags = [],
+		dlc = Dlc.BaseGame,
+	}: VehicleListItemArgs) {
 		this.name = name;
 		this.image = image;
 		this.model = model;
@@ -43,6 +50,9 @@ export default class VehicleListItem {
 	matchesSearchTerm(term: string) {
 		const normalTerm = term.replaceAll(/\s+/, '').toLocaleLowerCase();
 
-		return this.model.toLocaleLowerCase().includes(normalTerm) || this.name.replaceAll(/\s+/, '').toLocaleLowerCase().includes(normalTerm);
+		return (
+			this.model.toLocaleLowerCase().includes(normalTerm) ||
+			this.name.replaceAll(/\s+/, '').toLocaleLowerCase().includes(normalTerm)
+		);
 	}
 }

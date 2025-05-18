@@ -1,7 +1,7 @@
 import getConfig from "@common/Config";
 import { Control } from "@common/Data/Controls";
 import { SeatPosition, VehicleColor, VehicleModType } from "@common/Data/ParamEnums";
-import { delay, getUserInput, getUserInputColour, invertColour, notify, rainbowRgb, spawnVehicle, stringToColour, translate } from "@common/utils";
+import { delay, getLiveryName, getUserInput, getUserInputColour, getVehicleName, invertColour, loadTranslationText, notify, rainbowRgb, spawnVehicle, stringToColour, translate } from "@common/utils";
 import getGarage from "Garage";
 import type Trainer from "Trainer";
 
@@ -48,7 +48,7 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehcustomboth', this.onVehCustomBoth.bind(this));
         RegisterNuiCallback('vehcustomprimary', this.onVehCustomPrimary.bind(this));
         RegisterNuiCallback('vehcustomsecondary', this.onVehCustomSecondary.bind(this));
-        // RegisterNuiCallback('vehlivery', this.onVehLivery.bind(this));
+        RegisterNuiCallback('vehlivery', this.onVehLivery.bind(this));
         // RegisterNuiCallback('vehrooflivery', this.onVehRoofLivery.bind(this));
         RegisterNuiCallback('vehrim', this.onVehRim.bind(this));
         RegisterNuiCallback('vehdashcolour', this.onVehDashColour.bind(this));
@@ -327,6 +327,47 @@ export default class VehicleHandler implements Handler {
         } else {
             notify('~r~Not in a vehicle!');
         }
+
+        cb('ok');
+        return cb;
+    }
+
+    async onVehLivery(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const { action } = data;
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+        const liveryId = Number.parseInt(action);
+
+        if (!vehicle) {
+            notify('~r~Not in a vehicle!');
+            cb('ok');
+            return cb;
+        }
+
+        const liveryCount = GetVehicleLiveryCount(vehicle);
+
+        if (liveryCount === -1) {
+            SetVehicleModKit(vehicle, 0);
+            const modLiveryCount = GetNumVehicleMods(vehicle, VehicleModType.Livery);
+            console.log(`No basic liveries supported, ${modLiveryCount} mod liveries instead.`);
+
+            if (modLiveryCount > 0) {
+                SetVehicleMod(vehicle, VehicleModType.Livery, liveryId, false);
+            } else {
+                notify(`~r~${getVehicleName(vehicle)} does not support liveries!`);
+            }
+        } else if (liveryId > liveryCount) {
+            notify(`~r~${getVehicleName(vehicle)} does not have enough liveries to set to ${liveryId}!`);
+        } else {
+            const name = await getLiveryName(vehicle, liveryId);
+
+            if (name) {
+                console.log(`~g~Set ${getVehicleName(vehicle)} livery to ${name} (${liveryId}/${liveryCount - 1})`);
+            } else {
+                console.log(`~g~Set ${getVehicleName(vehicle)} livery to ${liveryId}/${liveryCount - 1}`);
+            }
+        }
+
+        await this.changeCustomColours(vehicle, data.action, false, true);
 
         cb('ok');
         return cb;

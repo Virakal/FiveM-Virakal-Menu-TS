@@ -2,7 +2,7 @@ import getConfig from '@common/Config';
 import { CustomColour } from '@common/Data/CustomColour';
 import { LicensePlateStyle, VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat, VehicleWindowTint } from '@common/Data/ParamEnums';
 import type { MenuItem, MenuMap } from '@common/Menu';
-import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, hexToColour, loadModel } from '@common/utils';
+import { addSpacesToCamelCase, cleanColourName, getLiveryName, getModName, getModTypeName, getVehicleMods, hexToColour, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
@@ -32,7 +32,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
         menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
         menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
-        // menus.set('vehicles.appearance.livery', this.getLiveryMenu());
+        menus.set('vehicles.appearance.livery', await this.getLiveryMenu());
         // menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
         // menus.set('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
 
@@ -84,7 +84,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
     async updateMenus() {
         const menuManager = this.menuManager;
-        // menuManager.updateAndSend('vehicles.appearance.livery', this.getLiveryMenu());
+        menuManager.updateAndSend('vehicles.appearance.livery', await this.getLiveryMenu());
         // menuManager.updateAndSend('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
         menuManager.updateAndSend('vehicles.seats', await this.getSeatsMenu());
         this.onNewVehicleMods(-1, -1);
@@ -278,6 +278,36 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             list.push({
                 text: addSpacesToCamelCase(value),
                 action: `vehtint ${key}`,
+            });
+        }
+
+        return list;
+    }
+
+    async getLiveryMenu(): Promise<MenuItem[]> {
+        // TODO: We should use mod liveries here instead if applicable
+        const actionPrefix = 'vehlivery';
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (!vehicle) {
+            return [{
+                text: 'Enter a vehicle to view liveries',
+            }];
+        }
+
+        const list: MenuItem[] = [{
+            text: 'No Livery',
+            action: `${actionPrefix} -1`,
+        }];
+
+        SetVehicleModKit(vehicle, 0);
+
+        const liveryCount = GetVehicleLiveryCount(vehicle);
+
+        for (let i = 0; i < liveryCount; i++) {
+            list.push({
+                text: await getLiveryName(vehicle, i) ?? `Livery ${i}`,
+                action: `${actionPrefix} ${i}`,
             });
         }
 

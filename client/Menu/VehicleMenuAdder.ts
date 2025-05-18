@@ -36,9 +36,9 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         // menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
         // menus.set('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
 
-        // menus.set('vehicles.appearance.customBothColour', this.getCustomColourMenu("vehcustomboth"));
-        // menus.set('vehicles.appearance.customPrimaryColour', this.getCustomColourMenu("vehcustomprimary"));
-        // menus.set('vehicles.appearance.customSecondaryColour', this.getCustomColourMenu("vehcustomsecondary"));
+        menus.set('vehicles.appearance.customBothColour', this.getCustomColourMenu('vehcustomboth'));
+        menus.set('vehicles.appearance.customPrimaryColour', this.getCustomColourMenu('vehcustomprimary'));
+        menus.set('vehicles.appearance.customSecondaryColour', this.getCustomColourMenu('vehcustomsecondary'));
 
         menus.set('vehicles.appearance.bothColour', this.getPaintColourMenu('vehboth'));
         menus.set('vehicles.appearance.primaryColour', this.getPaintColourMenu('vehprimary'));

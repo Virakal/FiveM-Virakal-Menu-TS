@@ -45,9 +45,9 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehsecondary', this.onVehSecondary.bind(this));
         RegisterNuiCallback('vehboth', this.onVehBoth.bind(this));
         RegisterNuiCallback('vehpearl', this.onVehPearl.bind(this));
-        // RegisterNuiCallback('vehcustomboth', this.onVehCustomBoth.bind(this));
-        // RegisterNuiCallback('vehcustomprimary', this.onVehCustomPrimary.bind(this));
-        // RegisterNuiCallback('vehcustomsecondary', this.onVehCustomSecondary.bind(this));
+        RegisterNuiCallback('vehcustomboth', this.onVehCustomBoth.bind(this));
+        RegisterNuiCallback('vehcustomprimary', this.onVehCustomPrimary.bind(this));
+        RegisterNuiCallback('vehcustomsecondary', this.onVehCustomSecondary.bind(this));
         // RegisterNuiCallback('vehlivery', this.onVehLivery.bind(this));
         // RegisterNuiCallback('vehrooflivery', this.onVehRoofLivery.bind(this));
         RegisterNuiCallback('vehrim', this.onVehRim.bind(this));
@@ -285,6 +285,45 @@ export default class VehicleHandler implements Handler {
 
         if (vehicle) {
             SetVehicleExtraColours(vehicle, Number.parseInt(colour), GetVehicleExtraColours(vehicle)[1]);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    async onVehCustomBoth(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            await this.changeCustomColours(vehicle, data.action, true, true);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    async onVehCustomPrimary(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            await this.changeCustomColours(vehicle, data.action, true, false);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    async onVehCustomSecondary(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            await this.changeCustomColours(vehicle, data.action, false, true);
         } else {
             notify('~r~Not in a vehicle!');
         }
@@ -619,5 +658,25 @@ export default class VehicleHandler implements Handler {
         ClearVehicleCustomPrimaryColour(vehicle);
         ClearVehicleCustomSecondaryColour(vehicle);
         SetVehicleColours(vehicle, chrome, chrome);
+    }
+
+    private async changeCustomColours(vehicle: number, action: string, changePrimary: boolean, changeSecondary: boolean) {
+        let colour;
+
+        if (action === 'input') {
+            this.trainer.blockInput = true;
+            colour = await getUserInputColour();
+            this.trainer.blockInput = false;
+        } else {
+            colour = stringToColour(action);
+        }
+
+        if (changePrimary) {
+            SetVehicleCustomPrimaryColour.apply(null, [vehicle, ...colour]);
+        }
+
+        if (changeSecondary) {
+            SetVehicleCustomSecondaryColour.apply(null, [vehicle, ...colour]);
+        }
     }
 }

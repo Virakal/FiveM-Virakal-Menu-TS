@@ -12,8 +12,8 @@ import UIHandler from 'Handler/UIHandler';
 import VehicleHandler from 'Handler/VehicleHandler';
 import MenuManager from 'MenuManager';
 
-// const KEY_TOGGLE_MENU = Control.SelectCharacterMichael; // temp disabled - F6
-const KEY_TOGGLE_MENU = Control.SelectCharacterTrevor; // F7
+const KEY_TOGGLE_MENU = Control.SelectCharacterFranklin; // F6
+const KEY_TOGGLE_MENU_2 = Control.SelectCharacterTrevor; // F7
 const KEY_SELECT = Control.PhoneSelect; // Enter/LMB
 const KEY_BACK = Control.PhoneCancel; // Backspace/Esc/RMB
 const KEY_UP = Control.PhoneUp;
@@ -75,7 +75,10 @@ export default class Trainer {
 
 	handleMenuKeys() {
 		// Show/hide trainer
-		if (this.shouldHandleControl(KEY_TOGGLE_MENU, false)) {
+		if (
+			this.shouldHandleControl(KEY_TOGGLE_MENU, false) ||
+			this.shouldHandleControl(KEY_TOGGLE_MENU_2, false)
+		) {
 			this.showTrainer = !this.showTrainer;
 
 			if (this.showTrainer) {

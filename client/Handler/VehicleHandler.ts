@@ -390,7 +390,9 @@ export default class VehicleHandler implements Handler {
         }
 
         if (action === 'input') {
+            this.trainer.blockInput = true;
             const colour = await getUserInputColour();
+            this.trainer.blockInput = false;
             SetVehicleNeonLightsColour.apply(null, [vehicle, ...colour]);
         } else if (action === 'allon') {
             for (let i = 0; i < 4; i++) {

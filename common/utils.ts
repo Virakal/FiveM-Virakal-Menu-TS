@@ -772,7 +772,7 @@ function getModTypeNameInternal(
 }
 
 export function addSpacesToCamelCase(name: string): string {
-	return name.replaceAll(/([A-Z|\d+])/g, ' $1').trim();
+	return name.replaceAll(/([A-Z|\d]+)/g, ' $1').trim();
 }
 
 export function cleanColourName(name: string) {

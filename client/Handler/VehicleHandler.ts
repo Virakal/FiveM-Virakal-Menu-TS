@@ -64,7 +64,7 @@ export default class VehicleHandler implements Handler {
         // // Boost
         // RegisterNuiCallback('boostpower', this.onBoostPower.bind(this));
 
-        // on('virakalMenu:newVehicle', this.onNewVehicle);
+        on('virakalMenu:enteredVehicle', this.onNewVehicle);
 
         setTick(this.rainbowTick.bind(this));
         // setTick(this.boostTick.bind(this));
@@ -355,5 +355,21 @@ export default class VehicleHandler implements Handler {
         this.trainer.blockInput = false;
 
         return vehicle;
+    }
+
+    onNewVehicle() {
+        const config = getConfig();
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (config.getBool('RainbowChrome')) {
+            // this.setChrome(vehicle);
+        }
+
+        if (config.getBool('InvincibleVehicle')) {
+            SetEntityHealth(vehicle, GetEntityMaxHealth(vehicle));
+            SetVehicleDirtLevel(vehicle, 0);
+            SetVehicleEngineHealth(vehicle, 1000);
+            SetVehicleFixed(vehicle);
+        }
     }
 }

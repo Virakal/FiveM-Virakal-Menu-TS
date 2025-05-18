@@ -6,13 +6,13 @@ import {
 	VehicleModType,
 } from '@common/Data/ParamEnums';
 import {
+	type Colour,
 	delay,
 	getLiveryName,
 	getUserInput,
 	getUserInputColour,
 	getVehicleName,
 	invertColour,
-	loadTranslationText,
 	notify,
 	rainbowRgb,
 	spawnVehicle,
@@ -611,7 +611,7 @@ export default class VehicleHandler implements Handler {
 	): Promise<NuiCallback> {
 		const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 		const { action } = data;
-		let colour;
+		let colour: Colour;
 
 		cb('ok');
 
@@ -909,7 +909,7 @@ export default class VehicleHandler implements Handler {
 		changePrimary: boolean,
 		changeSecondary: boolean,
 	) {
-		let colour;
+		let colour: Colour;
 
 		if (action === 'input') {
 			this.trainer.blockInput = true;

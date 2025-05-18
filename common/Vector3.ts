@@ -29,7 +29,7 @@ export default class Vector3 {
 
 	apply<T>(
 		callback: (x: number, y: number, z: number) => T,
-		context: any = null,
+		context: object = null,
 	): T {
 		return callback.apply(context ?? this, this.toArray());
 	}

@@ -10,6 +10,7 @@ export interface MenuAdder {
 // add a registry of the type you expect
 export namespace MenuAdder {
 	type Constructor<T> = {
+		// biome-ignore lint/suspicious/noExplicitAny: we don't car ebaout the constructor args
 		new (...args: any[]): T;
 		readonly prototype: T;
 	};

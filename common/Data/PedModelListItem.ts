@@ -10,7 +10,7 @@ export default class PedModelListItem {
 
 	get image(): string | undefined {
 		if ([PedModelType.Custom, PedModelType.MainCharacter].includes(this.type)) {
-			return;
+			return undefined;
 		}
 
 		return `https://docs.fivem.net/peds/${this.model}.webp`;

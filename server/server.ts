@@ -97,7 +97,7 @@ class Server {
 		emitNet('virakalMenu:returnConfig', playerId, contents);
 	}
 
-	async onSetConfig(config: any) {
+	async onSetConfig(config: string) {
 		const path = this.getConfigPathForPlayer(source);
 
 		await writeFile(path, config, {
@@ -126,7 +126,8 @@ class Server {
 		const handles = getPlayerIdentifiers(playerId).filter((s) =>
 			s.startsWith('license:'),
 		);
-		let handle;
+
+		let handle: string;
 
 		if (GetConvar('sv_fxdkMode', '0') === '1') {
 			handle = 'developer';

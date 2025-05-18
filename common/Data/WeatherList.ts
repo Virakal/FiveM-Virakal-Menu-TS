@@ -1,3 +1,4 @@
+// biome-ignore lint/complexity/noStaticOnlyClass: this is fine for now
 export default class WeatherList {
 	static internalNames = [
 		'EXTRASUNNY',

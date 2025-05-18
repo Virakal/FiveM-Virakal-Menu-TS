@@ -190,6 +190,7 @@ export default class PlayerHandler {
 
 	updateRecentSkinsList(model: Model) {
 		if (typeof model === 'string') {
+			// biome-ignore lint/style/noParameterAssign: we are just enforcing a type
 			model = GetHashKey(model);
 		}
 

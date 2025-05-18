@@ -438,12 +438,12 @@ export async function spawnVehicle(model: Model): Promise<number> {
 	}
 
 	if (config.getBool('SpawnInVehicle')) {
-		let steeringAngle;
-		let velocity;
-		let rpm;
-		let heading;
-		let highGear;
-		let rotation;
+		let steeringAngle: number;
+		let velocity: number[];
+		let rpm: number;
+		let heading: number;
+		let highGear: number;
+		let rotation: number[];
 
 		if (playerVehicle) {
 			steeringAngle = GetVehicleSteeringAngle(vehicle);

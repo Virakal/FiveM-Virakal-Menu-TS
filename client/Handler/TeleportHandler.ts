@@ -84,7 +84,7 @@ export default class TeleportHandler implements Handler {
 		const ped = PlayerPedId();
 		const currentVehicle = GetVehiclePedIsIn(ped, false);
 		const lastVehicle = GetPlayersLastVehicle();
-		let errorMessage;
+		let errorMessage: string;
 
 		if (currentVehicle) {
 			errorMessage =

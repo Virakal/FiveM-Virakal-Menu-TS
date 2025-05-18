@@ -8,6 +8,7 @@ export enum PedModelType {
 	Custom = 3,
 }
 
+// biome-ignore lint/complexity/noStaticOnlyClass: this would be a mess if it wasn't a class
 export default class PedModelList {
 	static initialised = false;
 	static models: PedModelListItem[];
@@ -23,6 +24,7 @@ export default class PedModelList {
 
 	static getByHash(hash: Model) {
 		if (typeof hash === 'string') {
+			// biome-ignore lint/style/noParameterAssign: we are just enforcing a type
 			hash = Number.parseInt(hash, 10);
 		}
 

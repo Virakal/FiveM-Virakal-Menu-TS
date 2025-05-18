@@ -48,17 +48,21 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
 		// Add vehicle appearance menus
 		menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());
+
 		menus.set(
 			'vehicles.appearance.rainbowSettings.speed',
 			this.getRainbowSpeedMenu(),
 		);
+
 		menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
+
 		menus.set(
 			'vehicles.appearance.windowTintSettings',
 			this.getWindowTintMenu(),
 		);
 		menus.set('vehicles.appearance.livery', await this.getLiveryMenu());
 		menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
+
 		menus.set(
 			'vehicles.appearance.colourCombinations',
 			this.getColourCombinationsMenu(),
@@ -68,10 +72,12 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			'vehicles.appearance.customBothColour',
 			this.getCustomColourMenu('vehcustomboth'),
 		);
+
 		menus.set(
 			'vehicles.appearance.customPrimaryColour',
 			this.getCustomColourMenu('vehcustomprimary'),
 		);
+
 		menus.set(
 			'vehicles.appearance.customSecondaryColour',
 			this.getCustomColourMenu('vehcustomsecondary'),
@@ -81,26 +87,32 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			'vehicles.appearance.bothColour',
 			this.getPaintColourMenu('vehboth'),
 		);
+
 		menus.set(
 			'vehicles.appearance.primaryColour',
 			this.getPaintColourMenu('vehprimary'),
 		);
+
 		menus.set(
 			'vehicles.appearance.secondaryColour',
 			this.getPaintColourMenu('vehsecondary'),
 		);
+
 		menus.set(
 			'vehicles.appearance.pearlescentColour',
 			this.getPaintColourMenu('vehpearl'),
 		);
+
 		menus.set(
 			'vehicles.appearance.rimColour',
 			this.getPaintColourMenu('vehrim'),
 		);
+
 		menus.set(
 			'vehicles.appearance.dashColour',
 			this.getPaintColourMenu('vehdashcolour'),
 		);
+
 		menus.set(
 			'vehicles.appearance.trimColour',
 			this.getPaintColourMenu('vehtrimcolour'),
@@ -112,15 +124,17 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			'vehicles.mods.lights.neonColour',
 			this.getCustomColourMenu('vehneon'),
 		);
+
 		menus.set('vehicles.mods.performance', this.getModPerformanceMenu());
 		menus.set('vehicles.mods.wheels', this.getModWheelsMenu());
 		menus.set(
 			'vehicles.mods.wheels.tyreSmokeColour',
 			this.getCustomColourMenu('vehtyresmokecolour'),
 		);
-		menus = await this.addOtherModsMenus(menus);
 
-		return menus;
+		const allMenus = await this.addOtherModsMenus(menus);
+
+		return allMenus;
 	}
 
 	onMenusAdded(): void {

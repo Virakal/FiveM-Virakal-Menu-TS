@@ -1,9 +1,10 @@
 import getConfig from '@common/Config';
 import { VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat } from '@common/Data/ParamEnums';
-import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, loadModel } from '@common/utils';
+import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, hexToColour, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 import type { MenuItem, MenuMap } from '@common/Menu';
+import { CustomColour } from '@common/Data/CustomColour';
 
 const DEFAULT_BOOST_POWER = 75;
 
@@ -616,5 +617,32 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set(menuParent, modTypeMenu);
 
         return menus;
+    }
+
+    getCustomColourMenu(actionPrefix: string): MenuItem[] {
+        const list: MenuItem[] = [{
+            text: 'Custom (HTML #RRGGBB or R,G,B)',
+            action: `${actionPrefix} input`,
+        }];
+
+        for (const [name, hex] of Object.entries(CustomColour)) {
+            const colour = hexToColour(hex);
+
+            list.push({
+                text: addSpacesToCamelCase(name),
+                action: `${actionPrefix} ${colour.join(',')}`,
+                image: this.getDummyImage(hex),
+            });
+        }
+
+        return list;
+    }
+
+    getDummyImage(hex: string): string {
+        const width = 350;
+        const height = 200;
+        const colour = hex.replace(/^#/, '');
+
+        return `https://dummyimage.com/${width}x${height}/${colour}/${colour}.png&text=Sample`;
     }
 }

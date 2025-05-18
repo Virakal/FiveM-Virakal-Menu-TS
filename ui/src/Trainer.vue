@@ -42,7 +42,7 @@
         }
     })
     export default class Trainer extends Vue {
-        trainerTitle = 'Virakal Trainer';
+        trainerTitle = 'Virakal Menu';
         resourceName = 'virakal-trainer';
         maxPageSize = 15;
         showTrainer = false;

@@ -1,5 +1,5 @@
 import getConfig from '@common/Config';
-import { VehicleColor, VehicleModType, VehicleSeat } from '@common/Data/ParamEnums';
+import { VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat } from '@common/Data/ParamEnums';
 import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
@@ -48,7 +48,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance.trimColour', this.getPaintColourMenu('vehtrimcolour'));
 
         // // Add mods menus
-        // menus.set('vehicles.mods.lights', this.getModLightsMenu());
+        menus.set('vehicles.mods.lights', this.getModLightsMenu());
         // menus.set('vehicles.mods.lights.neonColour', this.getCustomColourMenu("vehneon"));
         menus.set('vehicles.mods.performance', this.getModPerformanceMenu());
         menus.set('vehicles.mods.wheels', this.getModWheelsMenu());
@@ -292,6 +292,51 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         }
 
         return list;
+    }
+
+    getModLightsMenu(): MenuItem[] {
+        const list = [
+            {
+                text: 'Enable Xenon Headlights',
+                action: 'vehmod xenonon',
+            },
+            {
+                text: 'Disable Xenon Headlights',
+                action: 'vehmod xenonoff',
+            },
+            {
+                text: 'All Neons On',
+                action: 'vehneon allon',
+            },
+            {
+                text: 'All Neons Off',
+                action: 'vehneon alloff',
+            },
+            {
+                text: 'Change Neon Colour',
+                sub: 'vehicles.mods.lights.neonColour',
+            },
+        ];
+
+        const disableItems = [];
+
+        for (const [key, value] of Object.entries(VehicleNeonLight)) {
+            if (typeof value !== 'string') {
+                continue;
+            }
+
+            list.push({
+                text: `Enable ${value} Neon`,
+                action: `vehneon on${key}`,
+            });
+
+            disableItems.push({
+                text: `Disable ${value} Neon`,
+                action: `vehneon off${key}`,
+            });
+        }
+
+        return [...list, ...disableItems];
     }
 
     getGarageSaveMenu() {

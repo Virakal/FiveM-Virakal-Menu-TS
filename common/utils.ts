@@ -4,7 +4,7 @@ export type ModList = Map<VehicleModType, number>;
 
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
-import { OnScreenKeyboardStatus, SeatPosition, VehicleModType, VehicleSeat, WindowTitle } from "Data/ParamEnums";
+import { OnScreenKeyboardStatus, SeatPosition, VehicleModType, VehicleSeat } from "Data/ParamEnums";
 import getConfig from "Config";
 import { VehicleHash } from "Data/VehicleHash";
 import { VehicleHorn, VehicleHornName } from "Data/VehicleHorns";
@@ -73,7 +73,7 @@ export function sendUIMessage(message: object) {
     SendNUIMessage(message);
 }
 
-export async function getUserInput(maxLength: number, windowTitle = WindowTitle.FMMC_KEY_TIP8, defaultText = '') {
+export async function getUserInput(maxLength: number, windowTitle = '', defaultText = '') {
     showKeyboard(maxLength, windowTitle, defaultText);
 
     while (UpdateOnscreenKeyboard() === OnScreenKeyboardStatus.OSK_PENDING) {
@@ -83,8 +83,8 @@ export async function getUserInput(maxLength: number, windowTitle = WindowTitle.
     return GetOnscreenKeyboardResult();
 }
 
-export function showKeyboard(maxLength: number, windowTitle = WindowTitle.FMMC_KEY_TIP8, defaultText = '') {
-    DisplayOnscreenKeyboard(1, windowTitle.toString(), null, defaultText, null, null, null, maxLength + 1)
+export function showKeyboard(maxLength: number, windowTitle = '', defaultText = '') {
+    DisplayOnscreenKeyboard(1, windowTitle, null, defaultText, null, null, null, maxLength + 1)
 }
 
 export function delay(ms: number): Promise<CitizenTimer> {

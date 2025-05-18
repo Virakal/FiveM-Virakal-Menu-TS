@@ -1,7 +1,7 @@
 import getConfig from "@common/Config";
 import { Control } from "@common/Data/Controls";
 import { SeatPosition, VehicleColor, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
-import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle, translate } from "@common/utils";
+import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle, stringToColour, translate } from "@common/utils";
 import getGarage from "Garage";
 import type Trainer from "Trainer";
 
@@ -58,7 +58,7 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('rainbowspeed', this.onRainbowSpeed.bind(this));
         // RegisterNuiCallback('vehplatetext', this.onVehPlateText.bind(this));
         // RegisterNuiCallback('vehplatestyle', this.onVehPlateStyle.bind(this));
-        // RegisterNuiCallback('vehneon', this.onVehNeon.bind(this));
+        RegisterNuiCallback('vehneon', this.onVehNeon.bind(this));
         // RegisterNuiCallback('vehtyresmokecolour', this.onVehTyreSmokeColour.bind(this));
         RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
         RegisterNuiCallback('vehmodother', this.onVehModOther.bind(this));
@@ -378,6 +378,47 @@ export default class VehicleHandler implements Handler {
         return cb;
     }
 
+    onVehNeon(data: NuiData, cb: NuiCallback): NuiCallback {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+        const { action } = data;
+
+        cb('ok');
+
+        if (!vehicle) {
+            notify('~r~Not in a vehicle!');
+            return cb;
+        }
+
+        if (action === 'allon') {
+            for (let i = 0; i < 4; i++) {
+                SetVehicleNeonLightEnabled(vehicle, i, true);
+            }
+
+            notify('~g~Neons on.');
+        } else if (action === 'alloff') {
+            for (let i = 0; i < 4; i++) {
+                SetVehicleNeonLightEnabled(vehicle, i, false);
+            }
+
+            notify('~g~Neons off.');
+        } else {
+            const match = action.match(/(?:^(?<set>on|off)(?<light>\d)$|(?<colour>^\d+,\d+,\d+$))/);
+
+            if (match.groups?.set) {
+                const { set, light } = match.groups;
+                const enable = set === 'on';
+                const messagePrefix = enable ? 'Enabled ' : 'Disabled';
+                SetVehicleNeonLightEnabled(vehicle, Number.parseInt(light), enable);
+                notify(`~g~${messagePrefix} neon ${light}.`);
+            } else if (match.groups?.colour) {
+                const colour = stringToColour(match.groups.colour);
+                SetVehicleNeonLightsColour.apply(null, [vehicle, ...colour]);
+            } else {
+                notify('~r~Invalid neon instruction!');
+            }
+        }
+    }
+
     onVehMod(data: NuiData, cb: NuiCallback): NuiCallback {
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
         cb('ok');
@@ -541,7 +582,7 @@ export default class VehicleHandler implements Handler {
     async spawnUserInputVehicle() {
         this.trainer.blockInput = true;
 
-        const model = await getUserInput(64, WindowTitle.FMMC_KEY_TIP8);
+        const model = await getUserInput(64, 'Enter internal vehicle name');
         const vehicle = await spawnVehicle(model);
 
         // Wait a few frames so that the messagebox doesn't start again immediately

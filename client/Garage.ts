@@ -290,14 +290,6 @@ class Garage {
 			SetVehicleNeonLightsColour.apply(null, [vehicle, ...colour]);
 		}
 
-		if ('TyreSmokeColour' in modList) {
-			console.log(`Setting secondary colour to ${modList.TyreSmokeColour}`);
-			const colour = modList.TyreSmokeColour.split(',').map((x) =>
-				Number.parseInt(x.trim()),
-			);
-			SetVehicleTyreSmokeColor.apply(null, [vehicle, ...colour]);
-		}
-
 		for (let i = 0; i < 4; i++) {
 			const key = `NeonEnabled${i}`;
 
@@ -318,6 +310,15 @@ class Garage {
 
 			console.log(`Setting ${key} to ${value}`);
 			ToggleVehicleMod(vehicle, value as number, value === 'true');
+		}
+
+		if ('TyreSmokeColour' in modList) {
+			console.log(`Setting tyre smoke colour to ${modList.TyreSmokeColour}`);
+			const colour = modList.TyreSmokeColour.split(',').map((x) =>
+				Number.parseInt(x.trim()),
+			);
+			ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, true);
+			SetVehicleTyreSmokeColor.apply(null, [vehicle, ...colour]);
 		}
 
 		const modPrefix = 'Mod#';

@@ -48,11 +48,11 @@ export default class VehicleListItem {
 	}
 
 	matchesSearchTerm(term: string) {
-		const normalTerm = term.replaceAll(/\s+/, '').toLocaleLowerCase();
+		const normalTerm = term.replaceAll(/\s+/g, '').toLocaleLowerCase();
 
 		return (
 			this.model.toLocaleLowerCase().includes(normalTerm) ||
-			this.name.replaceAll(/\s+/, '').toLocaleLowerCase().includes(normalTerm)
+			this.name.replaceAll(/\s+/g, '').toLocaleLowerCase().includes(normalTerm)
 		);
 	}
 }

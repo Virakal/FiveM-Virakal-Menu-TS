@@ -43,7 +43,6 @@
     })
     export default class Trainer extends Vue {
         trainerTitle = 'Virakal Menu';
-        resourceName = 'virakal-trainer';
         maxPageSize = 15;
         showTrainer = false;
         menus: { [menuName: string]: MenuItem[] } = { 'mainmenu': [{ text: "Waiting for menus to download..." }] };

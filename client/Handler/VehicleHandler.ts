@@ -1,5 +1,5 @@
 import getConfig from "@common/Config";
-import { SeatPosition, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
+import { SeatPosition, VehicleColor, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
 import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle } from "@common/utils";
 import type Trainer from "Trainer";
 
@@ -64,7 +64,7 @@ export default class VehicleHandler implements Handler {
         // // Boost
         // RegisterNuiCallback('boostpower', this.onBoostPower.bind(this));
 
-        on('virakalMenu:enteredVehicle', this.onNewVehicle);
+        on('virakalMenu:enteredVehicle', this.onNewVehicle.bind(this));
 
         setTick(this.rainbowTick.bind(this));
         // setTick(this.boostTick.bind(this));
@@ -362,7 +362,7 @@ export default class VehicleHandler implements Handler {
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 
         if (config.getBool('RainbowChrome')) {
-            // this.setChrome(vehicle);
+            this.setChrome(vehicle);
         }
 
         if (config.getBool('InvincibleVehicle')) {
@@ -371,5 +371,13 @@ export default class VehicleHandler implements Handler {
             SetVehicleEngineHealth(vehicle, 1000);
             SetVehicleFixed(vehicle);
         }
+    }
+
+    private setChrome(vehicle: number) {
+        const chrome = VehicleColor.Chrome;
+
+        ClearVehicleCustomPrimaryColour(vehicle);
+        ClearVehicleCustomSecondaryColour(vehicle);
+        SetVehicleColours(vehicle, chrome, chrome);
     }
 }

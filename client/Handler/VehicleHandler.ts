@@ -489,7 +489,6 @@ export default class VehicleHandler implements Handler {
     }
 
     async onVehPlateText(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
-        const { action } = data;
         const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 
         cb('ok');

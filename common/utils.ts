@@ -283,6 +283,24 @@ export function getPedVehicleSeat(ped: number): number | null {
     return null;
 }
 
+export function getVehicleName(vehicle: number): string {
+    return getVehicleModelName(GetEntityModel(vehicle));
+}
+
+export function getVehicleModelName(model: number): string {
+    return translate(GetDisplayNameFromVehicleModel(model));
+}
+
+export async function getLiveryName(vehicle: number, livery: number): Promise<string> {
+    const modLiveryCount = GetNumVehicleMods(vehicle, VehicleModType.Livery);
+
+    if (modLiveryCount > 0) {
+        return await getModName(vehicle, VehicleModType.Livery, livery);
+    }
+
+    return translate(GetLiveryName(vehicle, livery));
+}
+
 export function getVehicleMods(vehicle: number): ModList {
     // We divide by 2 because enums compile to have a reverse mapping
     const mods: ModList = new Map();

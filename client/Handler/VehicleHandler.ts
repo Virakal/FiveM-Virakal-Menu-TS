@@ -69,7 +69,6 @@ export default class VehicleHandler implements Handler {
         setTick(this.rainbowTick.bind(this));
         // setTick(this.boostTick.bind(this));
         setTick(this.invincibleCarTick.bind(this));
-        // setTick(this.checkChangedCar.bind(this));
 
         if (config.has('RainbowSpeed')) {
             this.rainbowSpeed = Number.parseFloat(config.get('RainbowSpeed')) ?? 0.5;

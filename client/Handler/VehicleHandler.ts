@@ -19,24 +19,24 @@ export default class VehicleHandler implements Handler {
         config.setDefaults({
             AutoDespawnVehicle: true,
             BoostOnHorn: true,
-            BoostPower: "75",
+            BoostPower: '75',
             InvincibleVehicle: true,
             MaintainVehicleVelocityOnSwitch: true,
             RainbowChrome: false,
             RainbowNeon: false,
             RainbowNeonInverse: false,
             RainbowPaint: false,
-            RainbowSpeed: "0.5",
+            RainbowSpeed: '0.5',
             SpawnInVehicle: true,
         });
 
-        // // General
+        // General
         RegisterNuiCallback('veh', this.onVeh.bind(this));
         RegisterNuiCallback('vehspawn', this.onVehSpawn.bind(this));
         // RegisterNuiCallback('vehsearch', this.onVehSearch.bind(this));
         RegisterNuiCallback('vehseat', this.onVehSeat.bind(this));
 
-        // // Garage
+        // Garage
         RegisterNuiCallback('vehsave', this.onVehSave.bind(this));
         RegisterNuiCallback('vehload', this.onVehLoad.bind(this));
 

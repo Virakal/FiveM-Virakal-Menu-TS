@@ -923,9 +923,11 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			menu[name] = this.getVehicleSpawnMenu(vehicles.getByVehicleClass(id));
 
 			if (menu[name].length === 0) {
-				menu[name] = [{
+				menu[name] = [
+					{
 					text: 'No vehicles of this type added yet',
-				}];
+					},
+				];
 			}
 
 			baseMenu.push({
@@ -956,9 +958,11 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			menu[name] = this.getVehicleSpawnMenu(vehicles.getByDlc(id));
 
 			if (menu[name].length === 0) {
-				menu[name] = [{
+				menu[name] = [
+					{
 					text: 'No vehicles from this DLC added yet',
-				}];
+					},
+				];
 			}
 
 			baseMenu.push({

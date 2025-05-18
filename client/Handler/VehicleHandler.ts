@@ -1,5 +1,5 @@
 import getConfig from "@common/Config";
-import { SeatPosition, WindowTitle } from "@common/Data/ParamEnums";
+import { SeatPosition, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
 import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle } from "@common/utils";
 import type Trainer from "Trainer";
 
@@ -58,7 +58,7 @@ export default class VehicleHandler implements Handler {
         // RegisterNuiCallback('vehplatestyle', this.onVehPlateStyle.bind(this));
         // RegisterNuiCallback('vehneon', this.onVehNeon.bind(this));
         // RegisterNuiCallback('vehtyresmokecolour', this.onVehTyreSmokeColour.bind(this));
-        // RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
+        RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
         RegisterNuiCallback('vehmodother', this.onVehModOther.bind(this));
 
         // // Boost
@@ -222,6 +222,62 @@ export default class VehicleHandler implements Handler {
         }
 
         cb('ok');
+        return cb;
+    }
+
+    onVehMod(data: NuiData, cb: NuiCallback): NuiCallback {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+        cb('ok');
+
+        if (!vehicle) {
+            notify('~r~Not in a vehicle!');
+            return cb;
+        }
+
+        const { action } = data;
+
+        switch (action) {
+            case 'quickupgrade':
+                SetVehicleModKit(vehicle, 0);
+                ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
+                ToggleVehicleMod(vehicle, VehicleModType.XenonLights, true);
+                ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, true);
+                SetVehicleMod(vehicle, VehicleModType.Suspension, 3, false);
+                SetVehicleMod(vehicle, VehicleModType.Armor, 4, false);
+                SetVehicleMod(vehicle, VehicleModType.Brakes, 2, false);
+                SetVehicleMod(vehicle, VehicleModType.Engine, 2, false);
+                SetVehicleTyreSmokeColor(vehicle, 0, 0, 0);
+
+                notify('~g~Quick upgrade complete!');
+                break;
+            case 'turboon':
+                ToggleVehicleMod(vehicle, VehicleModType.Turbo, true);
+                notify('~g~Turbo installed!');
+                break;
+            case 'turbooff':
+                ToggleVehicleMod(vehicle, VehicleModType.Turbo, false);
+                notify('~g~Turbo uninstalled!');
+                break;
+            case 'xenonon':
+                ToggleVehicleMod(vehicle, VehicleModType.XenonLights, true);
+                notify('~g~Xenon lights installed!');
+                break;
+            case 'xenonoff':
+                ToggleVehicleMod(vehicle, VehicleModType.XenonLights, false);
+                notify('~g~Xenon lights uninstalled!');
+                break;
+            case 'tyresmokeon':
+                ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, true);
+                notify('~g~Tyre smoke installed!');
+                break;
+            case 'tyresmokeoff':
+                ToggleVehicleMod(vehicle, VehicleModType.TyreSmoke, false);
+                notify('~g~Tyre smoke uninstalled!');
+                break;
+        }
+
+        emit('virakalMenu:vehicleModsChanged', -1, -1);
+
         return cb;
     }
 

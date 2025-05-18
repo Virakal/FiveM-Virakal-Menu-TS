@@ -3,6 +3,8 @@ import { VehicleModType } from '@common/Data/ParamEnums';
 import { getModName, getModTypeName, getVehicleMods } from '@common/utils';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
+const DEFAULT_BOOST_POWER = 75;
+
 @MenuAdder.register
 export default class VehicleMenuAdder extends BaseMenuAdder {
     async add(menus: MenuMap): Promise<MenuMap> {
@@ -14,7 +16,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance', this.getAppearanceMenu());
         menus.set('vehicles.mods', this.getModsMenu());
         // menus.set('vehicles.seats', this.getSeatsMenu());
-        // menus.set('vehicles.boostPower', this.getBoostPowerMenu());
+        menus.set('vehicles.boostPower', this.getBoostPowerMenu());
 
         // // Add vehicle spawn menus
         menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
@@ -62,8 +64,13 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
     }
 
     onConfigChanged(key: string, value: string): void {
-        if (key === 'RainbowSpeed') {
-            this.menuManager.updateAndSend('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
+        switch (key) {
+            case 'RainbowSpeed':
+                this.menuManager.updateAndSend('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
+                break;
+            case 'BoostPower':
+                this.menuManager.updateAndSend('vehicles.boostPower', this.getBoostPowerMenu());
+                break;
         }
     }
 
@@ -355,6 +362,33 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
                 sub: 'vehicles.mods.other',
             }
         ];
+    }
+
+    getBoostPowerMenu(): MenuItem[] {
+        const config = getConfig();
+        const list = [];
+        let current = Number.parseInt(config.get('BoostPower'));
+
+        if (isNaN(current) || current < 1) {
+            current = DEFAULT_BOOST_POWER;
+        }
+
+        for (let power = 25; power <= 150; power += 25) {
+            let name = `Power ${power}`;
+
+            if (power === current) {
+                name += ' (Current)';
+            } else if (power === DEFAULT_BOOST_POWER) {
+                name += ' (Default)';
+            }
+
+            list.push({
+                text: name,
+                action: `boostpower ${power}`,
+            });
+        }
+
+        return list;
     }
 
     getModWheelsMenu(): MenuItem[] {

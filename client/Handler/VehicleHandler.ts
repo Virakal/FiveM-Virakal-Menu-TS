@@ -62,8 +62,8 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
         RegisterNuiCallback('vehmodother', this.onVehModOther.bind(this));
 
-        // // Boost
-        // RegisterNuiCallback('boostpower', this.onBoostPower.bind(this));
+        // Boost
+        RegisterNuiCallback('boostpower', this.onBoostPower.bind(this));
 
         on('virakalMenu:enteredVehicle', this.onNewVehicle.bind(this));
 
@@ -294,6 +294,17 @@ export default class VehicleHandler implements Handler {
 
             emit('virakalMenu:vehicleModsChanged', modType, index);
         }
+
+        cb('ok');
+        return cb;
+    }
+
+    onBoostPower(data: NuiData, cb: NuiCallback): NuiCallback {
+        const config = getConfig();
+        const power = data.action;
+
+        config.set('BoostPower', power);
+        notify(`~g~Set boost power to ${power}`);
 
         cb('ok');
         return cb;

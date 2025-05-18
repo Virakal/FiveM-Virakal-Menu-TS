@@ -8,6 +8,8 @@ import {
 	VehicleSeat,
 	VehicleWindowTint,
 } from '@common/Data/ParamEnums';
+import { getVehicles } from '@common/Data/VehicleList';
+import VehicleListItem from '@common/Data/VehicleListItem';
 import type { MenuItem, MenuMap } from '@common/Menu';
 import {
 	addSpacesToCamelCase,
@@ -44,7 +46,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
 		// menus = this.addSpawnByTypeMenus(menus);
 		// menus = this.addSpawnByDlcMenus(menus);
-		// menus.set('vehicles.spawn.fun', this.getVehicleSpawnMenu(VehicleList.GetByTag("fun")));
+		menus.set('vehicles.spawn.fun', this.getVehicleSpawnMenu(getVehicles().getByTag('fun')));
 
 		// Add vehicle appearance menus
 		menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());
@@ -894,5 +896,14 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		const colour = hex.replace(/^#/, '');
 
 		return `https://dummyimage.com/${width}x${height}/${colour}/${colour}.png&text=Sample`;
+	}
+
+	getVehicleSpawnMenu(vehicles: VehicleListItem[]): MenuItem[] {
+		console.log(vehicles.length);
+		return vehicles.map((x) => ({
+			text: x.name,
+			action: `vehspawn ${x.model}`,
+			image: x.image,
+		}));
 	}
 }

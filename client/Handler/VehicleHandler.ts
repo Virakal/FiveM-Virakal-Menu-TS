@@ -1,7 +1,8 @@
 import getConfig from "@common/Config";
 import { Control } from "@common/Data/Controls";
 import { SeatPosition, VehicleColor, VehicleModType, WindowTitle } from "@common/Data/ParamEnums";
-import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle } from "@common/utils";
+import { delay, getUserInput, invertColour, notify, rainbowRgb, spawnVehicle, translate } from "@common/utils";
+import getGarage from "Garage";
 import type Trainer from "Trainer";
 
 const RAINBOW_TICK_DELAY = 100;
@@ -36,8 +37,8 @@ export default class VehicleHandler implements Handler {
         RegisterNuiCallback('vehseat', this.onVehSeat.bind(this));
 
         // // Garage
-        // RegisterNuiCallback('vehsave', this.onVehSave.bind(this));
-        // RegisterNuiCallback('vehload', this.onVehLoad.bind(this));
+        RegisterNuiCallback('vehsave', this.onVehSave.bind(this));
+        RegisterNuiCallback('vehload', this.onVehLoad.bind(this));
 
         // // Colours
         // RegisterNuiCallback('vehprimary', this.onVehPrimary.bind(this));
@@ -196,6 +197,39 @@ export default class VehicleHandler implements Handler {
         }
 
         cb('ok');
+        return cb;
+    }
+
+    async onVehSave(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const { action: slot } = data;
+        const garage = getGarage();
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (vehicle) {
+            const model = GetEntityModel(vehicle);
+            const name = translate(GetDisplayNameFromVehicleModel(model));
+            garage.saveVehicle(slot, vehicle);
+            notify(`~g~Save ${name} to slot ${slot}!`);
+        } else {
+            notify('~r~Not in a vehicle!');
+        }
+
+        cb('ok');
+        return cb;
+    }
+
+    async onVehLoad(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const { action: slot } = data;
+        const garage = getGarage();
+
+        cb('ok');
+
+        if (garage.hasSavedVehicle(slot)) {
+            await garage.loadVehicle(slot);
+        } else {
+            notify(`~r~No vehicle saved in slot ${slot}!`)
+        }
+
         return cb;
     }
 

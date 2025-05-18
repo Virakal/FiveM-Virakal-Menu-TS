@@ -1,6 +1,7 @@
 import getConfig from '@common/Config';
 import { VehicleModType, VehicleSeat } from '@common/Data/ParamEnums';
 import { addSpacesToCamelCase, getModName, getModTypeName, getVehicleMods, loadModel } from '@common/utils';
+import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
 
 const DEFAULT_BOOST_POWER = 75;
@@ -11,8 +12,8 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles', this.getVehiclesMenu());
 
         menus.set('vehicles.spawn', this.getSpawnMenu());
-        // menus.set('vehicles.save', this.getGarageSaveMenu());
-        // menus.set('vehicles.load', this.getGarageLoadMenu());
+        menus.set('vehicles.save', this.getGarageSaveMenu());
+        menus.set('vehicles.load', this.getGarageLoadMenu());
         menus.set('vehicles.appearance', this.getAppearanceMenu());
         menus.set('vehicles.mods', this.getModsMenu());
         menus.set('vehicles.seats', await this.getSeatsMenu());
@@ -64,6 +65,11 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
     }
 
     onConfigChanged(key: string, value: string): void {
+        if (key.startsWith(GARAGE_CONFIG_KEY_PREFIX)) {
+            this.menuManager.updateAndSend('vehicles.load', this.getGarageLoadMenu());
+            this.menuManager.updateAndSend('vehicles.save', this.getGarageSaveMenu());
+        }
+
         switch (key) {
             case 'RainbowSpeed':
                 this.menuManager.updateAndSend('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
@@ -264,6 +270,39 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             list.push({
                 text,
                 action: `rainbowspeed ${speed}`,
+            });
+        }
+
+        return list;
+    }
+
+    getGarageSaveMenu() {
+        return this.getGarageMenu('vehsave', 'Save in Slot');
+    }
+
+    getGarageLoadMenu() {
+        return this.getGarageMenu('vehload', 'Load from Slot');
+    }
+
+    private getGarageMenu(actionPrefix: string, namePrefix: string): MenuItem[] {
+        const list = [];
+        const garage = getGarage();
+
+        for (let i = 1; i <= GARAGE_MAX_VEHICLE_SLOTS; i++) {
+            let vehicleName = 'Empty';
+            const slot = i.toString();
+            let image = '';
+
+            if (garage.hasSavedVehicle(slot)) {
+                // TODO: Get image
+                const slotInfo = garage.getVehicleInfo(slot);
+                vehicleName = slotInfo.displayName;
+            }
+
+            list.push({
+                text: `${namePrefix} ${i} (${vehicleName})`,
+                action: `${actionPrefix} ${i}`,
+                image,
             });
         }
 

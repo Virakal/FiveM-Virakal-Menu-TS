@@ -175,6 +175,12 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 					this.getBoostPowerMenu(),
 				);
 				break;
+			case 'VehicleSpawnSearchTerm':
+				this.menuManager.updateAndSend(
+					'vehicles.spawn.search',
+					this.getSpawnSearchMenu(),
+				);
+				break;
 		}
 	}
 
@@ -298,7 +304,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 	getSpawnSearchMenu(): MenuItem[] {
 		const config = getConfig();
 
-		const list = [
+		const list: MenuItem[] = [
 			{
 				text: 'Search for a name...',
 				action: 'vehsearch',
@@ -307,6 +313,8 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 
 		if (config.has('VehicleSpawnSearchTerm')) {
 			const term = config.get('VehicleSpawnSearchTerm');
+			const vehicles = getVehicles();
+			list.push(...this.getVehicleSpawnMenu(vehicles.getBySearchTerm(term)));
 		}
 
 		return list;
@@ -925,7 +933,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			if (menu[name].length === 0) {
 				menu[name] = [
 					{
-					text: 'No vehicles of this type added yet',
+						text: 'No vehicles of this type added yet',
 					},
 				];
 			}
@@ -960,7 +968,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 			if (menu[name].length === 0) {
 				menu[name] = [
 					{
-					text: 'No vehicles from this DLC added yet',
+						text: 'No vehicles from this DLC added yet',
 					},
 				];
 			}

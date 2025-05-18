@@ -50,7 +50,7 @@ export default class VehicleHandler implements Handler {
 		// General
 		RegisterNuiCallback('veh', this.onVeh.bind(this));
 		RegisterNuiCallback('vehspawn', this.onVehSpawn.bind(this));
-		// RegisterNuiCallback('vehsearch', this.onVehSearch.bind(this));
+		RegisterNuiCallback('vehsearch', this.onVehSearch.bind(this));
 		RegisterNuiCallback('vehseat', this.onVehSeat.bind(this));
 
 		// Garage
@@ -541,6 +541,23 @@ export default class VehicleHandler implements Handler {
 				break;
 		}
 
+		return cb;
+	}
+
+	async onVehSearch(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+		const config = getConfig();
+		this.trainer.blockInput = true;
+		const term = await getUserInput(256, 'Enter search term');
+
+		if (term) {
+			config.set('VehicleSpawnSearchTerm', term);
+		}
+
+		// Wait a few frames so that the messagebox doesn't start again immediately
+		await delay(10);
+		this.trainer.blockInput = false;
+
+		cb('ok');
 		return cb;
 	}
 

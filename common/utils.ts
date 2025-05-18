@@ -192,6 +192,42 @@ export function invertColour(colour: Colour): Colour {
     return [255 - r, 255 - g, 255 - b];
 }
 
+export async function getUserInputColour(): Promise<Colour> {
+    const input = await getUserInput(64, 'Enter custom colour (HTML #RRGGBB or R,G,B)', '');
+    return stringToColour(input);
+}
+
+export function hexToColour(input: string): Colour {
+    let clean = input.trim().replace(/^#/, '').toLowerCase();
+
+    if (clean.length === 3) {
+        clean = clean.replaceAll(/(.)/g, '$1$1');
+    }
+
+    const match = clean.match(/(?<r>..)(?<g>..)(?<b>..)(?<a>..)?/);
+
+    if (!match) {
+        return null;
+    }
+
+    const {r, g, b} = match.groups;
+    return [r, g, b].map((x) => Number.parseInt(x, 16)) as Colour;
+}
+
+export function stringToColour(input: string): Colour {
+    if (input.trim().startsWith('#')) {
+        return hexToColour(input);
+    }
+
+    const split = input.split(',');
+
+    if (split.length !== 3) {
+        return;
+    }
+
+    return split.map((x) => Number.parseInt(x.trim(), 10)) as Colour;
+}
+
 export async function teleportToGroundHeight(ped: number, position: Vector3, includeWater = true, additionalHeight = 2.5): Promise<void> {
     const testHeights = [
         100,

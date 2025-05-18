@@ -1,10 +1,10 @@
 import getConfig from '@common/Config';
+import { CustomColour } from '@common/Data/CustomColour';
 import { LicensePlateStyle, VehicleColor, VehicleModType, VehicleNeonLight, VehicleSeat } from '@common/Data/ParamEnums';
+import type { MenuItem, MenuMap } from '@common/Menu';
 import { addSpacesToCamelCase, cleanColourName, getModName, getModTypeName, getVehicleMods, hexToColour, loadModel } from '@common/utils';
 import getGarage, { GARAGE_CONFIG_KEY_PREFIX, GARAGE_MAX_VEHICLE_SLOTS } from 'Garage';
 import { BaseMenuAdder, MenuAdder } from "Menu/MenuAdder";
-import type { MenuItem, MenuMap } from '@common/Menu';
-import { CustomColour } from '@common/Data/CustomColour';
 
 const DEFAULT_BOOST_POWER = 75;
 
@@ -21,13 +21,13 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.seats', await this.getSeatsMenu());
         menus.set('vehicles.boostPower', this.getBoostPowerMenu());
 
-        // // Add vehicle spawn menus
+        // Add vehicle spawn menus
         menus.set('vehicles.spawn.search', this.getSpawnSearchMenu());
         // menus = this.addSpawnByTypeMenus(menus);
         // menus = this.addSpawnByDlcMenus(menus);
         // menus.set('vehicles.spawn.fun', this.getVehicleSpawnMenu(VehicleList.GetByTag("fun")));
 
-        // // Add vehicle appearance menus
+        // Add vehicle appearance menus
         menus.set('vehicles.appearance.rainbowSettings', this.getRainbowMenu());
         menus.set('vehicles.appearance.rainbowSettings.speed', this.getRainbowSpeedMenu());
         menus.set('vehicles.appearance.numberPlateSettings', this.getPlatesMenu());
@@ -48,7 +48,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance.dashColour', this.getPaintColourMenu('vehdashcolour'));
         menus.set('vehicles.appearance.trimColour', this.getPaintColourMenu('vehtrimcolour'));
 
-        // // Add mods menus
+        // Add mods menus
         menus.set('vehicles.mods.lights', this.getModLightsMenu());
         menus.set('vehicles.mods.lights.neonColour', this.getCustomColourMenu('vehneon'));
         menus.set('vehicles.mods.performance', this.getModPerformanceMenu());

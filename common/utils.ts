@@ -4,7 +4,7 @@ export type ModList = Map<VehicleModType, number>;
 
 import isPromise from "is-promise";
 import Vector3 from "Vector3";
-import { OnScreenKeyboardStatus, SeatPosition, VehicleModType, WindowTitle } from "Data/ParamEnums";
+import { OnScreenKeyboardStatus, SeatPosition, VehicleModType, VehicleSeat, WindowTitle } from "Data/ParamEnums";
 import getConfig from "Config";
 import { VehicleHash } from "Data/VehicleHash";
 import { VehicleHorn, VehicleHornName } from "Data/VehicleHorns";
@@ -323,17 +323,18 @@ export async function spawnVehicle(model: Model): Promise<number> {
  *
  * @param from the vehicle to move passengers from
  * @param to the vehicle to move passengers to
+ * @param leaveDriver whether to leave the driver seat empty and not transfer them
  * @returns true if there was enough space to move everybody
  */
-export function transferVehiclePassengers(from: number, to: number): boolean {
+export function transferVehiclePassengers(from: number, to: number, leaveDriver = false): boolean {
     const toPassengerCount = GetVehicleNumberOfPassengers(to);
     const toMaxPassengers = GetVehicleMaxNumberOfPassengers(to);
     const fromSeatCount = GetVehicleModelNumberOfSeats(GetEntityModel(from));
+    const firstSeat = leaveDriver ? VehicleSeat.RightFront : VehicleSeat.Driver;
 
     let amountSeated = toPassengerCount;
 
-    // Seats start at -1, for driver
-    for (let seat = -1; seat < (fromSeatCount - 1); seat++) {
+    for (let seat = firstSeat; seat < (fromSeatCount - 1); seat++) {
         const pedInSeat = GetPedInVehicleSeat(from, seat);
 
         if (pedInSeat) {

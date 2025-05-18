@@ -34,7 +34,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
         menus.set('vehicles.appearance.windowTintSettings', this.getWindowTintMenu());
         menus.set('vehicles.appearance.livery', await this.getLiveryMenu());
         // menus.set('vehicles.appearance.roofLivery', this.getRoofLiveryMenu());
-        // menus.set('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
+        menus.set('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
 
         menus.set('vehicles.appearance.customBothColour', this.getCustomColourMenu('vehcustomboth'));
         menus.set('vehicles.appearance.customPrimaryColour', this.getCustomColourMenu('vehcustomprimary'));
@@ -85,7 +85,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
     async updateMenus() {
         const menuManager = this.menuManager;
         menuManager.updateAndSend('vehicles.appearance.livery', await this.getLiveryMenu());
-        // menuManager.updateAndSend('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
+        menuManager.updateAndSend('vehicles.appearance.colourCombinations', this.getColourCombinationsMenu());
         menuManager.updateAndSend('vehicles.seats', await this.getSeatsMenu());
         this.onNewVehicleMods(-1, -1);
     }
@@ -319,6 +319,37 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
             list.push({
                 text: await getLiveryName(vehicle, i) ?? `Livery ${i}`,
                 action: `${actionPrefix} ${i}`,
+            });
+        }
+
+        return list;
+    }
+
+    getColourCombinationsMenu(): MenuItem[] {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+
+        if (!vehicle) {
+            return [{
+                text: 'Enter a vehicle to view colour combinations',
+            }];
+        }
+
+        SetVehicleModKit(vehicle, 0);
+
+        const list: MenuItem[] = [];
+        const comboCount = GetNumberOfVehicleColours(vehicle);
+
+        if (comboCount < 1) {
+            return [{
+                text: 'This vehicle doesn\'t support colour combinations',
+            }];
+        }
+
+        for (let i = 0; i < comboCount; i++) {
+            // TODO: Do these have names we can get?
+            list.push({
+                text: `Colour combination ${i}`,
+                action: `vehcolourcombo ${i}`,
             });
         }
 

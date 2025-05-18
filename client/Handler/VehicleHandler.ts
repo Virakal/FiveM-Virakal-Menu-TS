@@ -59,7 +59,7 @@ export default class VehicleHandler implements Handler {
         // RegisterNuiCallback('vehplatetext', this.onVehPlateText.bind(this));
         // RegisterNuiCallback('vehplatestyle', this.onVehPlateStyle.bind(this));
         RegisterNuiCallback('vehneon', this.onVehNeon.bind(this));
-        // RegisterNuiCallback('vehtyresmokecolour', this.onVehTyreSmokeColour.bind(this));
+        RegisterNuiCallback('vehtyresmokecolour', this.onVehTyreSmokeColour.bind(this));
         RegisterNuiCallback('vehmod', this.onVehMod.bind(this));
         RegisterNuiCallback('vehmodother', this.onVehModOther.bind(this));
 
@@ -414,6 +414,36 @@ export default class VehicleHandler implements Handler {
         }
 
         cb('ok');
+        return cb;
+    }
+
+    async onVehTyreSmokeColour(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+        const vehicle = GetVehiclePedIsUsing(PlayerPedId());
+        const { action } = data;
+        let colour;
+
+        cb('ok');
+
+        if (!vehicle) {
+            notify('~r~Not in a vehicle!');
+            return cb;
+        }
+
+        if (action === 'input') {
+            this.trainer.blockInput = true;
+            colour = await getUserInputColour();
+            this.trainer.blockInput = false;
+        } else {
+            colour = stringToColour(action);
+        }
+
+        if (colour) {
+            SetVehicleTyreSmokeColor.apply(null, [vehicle, ...colour]);
+            notify('~g~Tyre smoke colour changed.');
+        } else {
+            notify('~r~Invalid tyre smoke colour instruction!');
+        }
+
         return cb;
     }
 

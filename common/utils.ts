@@ -579,10 +579,10 @@ export async function getModName(
 		const name = GetModTextLabel(vehicle, modType, index);
 
 		if (index >= modCount / 2) {
-			return `${translate('CHROME')} ${name}`;
+			return `${translate('CHROME')} ${translate(name)}`;
 		}
 
-		return name;
+		return translate(name);
 	}
 
 	switch (modType) {

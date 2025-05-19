@@ -119,7 +119,13 @@ class Server {
 	}
 
 	private async makeConfigDirectory() {
-		await mkdir(this.configPath);
+		try {
+			await mkdir(this.configPath);
+		} catch (e) {
+			if (e?.code !== 'EEXIST') {
+				throw e;
+			}
+		}
 	}
 
 	private getConfigPathForPlayer(playerId: number) {

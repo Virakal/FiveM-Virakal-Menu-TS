@@ -10,6 +10,7 @@ import SettingsHandler from 'Handler/SettingsHandler';
 import TeleportHandler from 'Handler/TeleportHandler';
 import UIHandler from 'Handler/UIHandler';
 import VehicleHandler from 'Handler/VehicleHandler';
+import WeaponHandler from 'Handler/WeaponHandler';
 import MenuManager from 'MenuManager';
 
 const KEY_TOGGLE_MENU = Control.SelectCharacterFranklin; // F6
@@ -139,6 +140,7 @@ export default class Trainer {
 			new TeleportHandler(),
 			new UIHandler(this),
 			new VehicleHandler(this),
+			new WeaponHandler(),
 		];
 	}
 }

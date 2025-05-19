@@ -987,7 +987,6 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 	}
 
 	getVehicleSpawnMenu(vehicles: VehicleListItem[]): MenuItem[] {
-		console.log(vehicles.length);
 		return vehicles.map((x) => ({
 			text: x.name,
 			action: `vehspawn ${x.model}`,

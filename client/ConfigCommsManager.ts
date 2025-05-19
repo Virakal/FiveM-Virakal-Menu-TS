@@ -4,16 +4,7 @@ import { delay, sendUIMessage } from '@common/utils';
 export default class ConfigCommsManager {
 	constructor() {
 		onNet('virakalMenu:returnConfig', this.onReturnConfig);
-
-		RegisterNuiCallback(
-			'uiReady',
-			(data: NuiData, cb: NuiCallback): NuiCallback => {
-				console.log('UI is ready');
-				emitNet('virakalMenu:getConfig');
-				cb('ok');
-				return cb;
-			},
-		);
+		emitNet('virakalMenu:getConfig');
 	}
 
 	async onReturnConfig(configData: { [key: string]: string }) {

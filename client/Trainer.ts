@@ -1,5 +1,3 @@
-import { Control } from '@common/Data/Controls';
-import { notify, sendUIMessage } from '@common/utils';
 import ConfigCommsManager from 'ConfigCommsManager';
 import Events from 'Events';
 import AnimalBombHandler from 'Handler/AnimalBombHandler';
@@ -12,6 +10,8 @@ import UIHandler from 'Handler/UIHandler';
 import VehicleHandler from 'Handler/VehicleHandler';
 import WeaponHandler from 'Handler/WeaponHandler';
 import MenuManager from 'MenuManager';
+import { Control } from '@common/Data/Controls';
+import { notify, sendUIMessage } from '@common/utils';
 
 const KEY_TOGGLE_MENU = Control.SelectCharacterFranklin; // F6
 const KEY_TOGGLE_MENU_2 = Control.SelectCharacterTrevor; // F7
@@ -50,7 +50,7 @@ export default class Trainer {
 		notify('~y~Virakal Menu loaded!');
 	}
 
-	onTrainerClose(data: NuiData, cb: NuiCallback): NuiCallback {
+	onTrainerClose(_data: NuiData, cb: NuiCallback): NuiCallback {
 		this.showTrainer = false;
 		cb('ok');
 		return cb;

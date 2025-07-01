@@ -5,13 +5,13 @@ import {
 	VehicleToggleModType,
 } from '@common/Data/ParamEnums';
 import {
-	type ModList,
 	addSpacesToCamelCase,
 	delay,
 	getModName,
 	getModTypeName,
 	getVehicleModelName,
 	getVehicleMods,
+	type ModList,
 	spawnVehicle,
 } from '@common/utils';
 
@@ -104,7 +104,7 @@ class Garage {
 		}
 	}
 
-	toModString(vehicle: number, mods: ModList): string {
+	toModString(vehicle: number, _mods: ModList): string {
 		let modList: { [key: string]: string } = {};
 
 		if (GetIsVehiclePrimaryColourCustom(vehicle)) {

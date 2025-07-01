@@ -1,5 +1,5 @@
-import type { MenuMap } from '@common/Menu';
 import type MenuManager from 'MenuManager';
+import type { MenuMap } from '@common/Menu';
 
 export interface MenuAdder {
 	add(menus: MenuMap): MenuMap | Promise<MenuMap>;

@@ -1,6 +1,6 @@
+import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 import type { MenuItem, MenuMap } from '@common/Menu';
 import { delay } from '@common/utils';
-import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 
 const defaultTeleports = {
 	'Donkey Punch Farm': '428,6553,28',

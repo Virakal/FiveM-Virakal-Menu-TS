@@ -1,9 +1,9 @@
 import getConfig from '@common/Config';
 import PedModelList from '@common/Data/PedModelList';
 import {
-	type Model,
 	delay,
 	getPedVehicleSeat,
+	type Model,
 	notify,
 	withModel,
 } from '@common/utils';
@@ -80,7 +80,7 @@ export default class PlayerHandler {
 	}
 
 	async onLoadDefaultSkin(
-		data: NuiData,
+		_data: NuiData,
 		cb: NuiCallback,
 	): Promise<NuiCallback> {
 		const config = getConfig();
@@ -96,7 +96,7 @@ export default class PlayerHandler {
 		return cb;
 	}
 
-	onSaveDefaultSkin(data: NuiData, cb: NuiCallback): NuiCallback {
+	onSaveDefaultSkin(_data: NuiData, cb: NuiCallback): NuiCallback {
 		const config = getConfig();
 		config.set('DefaultSkin', config.get('CurrentSkin'));
 		notify(`~g~Saved ${config.get('DefaultSkin')} as your default skin.`);

@@ -23,7 +23,7 @@ export default class TeleportHandler implements Handler {
 		RegisterNuiCallback('telewaypoint', this.onTeleWaypoint);
 	}
 
-	onCoords(data: NuiData, cb: NuiCallback): NuiCallback {
+	onCoords(_data: NuiData, cb: NuiCallback): NuiCallback {
 		const ped = PlayerPedId();
 		const coords = getEntityPosition(ped);
 
@@ -80,7 +80,7 @@ export default class TeleportHandler implements Handler {
 		return cb;
 	}
 
-	onTeleLastCar(data: NuiData, cb: NuiCallback): NuiCallback {
+	onTeleLastCar(_data: NuiData, cb: NuiCallback): NuiCallback {
 		const ped = PlayerPedId();
 		const currentVehicle = GetVehiclePedIsIn(ped, false);
 		const lastVehicle = GetPlayersLastVehicle();
@@ -119,7 +119,7 @@ export default class TeleportHandler implements Handler {
 		return cb;
 	}
 
-	async onTeleWaypoint(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+	async onTeleWaypoint(_data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
 		const waypointPosition = getWaypointPosition();
 
 		cb('ok');

@@ -52,7 +52,7 @@ export default class MenuManager {
 	}
 
 	async sendAllMenus() {
-		for (const [key, value] of this.menu) {
+		for (const [key, _value] of this.menu) {
 			this.sendMenu(key);
 			await delay(10);
 		}

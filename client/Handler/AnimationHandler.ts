@@ -5,7 +5,7 @@ export default class AnimationHandler implements Handler {
 		RegisterNuiCallback('animate', this.onAnimate);
 	}
 
-	async onAnimate(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+	async onAnimate(_data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
 		// TODO This just plays the busted anim at the moment
 
 		const dict = 'random@arrests@busted';

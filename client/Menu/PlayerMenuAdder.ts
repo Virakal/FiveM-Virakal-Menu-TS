@@ -1,9 +1,9 @@
+import PlayerHandler from 'Handler/PlayerHandler';
+import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 import getConfig from '@common/Config';
 import PedModelList, { PedModelType } from '@common/Data/PedModelList';
 import type PedModelListItem from '@common/Data/PedModelListItem';
 import type { MenuItem, MenuMap } from '@common/Menu';
-import PlayerHandler from 'Handler/PlayerHandler';
-import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 
 @MenuAdder.register
 export default class PlayerMenuAdder extends BaseMenuAdder {
@@ -112,7 +112,7 @@ export default class PlayerMenuAdder extends BaseMenuAdder {
 		on('virakalMenu:configChanged', this.onConfigChanged.bind(this));
 	}
 
-	onConfigChanged(key: string, value: string) {
+	onConfigChanged(key: string, _value: string) {
 		if (key === 'CurrentSkin') {
 			this.menuManager.updateAndSend(
 				'player.skin.recent',

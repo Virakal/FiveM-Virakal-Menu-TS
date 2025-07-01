@@ -1,7 +1,11 @@
+import getGarage, {
+	GARAGE_CONFIG_KEY_PREFIX,
+	GARAGE_MAX_VEHICLE_SLOTS,
+} from 'Garage';
+import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 import getConfig from '@common/Config';
 import { CustomColour } from '@common/Data/CustomColour';
 import { Dlc, DlcName } from '@common/Data/Dlc';
-
 import {
 	LicensePlateStyle,
 	VehicleClass,
@@ -11,11 +15,9 @@ import {
 	VehicleSeat,
 	VehicleWindowTint,
 } from '@common/Data/ParamEnums';
-
 import { getVehicles } from '@common/Data/VehicleList';
 import type VehicleListItem from '@common/Data/VehicleListItem';
 import type { MenuItem, MenuMap } from '@common/Menu';
-
 import {
 	addSpacesToCamelCase,
 	cleanColourName,
@@ -26,13 +28,6 @@ import {
 	hexToColour,
 	loadModel,
 } from '@common/utils';
-
-import getGarage, {
-	GARAGE_CONFIG_KEY_PREFIX,
-	GARAGE_MAX_VEHICLE_SLOTS,
-} from 'Garage';
-
-import { BaseMenuAdder, MenuAdder } from 'Menu/MenuAdder';
 
 const DEFAULT_BOOST_POWER = 75;
 
@@ -156,7 +151,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		on('virakalMenu:vehicleModsChanged', this.onNewVehicleMods.bind(this));
 	}
 
-	onConfigChanged(key: string, value: string): void {
+	onConfigChanged(key: string, _value: string): void {
 		if (key.startsWith(GARAGE_CONFIG_KEY_PREFIX)) {
 			this.menuManager.updateAndSend('vehicles.load', this.getGarageLoadMenu());
 			this.menuManager.updateAndSend('vehicles.save', this.getGarageSaveMenu());
@@ -198,7 +193,7 @@ export default class VehicleMenuAdder extends BaseMenuAdder {
 		this.onNewVehicleMods(-1, -1);
 	}
 
-	async onNewVehicleMods(type: VehicleModType, index: number) {
+	async onNewVehicleMods(_type: VehicleModType, _index: number) {
 		// TODO: Limit this to the specific modtype and index
 		const menus = await this.getOtherModsMenus();
 

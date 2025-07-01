@@ -1,3 +1,5 @@
+import getGarage from 'Garage';
+import type Trainer from 'Trainer';
 import getConfig from '@common/Config';
 import { Control } from '@common/Data/Controls';
 import {
@@ -19,8 +21,6 @@ import {
 	stringToColour,
 	translate,
 } from '@common/utils';
-import getGarage from 'Garage';
-import type Trainer from 'Trainer';
 
 const RAINBOW_TICK_DELAY = 100;
 
@@ -544,7 +544,7 @@ export default class VehicleHandler implements Handler {
 		return cb;
 	}
 
-	async onVehSearch(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+	async onVehSearch(_data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
 		const config = getConfig();
 		this.trainer.blockInput = true;
 		const term = await getUserInput(256, 'Enter search term');
@@ -580,7 +580,7 @@ export default class VehicleHandler implements Handler {
 		return cb;
 	}
 
-	async onVehPlateText(data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
+	async onVehPlateText(_data: NuiData, cb: NuiCallback): Promise<NuiCallback> {
 		const vehicle = GetVehiclePedIsUsing(PlayerPedId());
 
 		cb('ok');

@@ -4,6 +4,9 @@
 	"main": "index.js",
 	"author": "Virakal",
 	"license": "MIT",
+	"engines": {
+		"node": "~16"
+	},
 	"scripts": {
 		"build": "run-p build:*",
 		"build:scripts": "node build.js --mode=production",

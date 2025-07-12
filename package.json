@@ -5,7 +5,7 @@
 	"author": "Virakal",
 	"license": "MIT",
 	"engines": {
-		"node": "~16"
+		"node": "^16"
 	},
 	"scripts": {
 		"build": "run-p build:*",

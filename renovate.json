@@ -6,6 +6,9 @@
   "ignorePaths": [
     "**/node_modules/**"
   ],
+  "constraints": {
+    "node": "^16"
+  },
   "packageRules": [
     {
       "matchPackageNames": [

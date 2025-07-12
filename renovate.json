@@ -5,5 +5,15 @@
   ],
   "ignorePaths": [
     "**/node_modules/**"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "node",
+        "@types/node"
+      ],
+      "matchUpdateTypes": "major",
+      "enabled": false
+    }
   ]
 }

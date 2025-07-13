@@ -22,7 +22,12 @@
 			"enabled": false
 		},
 		{
-			"matchPackageNames": ["@types/node", "node", "nodejs"],
+			"matchPackageNames": [
+				"@types/node",
+				"node",
+				"nodejs",
+				"actions/node-versions"
+			],
 			"enabled": false
 		}
 	]

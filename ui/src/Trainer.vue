@@ -267,17 +267,19 @@ export default defineComponent({
 			}
 		},
 		getStateText(value: boolean | string): string {
+			let toCheck = value
+
 			if (typeof value === 'string') {
-				value = value === 'true'
+				toCheck = value === 'true'
 			}
 
-			return value ? 'ON' : 'OFF'
+			return toCheck ? 'ON' : 'OFF'
 		},
 		getItemKey(item: MenuItem): string {
 			return item.key || item.action || item.text
 		},
-		getItemStateString(action: string): string | undefined {
-			if (action in this.itemStates) {
+		getItemStateString(action: string | undefined): string | undefined {
+			if (action && action in this.itemStates) {
 				return this.itemStates[action] ? 'ON' : 'OFF'
 			}
 		},

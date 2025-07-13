@@ -3,7 +3,7 @@
 	"extends": ["github>Jolt-Design/Renovate-Config"],
 	"ignorePaths": ["**/node_modules/**"],
 	"constraints": {
-		"node": "^16"
+		"node": "16.9.1"
 	},
 	"packageRules": [
 		{

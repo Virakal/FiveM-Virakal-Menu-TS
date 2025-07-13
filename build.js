@@ -11,7 +11,7 @@ const contexts = {
 	},
 	client: {
 		platform: 'browser',
-		target: ['chrome93'],
+		target: ['chrome90'],
 		format: 'iife',
 	},
 };

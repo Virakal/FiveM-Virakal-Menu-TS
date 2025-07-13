@@ -1,18 +1,19 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": ["github>Jolt-Design/Renovate-Config"],
-	"ignorePaths": ["**/node_modules/**"],
+	"extends": [
+		"github>Jolt-Design/Renovate-Config"
+	],
+	"ignorePaths": [
+		"**/node_modules/**"
+	],
 	"constraints": {
 		"node": "^16"
 	},
 	"packageRules": [
 		{
 			"matchPackageNames": [
-				"@types/node",
 				"@vitejs/plugin-vue",
 				"npm-run-all2",
-				"nodejs",
-				"node",
 				"vite",
 				"vue-tsc"
 			],
@@ -20,8 +21,22 @@
 			"enabled": false
 		},
 		{
-			"matchPackageNames": ["esbuild", "typescript"],
-			"matchUpdateTypes": ["major", "minor"],
+			"matchPackageNames": [
+				"esbuild",
+				"typescript"
+			],
+			"matchUpdateTypes": [
+				"major",
+				"minor"
+			],
+			"enabled": false
+		},
+		{
+			"matchPackageNames": [
+				"@types/node",
+				"node",
+				"nodejs"
+			],
 			"enabled": false
 		}
 	]

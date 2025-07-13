@@ -24,7 +24,6 @@ export default class PedModelList {
 
 	static getByHash(hash: Model) {
 		if (typeof hash === 'string') {
-			// biome-ignore lint/style/noParameterAssign: we are just enforcing a type
 			hash = Number.parseInt(hash, 10);
 		}
 

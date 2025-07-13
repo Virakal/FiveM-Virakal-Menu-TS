@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { MenuItem } from '@common/Menu';
+import type { MenuItem } from '@common/Menu';
 import { defineComponent } from 'vue';
 import PageIndicator from './components/PageIndicator.vue';
 import PreviewImage from './components/PreviewImage.vue';

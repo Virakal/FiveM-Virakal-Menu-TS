@@ -1,11 +1,7 @@
 {
 	"$schema": "https://docs.renovatebot.com/renovate-schema.json",
-	"extends": [
-		"github>Jolt-Design/Renovate-Config"
-	],
-	"ignorePaths": [
-		"**/node_modules/**"
-	],
+	"extends": ["github>Jolt-Design/Renovate-Config"],
+	"ignorePaths": ["**/node_modules/**"],
 	"constraints": {
 		"node": "^16"
 	},
@@ -21,22 +17,12 @@
 			"enabled": false
 		},
 		{
-			"matchPackageNames": [
-				"esbuild",
-				"typescript"
-			],
-			"matchUpdateTypes": [
-				"major",
-				"minor"
-			],
+			"matchPackageNames": ["esbuild", "typescript"],
+			"matchUpdateTypes": ["major", "minor"],
 			"enabled": false
 		},
 		{
-			"matchPackageNames": [
-				"@types/node",
-				"node",
-				"nodejs"
-			],
+			"matchPackageNames": ["@types/node", "node", "nodejs"],
 			"enabled": false
 		}
 	]

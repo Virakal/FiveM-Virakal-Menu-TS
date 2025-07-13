@@ -10,6 +10,7 @@
 			"matchPackageNames": [
 				"@types/node",
 				"@vitejs/plugin-vue",
+				"npm-run-all2",
 				"nodejs/node",
 				"node",
 				"vite",

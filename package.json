@@ -18,7 +18,7 @@
 		"@citizenfx/server": "latest",
 		"@types/node": "^16.18.126",
 		"esbuild": "^0.14.10",
-		"npm-run-all2": "^5.0.2"
+		"npm-run-all2": "^6.2.6"
 	},
 	"dependencies": {
 		"is-promise": "^4.0.0"

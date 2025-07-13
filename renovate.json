@@ -11,7 +11,7 @@
 				"@types/node",
 				"@vitejs/plugin-vue",
 				"npm-run-all2",
-				"nodejs/node",
+				"nodejs",
 				"node",
 				"vite",
 				"vue-tsc"

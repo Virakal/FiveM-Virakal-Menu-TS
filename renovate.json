@@ -10,6 +10,7 @@
 			"matchPackageNames": [
 				"@types/node",
 				"@vitejs/plugin-vue",
+				"nodejs/node",
 				"node",
 				"vite",
 				"vue-tsc"

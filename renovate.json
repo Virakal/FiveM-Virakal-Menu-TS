@@ -11,11 +11,17 @@
 				"@types/node",
 				"@vitejs/plugin-vue",
 				"node",
-				"typescript",
 				"vite",
 				"vue-tsc"
 			],
 			"matchUpdateTypes": "major",
+			"enabled": false
+		},
+		{
+			"matchPackageNames": [
+				"typescript"
+			],
+			"matchUpdateTypes": ["major", "minor"],
 			"enabled": false
 		}
 	]

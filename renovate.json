@@ -7,7 +7,14 @@
 	},
 	"packageRules": [
 		{
-			"matchPackageNames": ["node", "@types/node"],
+			"matchPackageNames": [
+				"@types/node",
+				"@vitejs/plugin-vue",
+				"node",
+				"typescript",
+				"vite",
+				"vue-tsc"
+			],
 			"matchUpdateTypes": "major",
 			"enabled": false
 		}

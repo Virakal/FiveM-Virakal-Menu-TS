@@ -32,5 +32,8 @@ for (const [context, contextOptions] of Object.entries(contexts)) {
 				);
 			}
 		})
-		.catch(() => process.exit(1));
+		.catch((e) => {
+			console.error(e);
+			process.exit(1);
+		});
 }

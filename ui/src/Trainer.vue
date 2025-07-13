@@ -100,6 +100,7 @@ export default defineComponent({
 		this.sendData('uiReady');
 	},
 	methods: {
+		// biome-ignore lint/suspicious/noExplicitAny: data can be anything
 		async sendData(name: string, data: any = {}): Promise<Response> {
 			// @ts-ignore
 			return fetch(`https://${GetParentResourceName()}/${name}`, {

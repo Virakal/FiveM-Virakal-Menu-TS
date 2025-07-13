@@ -5,16 +5,28 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { defineComponent } from "vue";
 
-@Component
-export default class TrainerOption extends Vue {
-	@Prop() private text!: string;
-	@Prop() private sub!: string;
-	@Prop() private action!: string;
-	@Prop() private state!: string;
-	@Prop() private image!: string;
-}
+export default defineComponent({
+    props: {
+        text: {
+            type: String
+        },
+        sub: {
+            type: String
+        },
+        action: {
+            type: String
+        },
+        state: {
+            type: String
+        },
+        image: {
+            type: String
+        }
+    }
+})
+
 </script>
 
 <style scoped>

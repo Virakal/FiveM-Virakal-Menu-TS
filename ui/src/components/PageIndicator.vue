@@ -3,13 +3,19 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator';
+import { defineComponent } from "vue";
 
-@Component
-export default class PageIndicator extends Vue {
-	@Prop() private page!: number;
-	@Prop() private pageCount!: number;
-}
+export default defineComponent({
+    props: {
+        page: {
+            type: Number
+        },
+        pageCount: {
+            type: Number
+        }
+    }
+})
+
 </script>
 
 <style scoped>

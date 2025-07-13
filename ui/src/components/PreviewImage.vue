@@ -20,15 +20,17 @@ export default defineComponent({
     .imagecontainer {
         opacity: 0.7;
         position: absolute;
-        right: 650px;
-        top: 100px;
+        right: 25rem;
+        top: 1.7rem;
+        margin: 0;
+        padding: 0;
     }
 
     img {
         border: 1px solid black;
         margin: 0;
-        max-width: 350px;
+        max-width: 20rem;
         padding: 0;
-        width: 350px;
+        width: 20rem;
     }
 </style>

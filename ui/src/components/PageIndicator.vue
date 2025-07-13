@@ -20,7 +20,7 @@ export default defineComponent({
 <style scoped>
     .pageindicator {
         color: white;
-        font-size: 20px;
+        font-size: 1.2rem;
         text-align: center;
     }
 </style>

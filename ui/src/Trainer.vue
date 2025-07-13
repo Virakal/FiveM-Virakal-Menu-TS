@@ -328,10 +328,14 @@ export default defineComponent({
 				src: url("assets/Roboto.ttf");
 		}
 
+		html {
+			font-size: 1.5vh;
+		}
+
 		#trainercontainer {
 				position: absolute;
-				right: 200px;
-				top: 100px;
+				right: 2rem;
+				top: 2rem;
 		}
 
 		p {
@@ -342,22 +346,22 @@ export default defineComponent({
 		.traineroption {
 				display: flex;
 				align-items: center;
-				font-size: 16px;
-				margin: 4px;
+				font-size: 1rem;
+				margin: .5rem;
 				color: white;
-				height: 36px;
-				width: 350px;
+				height: 2.25rem;
+				width: 20rem;
 				background: rgba(0, 0, 0, 0.6);
-				margin-top: -4px;
-				padding-left: 5px;
+				margin-top: -.5rem;
+				padding-left: .5rem;
 		}
 
 		.traineroption.trainertitle {
 				justify-content: center;
-				font-size: 25px;
-				height: 75px;
+				font-size: 1.8rem;
+				height: 5rem;
 				background: rgba(29, 123, 185, 0.8);
-				text-shadow: 0 0 3px #340ba5;
+				text-shadow: 0 0 .5rem #340ba5;
 		}
 
 		.traineroption.trainertitle:after {
@@ -368,7 +372,7 @@ export default defineComponent({
 		.traineroption:after {
 				content: attr(data-state);
 				margin-left: auto;
-				margin-right: 10px;
+				margin-right: .5rem;
 		}
 
 		.traineroption.sub:after {

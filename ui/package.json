@@ -4,7 +4,8 @@
 	"private": true,
 	"scripts": {
 		"serve": "vite preview",
-		"build": "vite build"
+		"build": "vite build",
+		"watch": "vite build --watch"
 	},
 	"description": "Virakal Trainer user interface",
 	"author": {

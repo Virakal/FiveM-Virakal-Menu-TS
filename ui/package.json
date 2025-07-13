@@ -11,8 +11,7 @@
 		"name": ""
 	},
 	"dependencies": {
-		"vue": "3.5.17",
-		"vue-property-decorator": "9.1.2"
+		"vue": "3.5.17"
 	},
 	"devDependencies": {
 		"@vue/cli-plugin-babel": "5.0.8",

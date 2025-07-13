@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  build_ui:
+  build_client_server:
     runs-on: ubuntu-latest
 
     steps:

@@ -1,17 +1,6 @@
 const esbuild = require('esbuild');
 
-const production =
-	process.argv.findIndex((argItem) => argItem === '--mode=production') >= 0;
-
-const onRebuild = (context) => {
-	return async (err, res) => {
-		if (err) {
-			return console.error(`[${context}]: Rebuild failed`, err);
-		}
-
-		console.log(`[${context}]: Rebuild succeeded, warnings:`, res.warnings);
-	};
-};
+const production = 	process.argv.findIndex((argItem) => argItem === '--mode=production') >= 0;
 
 const server = {
 	platform: 'node',
@@ -26,18 +15,19 @@ const client = {
 };
 
 for (const context of ['client', 'server']) {
-	esbuild
-		.build({
+	esbuild[production ? 'build' : 'context']({
 			bundle: true,
 			entryPoints: [`${context}/${context}.ts`],
 			outfile: `dist/${context}.js`,
-			watch: production
-				? false
-				: {
-						onRebuild: onRebuild(context),
-					},
 			...(context === 'client' ? client : server),
 		})
-		.then(() => console.log(`[${context}]: Built successfully!`))
+		.then((r) => {
+			console.log(`[${context}]: Built successfully!`)
+
+			if (!production) {
+				r.watch()
+					.then(() => console.log(`[${context}]: Watching for changes...`))
+			}
+		})
 		.catch(() => process.exit(1));
 }

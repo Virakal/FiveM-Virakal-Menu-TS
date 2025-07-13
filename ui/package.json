@@ -3,8 +3,8 @@
 	"version": "0.1.0",
 	"private": true,
 	"scripts": {
-		"serve": "vue-cli-service serve",
-		"build": "vue-cli-service build"
+		"serve": "vite preview",
+		"build": "vite build"
 	},
 	"description": "Virakal Trainer user interface",
 	"author": {
@@ -15,11 +15,13 @@
 		"vue": "3.5.17"
 	},
 	"devDependencies": {
-		"@vue/cli-plugin-babel": "5.0.8",
-		"@vue/cli-plugin-typescript": "5.0.8",
-		"@vue/cli-service": "5.0.8",
-		"typescript": "5.8.3",
-		"vue-template-compiler": "2.7.16"
+		"@vitejs/plugin-vue": "^3.2.0",
+		"@vue/tsconfig": "^0.7.0",
+		"autoprefixer": "^10.4.21",
+		"typescript": "~5.6.3",
+		"vite": "^4.5.14",
+		"vue-template-compiler": "2.7.16",
+		"vue-tsc": "^0.40.13"
 	},
 	"postcss": {
 		"plugins": {

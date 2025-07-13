@@ -7,15 +7,12 @@ version '1.0.0'
 fxdk_watch_command 'yarn' {'watch'}
 fxdk_build_command 'yarn' {'build'}
 
-file 'ui/dist/css/app.css'
-file 'ui/dist/fonts/Roboto.ttf'
 file 'ui/dist/index.html'
-file 'ui/dist/js/app.js.map'
-file 'ui/dist/js/app.js'
-file 'ui/dist/js/chunk-vendors.js.map'
-file 'ui/dist/js/chunk-vendors.js'
+file 'ui/dist/assets/Roboto.ttf'
+file 'ui/dist/assets/index.js'
+file 'ui/dist/assets/index.css'
 
-ui_page "ui/dist/index.html"
+ui_page 'ui/dist/index.html'
 
 client_script 'dist/client.js'
 server_script 'dist/server.js'

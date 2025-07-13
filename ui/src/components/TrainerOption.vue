@@ -5,28 +5,27 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-    props: {
-        text: {
-            type: String
-        },
-        sub: {
-            type: String
-        },
-        action: {
-            type: String
-        },
-        state: {
-            type: String
-        },
-        image: {
-            type: String
-        }
-    }
+	props: {
+		text: {
+			type: String,
+		},
+		sub: {
+			type: String,
+		},
+		action: {
+			type: String,
+		},
+		state: {
+			type: String,
+		},
+		image: {
+			type: String,
+		},
+	},
 })
-
 </script>
 
 <style scoped>

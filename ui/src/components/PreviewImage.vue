@@ -5,16 +5,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent } from 'vue'
 
 export default defineComponent({
-    props: {
-        img: {
-            type: String
-        }
-    }
+	props: {
+		img: {
+			type: String,
+		},
+	},
 })
-
 </script>
 
 <style scoped>

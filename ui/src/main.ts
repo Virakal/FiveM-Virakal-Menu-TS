@@ -1,8 +1,4 @@
-import Vue from 'vue';
+import { createApp } from 'vue'
 import Trainer from './Trainer.vue';
 
-Vue.config.productionTip = true;
-
-new Vue({
-	render: (h) => h(Trainer),
-}).$mount('#app');
+createApp(Trainer).mount('#app')

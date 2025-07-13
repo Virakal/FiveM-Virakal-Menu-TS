@@ -11,7 +11,9 @@
 		"build": "run-p build:*",
 		"build:scripts": "node build.js --mode=production",
 		"build:ui": "cd ui && yarn build",
-		"watch": "node build.js"
+		"watch": "run-p watch:*",
+		"watch:scripts": "node build.js",
+		"watch:ui": "cd ui && yarn watch"
 	},
 	"devDependencies": {
 		"@citizenfx/client": "latest",

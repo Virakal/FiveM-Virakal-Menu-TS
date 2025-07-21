@@ -17,9 +17,9 @@
   integrity sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow==
 
 "@citizenfx/client@latest":
-  version "2.0.17000-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.17000-1.tgz#7c0e7bb1588543d8574c7293917601e3144fba54"
-  integrity sha512-aLZcNAFiDA046nKpxfgg7vXo9hLootdo2OPoBb5UWoiEFz4KUkPDeNv/yu5Fn2M6gVfoYwueUiBNFenxUFjIaQ==
+  version "2.0.17212-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.17212-1.tgz#2a5c415bf8cc267831c78fe11e3534792d07a30a"
+  integrity sha512-wT5Pu5CG0QjVnEIDNRHUyQJz+pygJbM9lnKTOHH9/ijcaxpuSu7l/ginPF9xevm9TM3YkcfJFsMvC8NBhwLwCA==
 
 "@citizenfx/server@latest":
   version "2.0.14862-1"

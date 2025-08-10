@@ -17,14 +17,14 @@
   integrity sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow==
 
 "@citizenfx/client@latest":
-  version "2.0.17871-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.17871-1.tgz#9a54765be28d85c9d37a64511c33b3fa526ed437"
-  integrity sha512-aQ4L183jBUPxLVdbGiBhd+mPVg+w/R4bc71tBnX0c90XibYiHLN9H5im9Jb1pVyQOZH+hxZuQbVzx9X90RD+Zw==
+  version "2.0.18270-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.18270-1.tgz#b0704359c15f2baa9cb2a2262d4dcfdc4d027293"
+  integrity sha512-utksB71JqOEDyoc4vn5KHImxx/SN+M0sTWA+o3xEpjG3ylWhPP2ibZ7V/A37RYjhoF/mVwHAPNcip6CpVfjB4w==
 
 "@citizenfx/server@latest":
-  version "2.0.14862-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.14862-1.tgz#bc584a52cedf815d11fdd85cb5c15172642f26e9"
-  integrity sha512-I6XnxIGBhskPe9S+q1OQLDqs6TYw1RhX06K6jUg+n0hGITYools6VBIIhdPe2uUlHA+76qJajQlV9ONeR3mDig==
+  version "2.0.18270-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.18270-1.tgz#db8a8fb8bb91e2bb78f54e26895053044fd23e89"
+  integrity sha512-hjE4uPnxCKRPJGXayH0V7aGmOhdxI2KFtJTEGS0EbC/tXFfsoOweuf6o8NVeNwIK9FVQnvk3gxihsazqxHyFSg==
 
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
@@ -401,9 +401,9 @@ spdx-expression-parse@^3.0.0:
     spdx-license-ids "^3.0.0"
 
 spdx-license-ids@^3.0.0:
-  version "3.0.21"
-  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.21.tgz#6d6e980c9df2b6fc905343a3b2d702a6239536c3"
-  integrity sha512-Bvg/8F5XephndSK3JffaRqdT+gyhfqIPwDHpX80tJrF8QQRYMo8sNMeaZ2Dp5+jhwKnUmIOyFFQfHRkjJm5nXg==
+  version "3.0.22"
+  resolved "https://registry.yarnpkg.com/spdx-license-ids/-/spdx-license-ids-3.0.22.tgz#abf5a08a6f5d7279559b669f47f0a43e8f3464ef"
+  integrity sha512-4PRT4nh1EImPbt2jASOKHX7PB7I+e4IWNLvkKFDxNhJlfjbYlleYQh285Z/3mPTHSAK/AvdMmw5BNNuYH8ShgQ==
 
 supports-preserve-symlinks-flag@^1.0.0:
   version "1.0.0"

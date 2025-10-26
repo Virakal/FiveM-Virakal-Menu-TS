@@ -12,19 +12,19 @@
     picocolors "^1.1.1"
 
 "@babel/helper-validator-identifier@^7.27.1":
-  version "7.27.1"
-  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.27.1.tgz#a7054dcc145a967dd4dc8fee845a57c1316c9df8"
-  integrity sha512-D2hP9eA+Sqx1kBZgzxZh0y1trbuU+JoDkiEwqhQ36nodYqJwyEIhPSdMNd7lOm/4io72luTPWH20Yda0xOuUow==
+  version "7.28.5"
+  resolved "https://registry.yarnpkg.com/@babel/helper-validator-identifier/-/helper-validator-identifier-7.28.5.tgz#010b6938fab7cb7df74aa2bbc06aa503b8fe5fb4"
+  integrity sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==
 
 "@citizenfx/client@latest":
-  version "2.0.21130-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.21130-1.tgz#d5cf0e301d2aec8f5d32778dd2d13886991e33af"
-  integrity sha512-77XC2/kukF5Ykz9h7NxWw3EysgrKzxa5tCJMvVHK5LByybc2R2+ssFDvHq6EuaCYciDrHbU9gz8xXqtRiB/xmg==
+  version "2.0.21321-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.21321-1.tgz#3cb1e6a4b5d854fb3f567e8d796d073ca34fd132"
+  integrity sha512-2WeA9+04MI/mUA46aikwbha4jgb663MAbH6qs1n6AkWUEuM4ZT8VSHzIgwbqGIhJn19qOerJWRY735g80X0yKQ==
 
 "@citizenfx/server@latest":
-  version "2.0.21130-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.21130-1.tgz#dffa09c07d7078084da3f05955287b5b22b853e5"
-  integrity sha512-fDW7Iv50y2IDCTcMyutFhn926g8MRnwHWO4M+jkqpYC6gkcrMvehpidENPflbRJszCsYfaaOo1kISQ85/4eyoQ==
+  version "2.0.21314-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.21314-1.tgz#200700ca0f2755b4ed17de765683b51a9fee143c"
+  integrity sha512-qhcvQw1RiYAT86kG8k07k3n6GjZAmJKyuPoEKsfgoyDLOCmhbHN5kfe43Bj2UJbbB1TA/223+O+1D0HUWfpciQ==
 
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
@@ -241,7 +241,7 @@ is-arrayish@^0.2.1:
   resolved "https://registry.yarnpkg.com/is-arrayish/-/is-arrayish-0.2.1.tgz#77c99840527aa8ecb1a8ba697b80645a7a926a9d"
   integrity sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
 
-is-core-module@^2.16.0:
+is-core-module@^2.16.1:
   version "2.16.1"
   resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.16.1.tgz#2a98801a849f43e2add644fbb6bc6229b19a4ef4"
   integrity sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==
@@ -349,11 +349,11 @@ read-pkg@^5.2.0:
     type-fest "^0.6.0"
 
 resolve@^1.10.0:
-  version "1.22.10"
-  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.10.tgz#b663e83ffb09bbf2386944736baae803029b8b39"
-  integrity sha512-NPRy+/ncIMeDlTAsuqwKIiferiawhefFJtkNSW0qZJEqMEb+qBt/77B/jGeeek+F0uOeN05CDa6HXbbIgtVX4w==
+  version "1.22.11"
+  resolved "https://registry.yarnpkg.com/resolve/-/resolve-1.22.11.tgz#aad857ce1ffb8bfa9b0b1ac29f1156383f68c262"
+  integrity sha512-RfqAvLnMl313r7c9oclB1HhUEAezcpLjz95wFH4LVuhk9JF/r22qmVP9AMmOU4vMX7Q8pN8jwNg/CSpdFnMjTQ==
   dependencies:
-    is-core-module "^2.16.0"
+    is-core-module "^2.16.1"
     path-parse "^1.0.7"
     supports-preserve-symlinks-flag "^1.0.0"
 

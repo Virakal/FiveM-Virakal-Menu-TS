@@ -17,14 +17,14 @@
   integrity sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==
 
 "@citizenfx/client@latest":
-  version "2.0.22279-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.22279-1.tgz#0941a598024abf146cc651928b8fea3823170774"
-  integrity sha512-BgK0GXcE+xatCfB+OTzHPsoWCbhJhQGECCSN5IstnARt0zRfGOKM4E+gHYSidaXn86+fMGOa92ikxx1kZk1+Qg==
+  version "2.0.22443-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.22443-1.tgz#54fb106a1109ea523112755e8a9587a9be7687c3"
+  integrity sha512-fCnYxGrFCl1iUxS1oAbmwXCuouLd+MzMjLrvVIv9Q/2/H7SyhPDHLZVOedUZmkG0gWvt4wGk1Pjcv41uzmVlhA==
 
 "@citizenfx/server@latest":
-  version "2.0.22279-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.22279-1.tgz#7afe4023bab4fe40efa321a37b825592b56cf996"
-  integrity sha512-a35x2UTc3mMVlHWoiAyrZEmMUWQUNBSBkRXziHpCQyLubgSHnA4Ic+jhY2CHsHHKA1AHT37ajO0BajFlDHdhoA==
+  version "2.0.22443-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.22443-1.tgz#0c81e710637c7c54b98131acc7315d843fa38c1b"
+  integrity sha512-QbLuZQ0JnFXu59d4x0Z0qN3Bu+tb38oK4+E3DvB0zg172+EzrdGnfX66KprlM8JEjDvItTR4fSIVUWJyNYzULQ==
 
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"

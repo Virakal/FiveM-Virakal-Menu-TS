@@ -17,14 +17,14 @@
   integrity sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==
 
 "@citizenfx/client@latest":
-  version "2.0.27092-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.27092-1.tgz#bd89e87839bf601fb31c896918a41011ece244a6"
-  integrity sha512-Rjmq2jJ178P+gJ9qVtpUWu538O+AqmfdjatT0okfngHRNRi9DeHyTiZRkzRNHhIkdKy6tCZ71OBiQGCJmdd1OA==
+  version "2.0.27417-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.27417-1.tgz#0cfb426eba04c28cc7081c0e3bd37e3d78824cf1"
+  integrity sha512-o1kKQsZFaZUbIuW2N4i1uHyBOKxBVEzZCUkJlqnL5Ck4urSRJnyJKkTygkjuA+LlbUBBtFNj4oSYxvCr6esBSg==
 
 "@citizenfx/server@latest":
-  version "2.0.27092-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.27092-1.tgz#84b2d97e2fbd956c11c3ca33781a35308e624d0f"
-  integrity sha512-+yShrQOuShrIR7GHNW4xygAGqtfPCwpqAmhTkbQAwyn7igiS/t9NcsFUvpiuwD/EBp+5G/2MbapMKZ6GQnxfLw==
+  version "2.0.27417-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.27417-1.tgz#afa12f3153f243d0fbc3c415b6e47a73525d3071"
+  integrity sha512-WjA7CDx0t2sfI0bnaE/QCufTt8QcWfMSzxL68ZiwIF/P9oU6wLdKvD/lK7Kf9mFydLDl24sM7ks4KaRvd/rE4A==
 
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
@@ -162,9 +162,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 brace-expansion@^1.1.7:
-  version "1.1.12"
-  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.12.tgz#ab9b454466e5a8cc3a187beaad580412a9c5b843"
-  integrity sha512-9T9UjW3r0UW5c1Q7GTwllptXwhvYmEzFhzMfZ9H7FQWt+uZePjZPjBP/W1ZEyZ1twGWom5/56TF4lPcqjnDHcg==
+  version "1.1.13"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.13.tgz#d37875c01dc9eff988dd49d112a57cb67b54efe6"
+  integrity sha512-9ZLprWS6EENmhEOpjCYW2c8VkmOvckIJZfkr7rBW6dObmfgJ/L1GpSYW5Hpo9lDz4D1+n0Ckz8rU7FwHDQiG/w==
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"

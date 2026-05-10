@@ -17,14 +17,14 @@
   integrity sha512-qSs4ifwzKJSV39ucNjsvc6WVHs6b7S03sOh2OcHF9UHfVPqWWALUsNUVzhSBiItjRZoLHx7nIarVjqKVusUZ1Q==
 
 "@citizenfx/client@latest":
-  version "2.0.28954-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.28954-1.tgz#4bd1757b426363053f94a667503d6a53468825c9"
-  integrity sha512-zvl4DKCLaeNIcYAR4d9AdPaTl7qc0mXb0Fpb1xaenwE7pmQktvvM13+hRXUPfcjCdVGldL/9p3BW0HQTyRTOhw==
+  version "2.0.29199-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.29199-1.tgz#962368e77c0007f99744805e72b1b9a48e945933"
+  integrity sha512-mGvu2QMyBqQVvuYwh98FNyiuAejvoJoOyGe4+Q2VsA++WCaZKlTSk41G4vsuT8vTdzgEh1+ODT0IlIqcikiLHA==
 
 "@citizenfx/server@latest":
-  version "2.0.28954-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.28954-1.tgz#b2d8b5e3be36a18cff0764e7b776cbb9fced7328"
-  integrity sha512-L9tcf2GftzukZWbTGWNVlV7++ZdpKQjDbtWbZ2s27XvtkU4xCcolXgaFCp0IFv3bzQHUr2edR0Ekb3VmV0DZ8g==
+  version "2.0.29199-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/server/-/server-2.0.29199-1.tgz#1c96dc7697363b316f1aca313c30431795fdaf06"
+  integrity sha512-LD2LXg3qhUwbPK9S9TWiLmnhV8Am6uyUW2WqygJFGBgtm2EkAte1Dvrb8PGGc7g2jr3LY+3SE6D/7oh6cBijpA==
 
 "@esbuild/aix-ppc64@0.21.5":
   version "0.21.5"
@@ -229,7 +229,7 @@ function-bind@^1.1.2:
   resolved "https://registry.yarnpkg.com/function-bind/-/function-bind-1.1.2.tgz#2c02d864d97f3ea6c8830c464cbd11ab6eab7a1c"
   integrity sha512-7XHNxH7qX9xG5mIwxkhumTox/MIRNcOgDrxWsMt2pAr23WHp6MrRlN7FBSFpCpr+oVO0F744iUgR82nJMfG2SA==
 
-hasown@^2.0.2:
+hasown@^2.0.3:
   version "2.0.3"
   resolved "https://registry.yarnpkg.com/hasown/-/hasown-2.0.3.tgz#5e5c2b15b60370a4c7930c383dfb76bf17bc403c"
   integrity sha512-ej4AhfhfL2Q2zpMmLo7U1Uv9+PyhIZpgQLGT1F9miIGmiCJIoCgSmczFdrc97mWT4kVY72KA+WnnhJ5pghSvSg==
@@ -247,11 +247,11 @@ is-arrayish@^0.2.1:
   integrity sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==
 
 is-core-module@^2.16.1:
-  version "2.16.1"
-  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.16.1.tgz#2a98801a849f43e2add644fbb6bc6229b19a4ef4"
-  integrity sha512-UfoeMA6fIJ8wTYFEUjelnaGI67v6+N7qXJEvQuIGa99l4xsCruSYOVSQ0uPANn4dAzm8lkYPaKLrrijLq7x23w==
+  version "2.16.2"
+  resolved "https://registry.yarnpkg.com/is-core-module/-/is-core-module-2.16.2.tgz#3e07450a8080ebce3fbf0cac494f4d2ab324e082"
+  integrity sha512-evOr8xfXKxE6qSR0hSXL2r3sd7ALj8+7jQEUvPYcm5sgZFdJ+AYzT6yNmJenvIYQBgIGwfwz08sL8zoL7yq2BA==
   dependencies:
-    hasown "^2.0.2"
+    hasown "^2.0.3"
 
 is-promise@^4.0.0:
   version "4.0.0"

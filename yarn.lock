@@ -17,9 +17,9 @@
   integrity sha512-qehxGkRj55h/ff8EMaJ+cYhyaKlHIxqYDn682wQD7RNp9UujOQsHog2uS0r2vzr4pW+sXf90NeeayjcNaX3fFg==
 
 "@citizenfx/client@latest":
-  version "2.0.33230-1"
-  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.33230-1.tgz#93183dc3b70ed5ec1b31061ed1ff14b9d344b20c"
-  integrity sha512-RAQzWsc257nvZpc7OMy1OHWjCKpSemR6oLn5x9T7ZZJhQ9koVGVEeF3WjRCz/z7F72Yhfvf5gbmDHir61feYTA==
+  version "2.0.33864-1"
+  resolved "https://registry.yarnpkg.com/@citizenfx/client/-/client-2.0.33864-1.tgz#08262ebbe3135247517e2bf3cd993b624a5d4577"
+  integrity sha512-nl6bIOSOofvO7P9EuAT7ZaZr7Pw/wyVNO+sy2XLKKGLfzMqa6kQUbMhGN0pxJzXv65UQBWNPLxuvgAJly04zIQ==
 
 "@citizenfx/server@latest":
   version "2.0.32561-1"
@@ -162,9 +162,9 @@ balanced-match@^1.0.0:
   integrity sha512-3oSeUO0TMV67hN1AmbXsK4yaqU7tjiHlbxRDZOpH0KW9+CeX4bRAaX0Anxt0tx2MrpRpWwQaPwIlISEJhYU5Pw==
 
 brace-expansion@^1.1.7:
-  version "1.1.16"
-  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.16.tgz#723d3a30c0558c225abc9fc479a73e14e26c3c2f"
-  integrity sha512-IDw48K2/2kRkg9LdJxurvq3lV3aBgq0REY89duEqFRthjlPdXHKMj7EnQOXVckxzgisinf3nHfrcE2FufFLXMw==
+  version "1.1.18"
+  resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.18.tgz#3ce74d89885136be1535341f8c3d4425c29a5cab"
+  integrity sha512-Edep/X9fGqVNmzKBVsDYIOtD+z1tuezV70LBjdCst9Tqu76lsnvRiZ6oTic1n+/BIwX6QDGAO94PN4N2SADvtw==
   dependencies:
     balanced-match "^1.0.0"
     concat-map "0.0.1"

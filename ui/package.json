@@ -16,7 +16,7 @@
 		"node": "16.9.1"
 	},
 	"dependencies": {
-		"vue": "^3.5.40"
+		"vue": "^3.5.41"
 	},
 	"devDependencies": {
 		"@vitejs/plugin-vue": "^3.2.0",
